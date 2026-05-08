@@ -1,0 +1,6 @@
+[project]
+name = "incidentlens"
+version = "0.1.0"
+description = "Incident 기반 장애 검색 서비스 레이어"
+readme = "README.md"
+requires-python = ">=3.12"
