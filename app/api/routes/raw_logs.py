@@ -9,11 +9,13 @@ from app.repositories.incident_embedding_repository import IncidentEmbeddingRepo
 from app.repositories.incident_repository import IncidentRepository
 from app.repositories.raw_log_repository import RawLogRepository
 from app.schemas.raw_log import RawLogCreate, RawLogIngestResponse
-from app.services.embedding_service import EmbeddingService
-from app.services.incident_match_service import IncidentMatchService
-from app.services.incident_service import IncidentService
-from app.services.llm_log_enrichment_service import LlmLogEnrichmentService
-from app.services.log_parse_service import LogParseService
+from app.services.embedding import EmbeddingService
+from app.services.log import (
+    IncidentMatchService,
+    IncidentService,
+    LlmLogEnrichmentService,
+    LogParseService,
+)
 
 
 def get_incident_service(

@@ -7,7 +7,10 @@ from typing import Literal
 from pydantic import BaseModel, Field, ValidationError
 
 from app.config import Settings
+from app.llm import OpenAiChatClient
 from app.models.log_processing import LlmEnrichedLog, PatternParsedLog
+from app.utils.json_text import extract_first_json_object
+from app.utils.text_preview import preview_truncated
 
 logger = logging.getLogger(__name__)
 
@@ -62,41 +65,7 @@ class _LlmEnrichedLogSchema(BaseModel):
 class LlmLogEnrichmentService:
     def __init__(self, settings: Settings) -> None:
         self._settings = settings
-
-    def _preview(self, value: str | None, limit: int = 500) -> str:
-        text = (value or "").replace("\n", "\\n")
-        return text if len(text) <= limit else text[:limit] + "...(truncated)"
-
-    def _schema_with_no_additional_properties(self) -> dict:
-        schema = _LlmEnrichedLogSchema.model_json_schema()
-
-        def fix(node: object) -> None:
-            if isinstance(node, dict):
-                if node.get("type") == "object":
-                    node["additionalProperties"] = False
-                    props = node.get("properties")
-                    if isinstance(props, dict):
-                        node["required"] = list(props.keys())
-                for value in node.values():
-                    fix(value)
-            elif isinstance(node, list):
-                for value in node:
-                    fix(value)
-
-        fix(schema)
-        return schema
-
-    def _extract_json_object(self, text: str) -> str | None:
-        value = (text or "").strip()
-        if not value:
-            return None
-
-        start = value.find("{")
-        end = value.rfind("}")
-        if start == -1 or end == -1 or end <= start:
-            return None
-
-        return value[start : end + 1]
+        self._llm = OpenAiChatClient(settings)
 
     def _build_prompt(
         self,
@@ -202,7 +171,7 @@ class LlmLogEnrichmentService:
 
         try:
             json_text = (
-                self._extract_json_object(text) if allow_json_extraction else text
+                extract_first_json_object(text) if allow_json_extraction else text
             )
             data = json.loads(json_text or text)
             return _LlmEnrichedLogSchema.model_validate(data)
@@ -210,7 +179,7 @@ class LlmLogEnrichmentService:
             logger.debug(
                 "LLM enrich output parse/validate failed: %s. raw_content_preview=%s",
                 e,
-                self._preview(text, limit=800),
+                preview_truncated(text, 800),
             )
             return None
 
@@ -259,54 +228,21 @@ class LlmLogEnrichmentService:
             logger.debug("LLM enrich skipped: openai_api_key is not set")
             return None
 
-        try:
-            from openai import OpenAI
-        except Exception as e:
-            logger.debug("LLM enrich skipped: OpenAI import failed: %s", e)
-            return None
-
-        client = OpenAI(api_key=self._settings.openai_api_key)
         messages = self._build_messages(project_name, raw_message, parsed)
-
-        text: str | None = None
-
-        try:
-            response = client.chat.completions.create(
-                model=self._settings.llm_model_name,
-                messages=messages,
-                response_format={
-                    "type": "json_schema",
-                    "json_schema": {
-                        "name": "EnrichedLog",
-                        "schema": self._schema_with_no_additional_properties(),
-                        "strict": True,
-                    },
-                },
-            )
-            text = (response.choices[0].message.content or "").strip()
-            model = self._parse_model_output(text, allow_json_extraction=False)
-        except Exception as e:
-            logger.debug("LLM enrich structured-output call failed: %s", e)
-            model = None
+        text = self._llm.chat_json_schema_strict(
+            messages,
+            schema_model=_LlmEnrichedLogSchema,
+            schema_name="EnrichedLog",
+        )
+        model = self._parse_model_output(text or "", allow_json_extraction=False)
 
         if model is None:
-            try:
-                response = client.chat.completions.create(
-                    model=self._settings.llm_model_name,
-                    messages=messages,
-                    response_format={"type": "json_object"},
-                )
-                text = (response.choices[0].message.content or "").strip()
-                model = self._parse_model_output(text, allow_json_extraction=True)
-            except Exception as e:
-                logger.debug("LLM enrich fallback call failed: %s", e)
-                return None
+            text = self._llm.chat_json_object(messages)
+            model = self._parse_model_output(text or "", allow_json_extraction=True)
 
         if model is None:
             return None
 
         output = self._normalize_output(model)
-
         logger.debug("LLM 응답 !!! %s", text)
-
         return output

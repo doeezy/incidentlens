@@ -3,7 +3,7 @@ from __future__ import annotations
 import uuid
 from datetime import datetime, timedelta
 
-from sqlalchemy import select
+from sqlalchemy import desc, nulls_last, select
 from sqlalchemy.orm import Session
 
 from app.models.incident import Incident
@@ -45,6 +45,21 @@ class IncidentRepository:
             .where(Incident.last_seen_at.is_not(None))
             .where(Incident.last_seen_at >= cutoff)
             .order_by(Incident.last_seen_at.desc())
+            .limit(limit)
+        )
+        return list(self._session.scalars(stmt).all())
+
+    def find_ticket_match_candidates(
+        self,
+        project_name: str,
+        limit: int = 500,
+    ) -> list[Incident]:
+        """티켓-incident 매칭 후보: 동일 프로젝트이고 상태가 open 또는 investigating."""
+        stmt = (
+            select(Incident)
+            .where(Incident.project_name == project_name)
+            .where(Incident.status.in_(("open", "investigating")))
+            .order_by(nulls_last(desc(Incident.last_seen_at)))
             .limit(limit)
         )
         return list(self._session.scalars(stmt).all())

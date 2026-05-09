@@ -22,18 +22,15 @@ class Settings(BaseSettings):
     )
 
     incident_match_threshold: float = 60.0
+    ticket_match_threshold: float = 65.0
     incident_match_candidate_days: int = 2
     # 매칭 판단 시간 창(분). 현재는 "1시간 이내 + 핵심 필드 완전 동일" 기준으로만 사용한다.
     incident_time_window_minutes_full: int = 60
     # (호환성 유지용) 기존 partial 설정값. 현재 매칭 로직에서는 full과 동일하게 취급한다.
     incident_time_window_minutes_partial: int = 60
 
-    # occurred_at에 timezone 정보가 없을 때(naive datetime) 적용할 기본 타임존
-    # 예: "2026-05-07 10:03:00" -> Asia/Seoul 로 해석 후 UTC로 저장
-    default_timezone: str = "Asia/Seoul"
-
     embedding_dimension: int = 1536
-    embedding_model_name: str = "mock-embedding-model"
+    embedding_model_name: str = "text-embedding-3-small"
     embedding_rules_version: str = "v1"
 
     openai_api_key: str | None = None

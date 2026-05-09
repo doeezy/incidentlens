@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Literal
 
 
@@ -21,8 +21,34 @@ class PatternParsedLog:
 
 
 @dataclass(frozen=True)
+class TicketPatternParsed:
+    """티켓 본문 규칙 기반 추출."""
+
+    module_name: str | None
+    class_name: str | None
+    method_name: str | None
+    error_type: str | None
+
+
+@dataclass(frozen=True)
+class LlmEnrichedTicket:
+    """Law Ticket LLM 생성/추론."""
+
+    module_name: str | None = None
+    class_name: str | None = None
+    method_name: str | None = None
+    error_type: str | None = None
+    normalized_summary: str | None = None
+    extracted_keywords: list[str] = field(default_factory=list)
+    domain_tags: list[str] = field(default_factory=list)
+    suspected_cause: str | None = None
+    resolution_note: str | None = None
+    correction_notes: str | None = None
+    parser_confidence: ParserConfidence = "low"
+
+
 class LlmEnrichedLog:
-    """LLM 보정/생성 결과(문맥 기반)."""
+    """Raw Log LLM 보정/생성 결과(문맥 기반)."""
 
     module_name: str | None
     class_name: str | None
@@ -35,4 +61,4 @@ class LlmEnrichedLog:
     extracted_keywords: list[str]
     domain_tags: list[str]
     correction_notes: str | None
-    parser_confidence: ParserConfidence
+    parser_confidence: ParserConfidence = "low"

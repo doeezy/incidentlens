@@ -25,6 +25,7 @@ class RawTicket(Base):
     module_name: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     class_name: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     method_name: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    error_type: Mapped[Optional[str]] = mapped_column(String, nullable=True)
 
     title: Mapped[str] = mapped_column(String, nullable=False)
     description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
@@ -40,7 +41,7 @@ class RawTicket(Base):
     resolution_note: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
 
     ticket_created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), nullable=False
+        DateTime(timezone=False), nullable=False
     )
     ticket_updated_at: Mapped[Optional[datetime]] = mapped_column(
         DateTime(timezone=True), nullable=True
