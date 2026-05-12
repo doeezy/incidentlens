@@ -52,6 +52,7 @@ class IncidentRepository:
     def find_ticket_match_candidates(
         self,
         project_name: str,
+        ticket_created_at: datetime,
         limit: int = 500,
     ) -> list[Incident]:
         """티켓-incident 매칭 후보: 동일 프로젝트이고 상태가 open 또는 investigating."""
@@ -59,6 +60,7 @@ class IncidentRepository:
             select(Incident)
             .where(Incident.project_name == project_name)
             .where(Incident.status.in_(("open", "investigating")))
+            .where(Incident.first_detected_at <= ticket_created_at)
             .order_by(nulls_last(desc(Incident.last_seen_at)))
             .limit(limit)
         )

@@ -68,10 +68,11 @@ class RawTicketService:
             )
 
         ticket_id = uuid.uuid4()
+        normalized_ticket_key = self._normalize_ticket_key(payload=payload)
 
         raw_ticket = RawTicket(
             id=ticket_id,
-            ticket_key=payload.ticket_key.strip(),
+            ticket_key=normalized_ticket_key,
             project_name=project_name,
             repository_name=self._strip_opt(payload.repository_name),
             module_name=parsed.module_name or enriched.module_name,
@@ -94,8 +95,11 @@ class RawTicketService:
             match_status=None,
         )
 
-        # project_name이 같으면서 상태가 open, investigating인 incident 조회
-        candidates = self._incident_repo.find_ticket_match_candidates(project_name)
+        # project_name이 같으면서 상태가 open, investigating인 incident +
+        # 최초 에러 발생 시간이 티켓 생성일시보다 이전인 incident만 조회
+        candidates = self._incident_repo.find_ticket_match_candidates(
+            project_name, payload.ticket_created_at
+        )
         logger.debug(
             "ticket_match candidates project=%s count=%s ticket_key=%s raw_ticket_id=%s",
             project_name,
@@ -147,6 +151,7 @@ class RawTicketService:
             # 최종 점수 계산
             final = 0.6 * float(rs.rule_score) + 0.4 * (sem_ok * 100)
 
+            logger.debug("===== final icident_id: %s, score: %s", rs.incident.id, final)
             # 최종 점수가 임계값 이상이고 현재 최적 점수보다 높으면 업데이트
             if final >= threshold and (best_final is None or final > best_final):
                 best_final = final
@@ -187,6 +192,25 @@ class RawTicketService:
             return None
         s = v.strip()
         return s or None
+
+    def _normalize_ticket_key(
+        self,
+        *,
+        payload: RawTicketCreate,
+    ) -> str:
+        key = self._strip_opt(payload.ticket_key)
+
+        if not key:
+            return ""
+
+        if "#" not in key:
+            key = f"#{key}"
+
+        repo_name = self._strip_opt(payload.repository_name)
+        if repo_name:
+            return f"{repo_name}{key}"
+
+        return key
 
     def _ticket_payload_for_llm(
         self,
