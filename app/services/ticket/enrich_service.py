@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import uuid
 from typing import Any
 
@@ -22,22 +23,13 @@ from app.utils.text_preview import preview_truncated
 logger = logging.getLogger(__name__)
 
 
+_EXPLICIT_ERROR_TYPE = re.compile(r"^[A-Z][A-Za-z0-9_]*(?:Exception|Error)$")
+
+
 class _LlmTicketSchema(BaseModel):
-    module_name: str | None = Field(
-        default=None,
-        description="규칙 추출값 보정 또는 확인된 모듈. 불명확하면 null.",
-    )
-    class_name: str | None = Field(
-        default=None,
-        description="규칙 추출값 보정 또는 확인된 클래스. 불명확하면 null.",
-    )
-    method_name: str | None = Field(
-        default=None,
-        description="규칙 추출값 보정 또는 확인된 메서드. 불명확하면 null.",
-    )
     error_type: str | None = Field(
         default=None,
-        description="규칙 추출값 보정 또는 확인된 오류 유형. 불명확하면 null.",
+        description="본문에 명시된 Exception/Error 클래스명. 불명확하면 null.",
     )
     normalized_summary: str | None = Field(
         default=None,
@@ -95,10 +87,10 @@ class LlmTicketEnrichmentService:
         return {
             "task": "enrich_ticket",
             "rules": {
-                "module_name": "pattern_extracted와 본문 근거로 확정·보정. 불명확하면 null.",
-                "class_name": "pattern_extracted와 본문 근거로 확정·보정. 불명확하면 null.",
-                "method_name": "pattern_extracted와 본문 근거로 확정·보정. 불명확하면 null.",
-                "error_type": "pattern_extracted와 본문 근거로 확정·보정. 불명확하면 null.",
+                "error_type": (
+                    "제목/본문에 명시된 Exception 또는 Error로 끝나는 클래스명만 작성. "
+                    "명확한 클래스명이 없으면 null."
+                ),
                 "normalized_summary": "제목과 본문에 근거한 한국어 1문장. 추측 금지.",
                 "extracted_keywords": "본문/제목에서 확인 가능한 짧은 키워드만.",
                 "domain_tags": "명확할 때만. 예: auth, login",
@@ -111,9 +103,6 @@ class LlmTicketEnrichmentService:
                 "parser_confidence": "high | medium | low",
             },
             "pattern_extracted": {
-                "module_name": parsed.module_name,
-                "class_name": parsed.class_name,
-                "method_name": parsed.method_name,
                 "error_type": parsed.error_type,
             },
             "input": {
@@ -124,9 +113,6 @@ class LlmTicketEnrichmentService:
             "output_contract": {
                 "must_be_json_only": True,
                 "fields": [
-                    "module_name",
-                    "class_name",
-                    "method_name",
                     "error_type",
                     "normalized_summary",
                     "extracted_keywords",
@@ -182,11 +168,11 @@ class LlmTicketEnrichmentService:
             {str(x).strip() for x in model.extracted_keywords if str(x).strip()}
         )
         tags = sorted({str(x).strip() for x in model.domain_tags if str(x).strip()})
+        error_type = model.error_type.strip() if model.error_type else None
+        if error_type and not _EXPLICIT_ERROR_TYPE.fullmatch(error_type):
+            error_type = None
         return LlmEnrichedTicket(
-            module_name=model.module_name,
-            class_name=model.class_name,
-            method_name=model.method_name,
-            error_type=model.error_type,
+            error_type=error_type,
             normalized_summary=model.normalized_summary.strip()
             if model.normalized_summary
             else None,
@@ -286,8 +272,8 @@ class LlmTicketEnrichmentService:
                 "각 incident의 summary/error information과 의미적으로 얼마나 유사한지 평가한다."
             ),
             "important_context": [
-                "후보 incident는 이미 코드에서 project_name, 시간, module, class, method, error_type 기준으로 필터링 및 스코어링된 결과다.",
-                "LLM은 project_name, 시간, module, class, method 일치 여부를 다시 판단하지 않는다.",
+                "후보 incident는 이미 코드에서 project_name, 시간, error_type, domain tag, keyword 기준으로 필터링 및 스코어링된 결과다.",
+                "LLM은 project_name, 시간, error_type, domain tag, keyword 일치 여부를 다시 판단하지 않는다.",
                 "LLM은 오직 ticket의 title, description, normalized_summary가 incident의 summary/error information의 의미적 유사도만 평가한다.",
                 "티켓은 incident보다 정보가 적을 수 있으므로, 티켓에 없는 세부 정보만으로 낮은 점수를 주지 않는다.",
             ],
@@ -307,7 +293,7 @@ class LlmTicketEnrichmentService:
                     {
                         "incident_id": "candidate incident_id",
                         "semantic_score": "0.0~1.0 float. 의미적으로 매우 유사하면 1.0에 가깝게. ticket text와 incident summary/error information이 의미적으로 유사할수록 높게.",
-                        "reason": "한국어 한 줄. project/time/module/class/method 판단은 쓰지 말고, 의미 유사도 근거만 작성.",
+                        "reason": "한국어 한 줄. 규칙 점수 판단은 쓰지 말고, 의미 유사도 근거만 작성.",
                         "should_match": "semantic_score가 0.65 이상이면 true, 아니면 false",
                     }
                 ],
@@ -320,8 +306,8 @@ class LlmTicketEnrichmentService:
                 "content": (
                     "Return JSON only. "
                     "You are a semantic similarity evaluator, not a final incident matcher. "
-                    "The system already handled project, time, module, class, method, and error_type scoring. "
-                    "Do not reject candidates based on project, time, module, class, method, or missing details. "
+                    "The system already handled project, time, error_type, domain tag, and keyword scoring. "
+                    "Do not reject candidates based on rule scoring or missing details. "
                     "Evaluate only the semantic similarity between the ticket text and the incident summary/error information. "
                     "Missing details in the ticket are not evidence of mismatch. "
                     "semantic_score must be a float between 0.0 and 1.0. 0.0 means completely unrelated. 1.0 means almost certainly the same incident."

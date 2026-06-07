@@ -52,7 +52,7 @@ class RuleScoredIncident:
 
 
 class TicketIncidentRuleMatchService:
-    """티켓 ↔ incident 1단계 규칙 기반 스코어링 (최대 95점)."""
+    """티켓 ↔ incident 1단계 규칙 기반 스코어링 (최대 100점)."""
 
     def score(
         self,
@@ -71,28 +71,20 @@ class TicketIncidentRuleMatchService:
                 logger.debug("====== [score] last_seen_at_matched + 20.0 =======")
                 s += 20.0
 
-        # 에러 타입 매칭 25점
-        if equal_normalized(raw_ticket.error_type, incident.primary_error_type):
-            logger.debug("====== [score] error_type_matched + 25.0 =======")
-            s += 25.0
-        # 모듈 매칭 15점
-        if equal_normalized(raw_ticket.module_name, incident.module_name):
-            logger.debug("====== [score] module_matched + 15.0 =======")
-            s += 15.0
-        # 클래스 매칭 10점
-        if equal_normalized(raw_ticket.class_name, incident.class_name):
-            logger.debug("====== [score] class_matched + 10.0 =======")
-            s += 10.0
-        # 메서드 매칭 5점
-        if equal_normalized(raw_ticket.method_name, incident.method_name):
-            logger.debug("====== [score] method_matched + 5.0 =======")
-            s += 5.0
+        # 에러 타입 매칭 30점
+        if (
+            raw_ticket.error_type
+            and incident.primary_error_type
+            and equal_normalized(raw_ticket.error_type, incident.primary_error_type)
+        ):
+            logger.debug("====== [score] error_type_matched + 30.0 =======")
+            s += 30.0
 
-        # 도메인 태그 매칭 10점
-        s += _overlap_points(raw_ticket.domain_tags, incident.domain_tags, 10.0)
-        # 에러 키워드 매칭 10점
+        # 도메인 태그 매칭 20점
+        s += _overlap_points(raw_ticket.domain_tags, incident.domain_tags, 20.0)
+        # 에러 키워드 매칭 30점
         s += _overlap_points(
-            raw_ticket.extracted_keywords, incident.error_keywords, 10.0
+            raw_ticket.extracted_keywords, incident.error_keywords, 30.0
         )
         return s
 

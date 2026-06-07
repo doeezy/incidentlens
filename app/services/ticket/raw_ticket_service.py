@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import re
 import uuid
 from datetime import datetime, timezone
 
@@ -24,6 +25,11 @@ from app.services.ticket.rule_match_service import TicketIncidentRuleMatchServic
 from app.utils.strings import union_unique_strings
 
 logger = logging.getLogger(__name__)
+
+_PRIORITY_LABEL = re.compile(
+    r"^priority\s*(?::|/|=|-)\s*(?P<value>.+)$",
+    re.IGNORECASE,
+)
 
 
 class RawTicketService:
@@ -49,18 +55,21 @@ class RawTicketService:
 
     def ingest_raw_ticket(self, payload: RawTicketCreate) -> RawTicketIngestResponse:
         project_name = payload.project_name.strip()
-        # 규칙 기반 파싱 구조 필드 파싱
-        parsed = self._parse_service.parse(payload.title, payload.description)
+        repository_name = payload.repository_name.strip()
+        issue = payload.issue
+        title = issue.title.strip()
+        # 규칙 기반 error_type 파싱
+        parsed = self._parse_service.parse(title, issue.body)
         # LLM 추론/생성/검증
         enriched = self._llm_ticket_service.enrich(
             project_name=project_name,
-            title=payload.title,
-            description=payload.description,
+            title=title,
+            description=issue.body,
             parsed=parsed,
         )
         if enriched is None:
             enriched = LlmEnrichedTicket(
-                normalized_summary=payload.title.strip(),
+                normalized_summary=title,
                 extracted_keywords=[],
                 domain_tags=[],
                 suspected_cause=None,
@@ -68,29 +77,31 @@ class RawTicketService:
             )
 
         ticket_id = uuid.uuid4()
-        normalized_ticket_key = self._normalize_ticket_key(payload=payload)
 
         raw_ticket = RawTicket(
             id=ticket_id,
-            ticket_key=normalized_ticket_key,
+            ticket_key=f"{repository_name}#{issue.number}",
             project_name=project_name,
-            repository_name=self._strip_opt(payload.repository_name),
-            module_name=parsed.module_name or enriched.module_name,
-            class_name=parsed.class_name or enriched.class_name,
-            method_name=parsed.method_name or enriched.method_name,
+            repository_name=repository_name,
             error_type=parsed.error_type or enriched.error_type,
-            title=payload.title.strip(),
-            description=payload.description,
-            status=self._strip_opt(payload.status),
-            priority=self._strip_opt(payload.priority),
-            assignee=self._strip_opt(payload.assignee),
-            reporter=self._strip_opt(payload.reporter),
+            title=title,
+            description=issue.body,
+            status=self._strip_opt(issue.state),
+            priority=self._extract_priority(payload),
+            assignee=(
+                self._strip_opt(issue.assignees[0].login)
+                if issue.assignees
+                else None
+            ),
+            reporter=self._strip_opt(issue.user.login),
             normalized_summary=enriched.normalized_summary,
             extracted_keywords=list(enriched.extracted_keywords or []),
             domain_tags=list(enriched.domain_tags or []),
             suspected_cause=enriched.suspected_cause,
             resolution_note=enriched.resolution_note,
-            ticket_created_at=payload.ticket_created_at,
+            ticket_created_at=issue.created_at,
+            ticket_updated_at=issue.updated_at,
+            ticket_closed_at=issue.closed_at,
             incident_id=None,
             match_status=None,
         )
@@ -98,7 +109,7 @@ class RawTicketService:
         # project_name이 같으면서 상태가 open, investigating인 incident +
         # 최초 에러 발생 시간이 티켓 생성일시보다 이전인 incident만 조회
         candidates = self._incident_repo.find_ticket_match_candidates(
-            project_name, payload.ticket_created_at
+            project_name, issue.created_at
         )
         logger.debug(
             "ticket_match candidates project=%s count=%s ticket_key=%s raw_ticket_id=%s",
@@ -118,7 +129,6 @@ class RawTicketService:
         top5 = ranked[:5]
         # LLM 추론/생성/검증
         ticket_payload = self._ticket_payload_for_llm(
-            payload=payload,
             raw_ticket=raw_ticket,
         )
         # 티켓 title/description이 각 incident의 normalized_summary와 동일한 장애를 설명하는지 평가
@@ -193,53 +203,42 @@ class RawTicketService:
         s = v.strip()
         return s or None
 
-    def _normalize_ticket_key(
-        self,
-        *,
-        payload: RawTicketCreate,
-    ) -> str:
-        key = self._strip_opt(payload.ticket_key)
-
-        if not key:
-            return ""
-
-        if "#" not in key:
-            key = f"#{key}"
-
-        repo_name = self._strip_opt(payload.repository_name)
-        if repo_name:
-            return f"{repo_name}{key}"
-
-        return key
+    def _extract_priority(self, payload: RawTicketCreate) -> str | None:
+        for label in payload.issue.labels:
+            name = label.name.strip()
+            match = _PRIORITY_LABEL.fullmatch(name)
+            if match:
+                return match.group("value").strip() or None
+            if "priority" in name.lower():
+                return name
+        return None
 
     def _ticket_payload_for_llm(
         self,
         *,
-        payload: RawTicketCreate,
         raw_ticket: RawTicket,
     ) -> dict:
         return {
-            "project_name": payload.project_name.strip(),
-            "repository_name": payload.repository_name,
-            "ticket_key": payload.ticket_key,
-            "title": payload.title,
-            "description": payload.description,
-            "status": payload.status,
-            "priority": payload.priority,
-            "assignee": payload.assignee,
-            "reporter": payload.reporter,
+            "project_name": raw_ticket.project_name,
+            "repository_name": raw_ticket.repository_name,
+            "ticket_key": raw_ticket.ticket_key,
+            "title": raw_ticket.title,
+            "description": raw_ticket.description,
+            "status": raw_ticket.status,
+            "priority": raw_ticket.priority,
+            "assignee": raw_ticket.assignee,
+            "reporter": raw_ticket.reporter,
             "ticket_created_at": (
                 raw_ticket.ticket_created_at.isoformat()
                 if raw_ticket.ticket_created_at is not None
                 else None
             ),
-            "module_name": raw_ticket.module_name,
-            "class_name": raw_ticket.class_name,
-            "method_name": raw_ticket.method_name,
             "error_type": raw_ticket.error_type,
             "normalized_summary": raw_ticket.normalized_summary,
             "extracted_keywords": raw_ticket.extracted_keywords,
             "domain_tags": raw_ticket.domain_tags,
+            "suspected_cause": raw_ticket.suspected_cause,
+            "resolution_note": raw_ticket.resolution_note,
         }
 
     def _merge_ticket_into_incident(

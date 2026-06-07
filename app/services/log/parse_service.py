@@ -31,15 +31,6 @@ class LogParseService:
         r"(?P<logger>(?:[a-zA-Z_][\w$]*\.)+[a-zA-Z_][\w$]*)\s*[-:]\s*",
         re.IGNORECASE,
     )
-    _skip_fqn_prefixes = (
-        "java.",
-        "javax.",
-        "jdk.",
-        "sun.",
-        "com.sun.",
-        "org.junit.",
-        "org.mockito.",
-    )
 
     def parse(self, raw_message: str) -> PatternParsedLog:
         text = raw_message.strip()
@@ -50,6 +41,7 @@ class LogParseService:
             t = line.lstrip()
             if t.startswith("at ") and "(" in line:
                 stack_start = i
+                break
 
         if stack_start is not None:
             head = "\n".join(lines[:stack_start]).strip()
@@ -86,7 +78,7 @@ class LogParseService:
 
     def _fqn_is_application(self, fqn: str) -> bool:
         lower = fqn.lower()
-        return not any(lower.startswith(p) for p in self._skip_fqn_prefixes)
+        return lower.startswith("com.example.")
 
     def _from_fqn_and_method(
         self, fqn_raw: str, method: str

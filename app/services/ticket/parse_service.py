@@ -3,7 +3,6 @@ from __future__ import annotations
 import re
 
 from app.models.log_processing import TicketPatternParsed
-from app.utils.com_example_call_path import extract_module_class_method
 
 
 class TicketParseService:
@@ -23,15 +22,9 @@ class TicketParseService:
             s for s in (title or "", (description or "").strip()) if s
         ).strip()
 
-        module_name, class_name, method_name = extract_module_class_method(text)
         error_type = self._extract_error_type(text)
 
-        return TicketPatternParsed(
-            module_name=module_name,
-            class_name=class_name,
-            method_name=method_name,
-            error_type=error_type,
-        )
+        return TicketPatternParsed(error_type=error_type)
 
     def _extract_error_type(self, text: str) -> str | None:
         for pattern in (
