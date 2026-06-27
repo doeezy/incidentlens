@@ -83,47 +83,85 @@ class LlmTicketEnrichmentService:
         title: str,
         description: str | None,
         parsed: TicketPatternParsed,
-    ) -> dict[str, Any]:
-        return {
-            "task": "enrich_ticket",
-            "rules": {
-                "error_type": (
-                    "제목/본문에 명시된 Exception 또는 Error로 끝나는 클래스명만 작성. "
-                    "명확한 클래스명이 없으면 null."
-                ),
-                "normalized_summary": "제목과 본문에 근거한 한국어 1문장. 추측 금지.",
-                "extracted_keywords": "본문/제목에서 확인 가능한 짧은 키워드만.",
-                "domain_tags": "명확할 때만. 예: auth, login",
-                "suspected_cause": (
-                    "티켓 본문에 원인 근거가 명시된 경우에만 작성. "
-                    "추측이나 일반론이면 null."
-                ),
-                "resolution_note": "본문에 해결/조치 내용이 있으면 요약. 없으면 null.",
-                "correction_notes": "패턴 추출 대비 보정 사유 등. 없으면 null.",
-                "parser_confidence": "high | medium | low",
-            },
-            "pattern_extracted": {
-                "error_type": parsed.error_type,
-            },
-            "input": {
-                "project_name": project_name,
-                "title": title,
-                "description": description,
-            },
-            "output_contract": {
-                "must_be_json_only": True,
-                "fields": [
-                    "error_type",
-                    "normalized_summary",
-                    "extracted_keywords",
-                    "domain_tags",
-                    "suspected_cause",
-                    "resolution_note",
-                    "correction_notes",
-                    "parser_confidence",
-                ],
-            },
+    ) -> str:
+        return f"""
+        다음 장애 티켓을 분석하여 검색 및 장애 분석에 사용할 메타데이터를 생성한다.
+
+        [작업 목적]
+        - 제목과 본문을 읽고 장애 내용을 이해한다.
+        - 1차 규칙 기반 파싱 결과를 참고하여 필요한 경우 보정한다.
+        - 티켓에서 확인 가능한 정보만 사용한다.
+        - 추측하거나 일반적인 원인을 만들어내지 않는다.
+        - 근거가 부족한 값은 null 또는 빈 배열을 반환한다.
+
+        [작성 규칙]
+        1. error_type
+        - 제목 또는 본문에 Exception 또는 Error 클래스명이 명시된 경우만 작성한다.
+        - 명확하지 않으면 null을 반환한다.
+
+        2. normalized_summary
+        - 제목과 본문을 기반으로 한국어 1문장으로 요약한다.
+        - 추측하지 않는다.
+
+        3. extracted_keywords
+        - 검색에 도움이 되는 짧은 키워드를 작성한다.
+        - 제목과 본문에 실제 존재하는 내용만 사용한다.
+
+        4. domain_tags
+        - auth, login, payment 등 명확한 도메인만 작성한다.
+        - 확실하지 않으면 빈 배열을 반환한다.
+
+        5. suspected_cause
+        - 본문에 원인이나 장애 원인이 명시된 경우만 작성한다.
+        - 추측하지 않는다.
+
+        6. resolution_note
+        - 본문에 해결 방법이나 조치 내용이 있는 경우만 작성한다.
+        - 없으면 null을 반환한다.
+
+        7. correction_notes
+        - pattern_extracted 값을 수정하거나 보정한 이유를 간단히 작성한다.
+        - 수정 사항이 없으면 null을 반환한다.
+
+        8. parser_confidence
+        - high / medium / low 중 하나를 반환한다.
+
+        [입력]
+        project_name:
+        {project_name}
+
+        title:
+        {title}
+
+        description:
+        {description or ""}
+
+        pattern_extracted:
+        ```json
+        {
+            json.dumps(
+                {
+                    "error_type": parsed.error_type,
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
         }
+        ```
+
+        [반환 형식]
+        반드시 JSON만 반환한다.
+        아래 필드만 포함한다.
+        * error_type
+        * normalized_summary
+        * extracted_keywords
+        * domain_tags
+        * suspected_cause
+        * resolution_note
+        * correction_notes
+        * parser_confidence
+        
+        """.strip()
 
     def _build_messages(
         self,

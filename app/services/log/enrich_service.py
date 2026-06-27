@@ -72,43 +72,48 @@ class LlmLogEnrichmentService:
         project_name: str,
         raw_message: str,
         parsed: PatternParsedLog,
-    ) -> dict:
-        return {
-            "task": "validate_and_enrich_log",
-            "goal": [
-                "1차 규칙 기반 파싱 결과를 raw 로그와 비교해 검증/보정한다.",
-                "raw 로그에서 확인 가능한 정보만 사용해 요약/키워드/태그를 생성한다.",
-                "확실하지 않은 값은 추측하지 말고 null 또는 빈 배열로 반환한다.",
-            ],
-            "rules": {
-                "package_structure": "com.example.[module_name].[class_name].[method_name]",
-                "module_name": (
-                    "com.example 이후부터 마지막 두 세그먼트(class_name, method_name) "
-                    "직전까지의 경로. 예: com.example.user.auth.UserService.login -> user.auth"
-                ),
-                "class_name": "클래스 단순명. 예: UserService. 내부 클래스는 $를 .으로 정규화 가능.",
-                "method_name": "메서드명. 명확하지 않으면 null.",
-                "log_level": "TRACE|DEBUG|INFO|WARN|ERROR|FATAL 중 하나로 정규화. WARNING은 WARN으로 변환.",
-                "stack_trace": "원문에 stack trace가 있으면 예외 라인과 'at ...' 라인을 포함해 그대로 보존. 없으면 null.",
-                "error_type": "예외 타입명. 예: ClassNotFoundException",
-                "error_message": "예외 타입을 제외한 핵심 메시지. 예: com.foo.AuthFilter not found",
-                "normalized_summary": "normalized_summary는 '~했습니다.' 형태의 한국어 문장 1개로 작성한다. 구조 필드와 raw_message에 근거해 작성. 원인 추정은 하지 말 것.",
-                "extracted_keywords": "검색에 유용한 짧은 키워드 배열. raw_message와 파싱 결과에 근거한 값만 포함.",
-                "domain_tags": "도메인 태그 배열. 명확하지 않으면 빈 배열.",
-                "correction_notes": "수정/보정한 내용이 있으면 간단히 설명. 없으면 null.",
-                "parser_confidence": "파싱 결과가 명확하면 high, 일부 애매하면 medium, 불확실하면 low.",
-            },
-            "constraints": [
-                "Project name is immutable. Do not modify, normalize, or suggest changes to project_name. Use it only as context.",
-                "Use only information explicitly present in the raw log or clearly supported by the pattern_extracted input.",
-                "Do not guess or infer missing information. If a value cannot be confirmed, return null or an empty array.",
-                "The normalized_summary must describe only observable facts and must not include root cause analysis or resolution suggestions.",
-                "Return only valid JSON that strictly matches the required schema. Do not include any additional text.",
-            ],
-            "input": {
-                "project_name": project_name,
-                "raw_message": raw_message,
-                "pattern_extracted": {
+    ) -> str:
+        return f"""
+    다음 raw log와 1차 규칙 기반 파싱 결과를 비교하여 로그 정보를 검증하고 보강한다.
+
+    [작업 목적]
+    - raw log에서 관찰 가능한 정보만 사용한다.
+    - 1차 규칙 기반 파싱 결과가 raw log와 일치하는지 확인하고, 명확히 틀린 값만 보정한다.
+    - 확실하지 않은 값은 추측하지 말고 null 또는 빈 배열로 반환한다.
+    - 원인 분석이나 해결 방법은 작성하지 않는다.
+
+    [패키지 구조 규칙]
+    - 기본 구조는 com.example.[module_name].[class_name].[method_name] 이다.
+    - module_name은 com.example 이후부터 class_name 직전까지의 경로이다.
+    예: com.example.user.auth.UserService.login -> user.auth
+    - class_name은 클래스 단순명이다.
+    - method_name은 메서드명이다. 명확하지 않으면 null로 반환한다.
+    - stack trace가 있는 경우 첫 번째 application frame 기준으로 판단한다.
+    - project_name은 절대 수정하지 말고 문맥 정보로만 사용한다.
+
+    [필드 작성 규칙]
+    - log_level은 TRACE, DEBUG, INFO, WARN, ERROR, FATAL 중 하나로 정규화한다. WARNING은 WARN으로 변환한다.
+    - error_type은 예외 타입명만 작성한다. 예: ClassNotFoundException
+    - error_message는 예외 타입을 제외한 핵심 메시지만 작성한다.
+    - normalized_summary는 raw log와 구조 필드에 근거한 한국어 1문장으로 작성한다.
+    - normalized_summary에는 root cause 추정이나 해결 제안을 포함하지 않는다.
+    - extracted_keywords는 검색에 유용한 짧은 키워드만 포함한다.
+    - domain_tags는 명확히 확인 가능한 도메인만 포함한다. 명확하지 않으면 빈 배열로 반환한다.
+    - correction_notes는 1차 파싱 결과를 수정하거나 null 처리한 이유를 간단히 작성한다. 없으면 null로 반환한다.
+    - parser_confidence는 high, medium, low 중 하나이다.
+
+    [입력]
+    project_name:
+    {project_name}
+
+    raw_message:
+    {raw_message}
+
+    pattern_extracted:
+    ```json
+    {
+            json.dumps(
+                {
                     "module_name": parsed.module_name,
                     "class_name": parsed.class_name,
                     "method_name": parsed.method_name,
@@ -117,25 +122,15 @@ class LlmLogEnrichmentService:
                     "error_type": parsed.error_type,
                     "error_message": parsed.error_message,
                 },
-            },
-            "output_contract": {
-                "must_be_json_only": True,
-                "fields": [
-                    "module_name",
-                    "class_name",
-                    "method_name",
-                    "log_level",
-                    "stack_trace",
-                    "error_type",
-                    "error_message",
-                    "normalized_summary",
-                    "extracted_keywords",
-                    "domain_tags",
-                    "correction_notes",
-                    "parser_confidence",
-                ],
-            },
+                ensure_ascii=False,
+            )
         }
+    ```
+
+    [반환 형식]
+    반드시 JSON만 반환한다.
+    스키마에 정의된 필드 외의 텍스트는 절대 포함하지 않는다.
+    """
 
     def _build_messages(
         self,
@@ -157,10 +152,7 @@ class LlmLogEnrichmentService:
                     "Do not infer root cause or resolution."
                 ),
             },
-            {
-                "role": "user",
-                "content": json.dumps(prompt, ensure_ascii=False),
-            },
+            {"role": "user", "content": prompt},
         ]
 
     def _parse_model_output(
