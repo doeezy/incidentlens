@@ -62,7 +62,7 @@ class EmbeddingService:
         model = self._settings.embedding_model_name
 
         if not self._settings.openai_api_key:
-            logger.warning("OPENAI_API_KEY 없음: 임베딩은 mock 벡터로 저장됩니다.")
+            logger.warning("OPENAI_API_KEY 없음")
             return self._mock_vector(text)
 
         try:

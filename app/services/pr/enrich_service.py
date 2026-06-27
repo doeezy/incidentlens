@@ -99,17 +99,9 @@ class LlmPrEnrichmentService:
         incident: Incident,
     ) -> list[dict[str, str]]:
         pull_request = payload.pull_request
-        prompt: dict[str, Any] = {
-            "task": "enrich_pr_for_linked_incident",
-            "rules": {
-                "normalized_summary": "PR이 수행한 변경을 한국어 1문장으로 요약.",
-                "extracted_keywords": "PR 및 incident 근거가 있는 짧은 키워드만.",
-                "domain_tags": "PR 및 incident에서 명확히 확인되는 도메인 태그만.",
-                "suspected_fix_for": "PR이 해결하려는 장애 증상이나 원인. 근거 없으면 null.",
-                "resolution_note": "PR이 장애를 어떻게 해결했는지 조치 중심으로 요약.",
-                "diff_summary": "patch와 변경 파일에 근거하여 주요 코드 변경을 요약.",
-            },
-            "incident": {
+
+        incident_json = json.dumps(
+            {
                 "id": str(incident.id),
                 "project_name": incident.project_name,
                 "status": incident.status,
@@ -122,7 +114,12 @@ class LlmPrEnrichmentService:
                 "root_cause_summary": incident.root_cause_summary,
                 "resolution_summary": incident.resolution_summary,
             },
-            "pull_request": {
+            ensure_ascii=False,
+            indent=2,
+        )
+
+        pr_json = json.dumps(
+            {
                 "project_name": payload.project_name,
                 "repository_name": payload.repository_name,
                 "number": pull_request.number,
@@ -137,28 +134,84 @@ class LlmPrEnrichmentService:
                 "mvp_diff_summary": parsed.diff_summary,
                 "files": self._files_for_prompt(payload),
             },
-            "output_contract": {
-                "must_be_json_only": True,
-                "fields": [
-                    "normalized_summary",
-                    "extracted_keywords",
-                    "domain_tags",
-                    "suspected_fix_for",
-                    "resolution_note",
-                    "diff_summary",
-                ],
-            },
-        }
+            ensure_ascii=False,
+            indent=2,
+        )
+
+        prompt = f"""
+            아래 Pull Request는 이미 특정 incident와 연결된 상태이다.
+            제공된 incident 정보와 PR 정보만 사용해서 PR 내용을 보강한다.
+
+            [작업 목적]
+            - 이 PR이 어떤 변경을 했는지 요약한다.
+            - 이 PR이 연결된 incident의 어떤 증상 또는 실패를 해결하려는지 정리한다.
+            - PR의 변경 파일, patch, commit message, PR 본문에 근거하여 해결 내용을 요약한다.
+            - 제공되지 않은 원인, 해결책, 파일, 의존성, 비즈니스 맥락은 새로 만들어내지 않는다.
+            - 근거가 부족한 필드는 null 또는 빈 배열로 반환한다.
+
+            [작성 규칙]
+            1. normalized_summary
+            - PR이 수행한 변경을 한국어 1문장으로 요약한다.
+
+            2. extracted_keywords
+            - incident 또는 PR에서 직접 확인 가능한 검색용 키워드만 포함한다.
+            - 클래스명, 에러 타입, 파일명, 도메인 키워드처럼 검색에 유용한 값을 우선한다.
+
+            3. domain_tags
+            - incident 또는 PR에서 명확히 확인되는 도메인 태그만 포함한다.
+            - 명확하지 않으면 빈 배열을 반환한다.
+
+            4. suspected_fix_for
+            - 이 PR이 해결하려는 장애 증상, 실패 지점, 또는 원인을 작성한다.
+            - incident와 PR 정보로 뒷받침되지 않으면 null을 반환한다.
+
+            5. resolution_note
+            - PR이 장애를 어떻게 해결했는지 조치 중심으로 요약한다.
+            - 변경 내용이 불명확하면 null을 반환한다.
+
+            6. diff_summary
+            - changed_files, files.patch, commit_messages, mvp_diff_summary에 근거해 주요 코드 변경을 요약한다.
+            - patch에 없는 세부 구현은 추측하지 않는다.
+
+            [입력]
+            Incident:
+            ```json
+            {incident_json}
+            ```
+
+            Pull Request:
+            ```json
+            {pr_json}
+            ```
+
+            [반환 형식]
+            반드시 JSON만 반환한다.
+            아래 필드만 포함한다.
+
+            * normalized_summary
+            * extracted_keywords
+            * domain_tags
+            * suspected_fix_for
+            * resolution_note
+            * diff_summary 
+        """.strip()
+
         return [
             {
                 "role": "developer",
                 "content": (
-                    "You enrich a pull request already linked to an incident. "
-                    "Return JSON only. Use only evidence from the incident and PR. "
-                    "Do not invent causes or fixes."
+                    "You are an experienced software engineer analyzing a pull request "
+                    "that is already linked to a production incident. "
+                    "Use only the provided incident and pull request evidence. "
+                    "Do not invent causes, fixes, files, dependencies, or business context. "
+                    "If evidence is insufficient, return null or an empty array. "
+                    "Return only valid JSON matching the schema."
                 ),
             },
-            {"role": "user", "content": json.dumps(prompt, ensure_ascii=False)},
+            {
+                "role": "user",
+                "content": prompt,
+            },
         ]
 
     def _files_for_prompt(self, payload: RawPrCreate) -> list[dict[str, str | None]]:
