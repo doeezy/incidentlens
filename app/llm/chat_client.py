@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+from dataclasses import dataclass
 from typing import Any, TypeVar
 
 from pydantic import BaseModel
@@ -11,6 +12,13 @@ from app.utils.json_schema_strict import strict_object_schema_from_model
 logger = logging.getLogger(__name__)
 
 TSchema = TypeVar("TSchema", bound=BaseModel)
+
+
+@dataclass(frozen=True)
+class ChatCompletionResult:
+    text: str
+    prompt_tokens: int | None
+    completion_tokens: int | None
 
 
 class OpenAiChatClient:
@@ -24,6 +32,21 @@ class OpenAiChatClient:
         schema_model: type[TSchema],
         schema_name: str,
     ) -> str | None:
+        """OpenAI ``response_format=json_schema`` (strict). 실패 시 None."""
+        result = self.chat_json_schema_strict_with_usage(
+            messages,
+            schema_model=schema_model,
+            schema_name=schema_name,
+        )
+        return result.text if result else None
+
+    def chat_json_schema_strict_with_usage(
+        self,
+        messages: list[dict[str, Any]],
+        *,
+        schema_model: type[TSchema],
+        schema_name: str,
+    ) -> ChatCompletionResult | None:
         """OpenAI ``response_format=json_schema`` (strict). 실패 시 None."""
         if not self._settings.openai_api_key:
             return None
@@ -44,12 +67,27 @@ class OpenAiChatClient:
                 },
             )
             out = (response.choices[0].message.content or "").strip()
-            return out or None
+            if not out:
+                return None
+            usage = getattr(response, "usage", None)
+            return ChatCompletionResult(
+                text=out,
+                prompt_tokens=getattr(usage, "prompt_tokens", None),
+                completion_tokens=getattr(usage, "completion_tokens", None),
+            )
         except Exception as e:
             logger.debug("chat_json_schema_strict failed: %s", e)
             return None
 
     def chat_json_object(self, messages: list[dict[str, Any]]) -> str | None:
+        """OpenAI ``response_format=json_object``. 실패 시 None."""
+        result = self.chat_json_object_with_usage(messages)
+        return result.text if result else None
+
+    def chat_json_object_with_usage(
+        self,
+        messages: list[dict[str, Any]],
+    ) -> ChatCompletionResult | None:
         """OpenAI ``response_format=json_object``. 실패 시 None."""
         if not self._settings.openai_api_key:
             return None
@@ -63,7 +101,14 @@ class OpenAiChatClient:
                 response_format={"type": "json_object"},
             )
             out = (response.choices[0].message.content or "").strip()
-            return out or None
+            if not out:
+                return None
+            usage = getattr(response, "usage", None)
+            return ChatCompletionResult(
+                text=out,
+                prompt_tokens=getattr(usage, "prompt_tokens", None),
+                completion_tokens=getattr(usage, "completion_tokens", None),
+            )
         except Exception as e:
             logger.debug("chat_json_object failed: %s", e)
             return None

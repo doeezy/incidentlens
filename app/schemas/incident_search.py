@@ -8,8 +8,28 @@ from pydantic import BaseModel, Field
 
 
 class IncidentSearchRequest(BaseModel):
+    project_name: str = Field(..., min_length=1)
     query: str = Field(..., min_length=1)
     top_k: int = Field(default=5, ge=1, le=20)
+
+
+class IncidentBm25SearchRequest(BaseModel):
+    project_name: str = Field(..., min_length=1)
+    query: str = Field(..., min_length=1)
+    limit: int = Field(default=5, ge=1, le=50)
+
+
+class IncidentBm25SearchResult(BaseModel):
+    incident_id: uuid.UUID
+    bm25_score: float
+    rank: int
+
+
+class IncidentBm25SearchResponse(BaseModel):
+    project_name: str
+    query: str
+    limit: int
+    results: list[IncidentBm25SearchResult]
 
 
 class EvidenceLog(BaseModel):
@@ -56,8 +76,20 @@ class EvidencePr(BaseModel):
 
 class IncidentSearchResult(BaseModel):
     incident_id: uuid.UUID
-    score: float = Field(..., description="Vector similarity score. Higher is better.")
-    distance: float = Field(..., description="pgvector cosine distance. Lower is better.")
+    score: float = Field(..., description="Final retrieval score. Higher is better.")
+    distance: float | None = Field(
+        default=None,
+        description="pgvector cosine distance. Lower is better.",
+    )
+    vector_rank: int | None = None
+    keyword_rank: int | None = None
+    rrf_rank: int | None = None
+    vector_score: float | None = Field(
+        default=None,
+        description="Vector similarity score. Higher is better.",
+    )
+    bm25_score: float | None = None
+    rrf_score: float
     confidence: Literal["high", "medium", "low"]
     confidence_score: float = Field(..., ge=0.0, le=1.0)
     confidence_reason: str
@@ -82,15 +114,38 @@ class IncidentSearchResult(BaseModel):
 class IncidentSearchResponse(BaseModel):
     query: str
     top_k: int
+    project_name: str | None
     results: list[IncidentSearchResult]
 
 
 class IncidentAgentRequest(BaseModel):
+    conversation_id: uuid.UUID
+    question: str = Field(..., min_length=1)
+    top_k: int = Field(default=5, ge=1, le=20)
+
+
+class IncidentDirectAnswerRequest(BaseModel):
+    project_name: str = Field(..., min_length=1)
     question: str = Field(..., min_length=1)
     top_k: int = Field(default=5, ge=1, le=20)
 
 
 class IncidentAgentResponse(BaseModel):
     question: str
+    project_name: str | None
+    intent: Literal[
+        "ROOT_CAUSE",
+        "RESOLUTION",
+        "SIMILAR_CASE",
+        "SUMMARY",
+        "OUT_OF_SCOPE",
+    ]
+    retrieval_required: bool
+    rewritten_query: str | None
+    analysis_reason: str
     answer: str
     search_results: list[IncidentSearchResult]
+
+
+class ProjectListResponse(BaseModel):
+    projects: list[str]

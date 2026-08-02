@@ -1,0 +1,1199 @@
+{
+  "run": {
+    "id": "336c6a1f-3f8d-4baf-b9e0-d4ffc3537bbc",
+    "run_name": "retrieval_eval_v1_baseline",
+    "status": "COMPLETED",
+    "total_cases": 46,
+    "completed_cases": 46,
+    "parameters": {
+      "rrf_k": 60,
+      "top_k": 3,
+      "run_name": "retrieval_eval_v1_baseline",
+      "candidate_limit": 20
+    }
+  },
+  "case_counts": {
+    "answerable_cases": 40,
+    "no_result_cases": 6
+  },
+  "metrics": {
+    "pure_retrieval": {
+      "retrieval_top1_accuracy": 0.5,
+      "retrieval_top3_accuracy": 0.6,
+      "retrieval_mrr": 0.5948358585858585
+    },
+    "final_pipeline": {
+      "final_top1_accuracy": 0.175,
+      "final_top3_accuracy": 0.175,
+      "final_mrr": 0.175,
+      "answerable_recall": 0.175,
+      "no_result_accuracy": 1.0
+    }
+  },
+  "failure_counts": {
+    "CONFIDENCE_REJECT": 14,
+    "RRF_RANKING_MISS": 12,
+    "QUERY_REWRITE_ISSUE": 7
+  },
+  "failures": [
+    {
+      "case_key": "retrieval_eval_v1_ambiguous_query_002",
+      "category": "ambiguous_query",
+      "original_query": "결제 장애 있었던 거 요약해줘",
+      "rewritten_query": "결제 장애 요약",
+      "expected_incident_id": "7f929778-811d-4ec0-b344-74f54f61b5aa",
+      "vector_rank": 1,
+      "vector_score": 0.256384993385822,
+      "bm25_rank": 1,
+      "bm25_score": 2.1220152,
+      "rrf_rank": 1,
+      "rrf_score": 0.03278688524590164,
+      "original_query_rrf_rank": 1,
+      "original_query_rrf_score": 0.03278688524590164,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "CONFIDENCE_REJECT"
+    },
+    {
+      "case_key": "retrieval_eval_v1_ambiguous_query_003",
+      "category": "ambiguous_query",
+      "original_query": "권한 문제로 막힌 장애 찾아줘",
+      "rewritten_query": "권한 문제 장애 사례",
+      "expected_incident_id": "433dff0c-eeaf-481f-99cf-b9d041befd1e",
+      "vector_rank": 6,
+      "vector_score": 0.0025038468882017106,
+      "bm25_rank": null,
+      "bm25_score": null,
+      "rrf_rank": 6,
+      "rrf_score": 0.015151515151515152,
+      "original_query_rrf_rank": 11,
+      "original_query_rrf_score": 0.014084507042253521,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "RRF_RANKING_MISS"
+    },
+    {
+      "case_key": "retrieval_eval_v1_ambiguous_query_004",
+      "category": "ambiguous_query",
+      "original_query": "배치에서 이벤트 발행 실패한 사례",
+      "rewritten_query": "배치 이벤트 발행 실패 사례",
+      "expected_incident_id": "f7684112-d72d-4bc2-a9c6-162002937333",
+      "vector_rank": 8,
+      "vector_score": 0.0,
+      "bm25_rank": null,
+      "bm25_score": null,
+      "rrf_rank": 8,
+      "rrf_score": 0.014705882352941176,
+      "original_query_rrf_rank": 8,
+      "original_query_rrf_score": 0.014705882352941176,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "RRF_RANKING_MISS"
+    },
+    {
+      "case_key": "retrieval_eval_v1_ambiguous_query_005",
+      "category": "ambiguous_query",
+      "original_query": "캐시 쪽 장애 원인이 뭐였어?",
+      "rewritten_query": "캐시 장애 원인",
+      "expected_incident_id": "f0ec1c83-4ae3-4841-8446-a9f29dc2c5c8",
+      "vector_rank": 12,
+      "vector_score": 0.0,
+      "bm25_rank": null,
+      "bm25_score": null,
+      "rrf_rank": 12,
+      "rrf_score": 0.013888888888888888,
+      "original_query_rrf_rank": 13,
+      "original_query_rrf_score": 0.0136986301369863,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "RRF_RANKING_MISS"
+    },
+    {
+      "case_key": "retrieval_eval_v1_ambiguous_query_006",
+      "category": "ambiguous_query",
+      "original_query": "외부 연동 호출 실패한 장애 설명해줘",
+      "rewritten_query": "외부 연동 호출 실패 장애 설명",
+      "expected_incident_id": "ddf82944-5f08-46f8-9e95-f6b3ddafa590",
+      "vector_rank": 4,
+      "vector_score": 0.013420518263102088,
+      "bm25_rank": null,
+      "bm25_score": null,
+      "rrf_rank": 4,
+      "rrf_score": 0.015625,
+      "original_query_rrf_rank": 5,
+      "original_query_rrf_score": 0.015384615384615385,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "RRF_RANKING_MISS"
+    },
+    {
+      "case_key": "retrieval_eval_v1_cross_project_conflict_002",
+      "category": "cross_project_conflict",
+      "original_query": "로그인 클래스 로딩 실패가 admin-portal에서 난 사례",
+      "rewritten_query": "로그인 클래스 로딩 실패 admin-portal 사례",
+      "expected_incident_id": "7efeab5b-e531-496c-8a41-69d72e239439",
+      "vector_rank": 4,
+      "vector_score": 0.0212778499407823,
+      "bm25_rank": null,
+      "bm25_score": null,
+      "rrf_rank": 4,
+      "rrf_score": 0.015625,
+      "original_query_rrf_rank": 5,
+      "original_query_rrf_score": 0.015384615384615385,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "RRF_RANKING_MISS"
+    },
+    {
+      "case_key": "retrieval_eval_v1_cross_project_conflict_003",
+      "category": "cross_project_conflict",
+      "original_query": "배치 플랫폼에서 Redis 접속 수 초과로 캐시 장애 난 사례",
+      "rewritten_query": "배치 플랫폼 Redis 접속 수 초과 캐시 장애 사례",
+      "expected_incident_id": "9233f432-d5ef-4d51-b607-6f5a2eb28305",
+      "vector_rank": 6,
+      "vector_score": 0.0,
+      "bm25_rank": null,
+      "bm25_score": null,
+      "rrf_rank": 6,
+      "rrf_score": 0.015151515151515152,
+      "original_query_rrf_rank": 5,
+      "original_query_rrf_score": 0.015384615384615385,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "QUERY_REWRITE_ISSUE"
+    },
+    {
+      "case_key": "retrieval_eval_v1_cross_project_conflict_004",
+      "category": "cross_project_conflict",
+      "original_query": "관리자 포털에서 Redis 접속 제한으로 캐시 조회가 실패한 사례",
+      "rewritten_query": "관리자 포털 Redis 접속 제한 캐시 조회 실패 사례",
+      "expected_incident_id": "6f48f638-1d3f-46af-bd87-a77f17652e57",
+      "vector_rank": 11,
+      "vector_score": 0.0,
+      "bm25_rank": null,
+      "bm25_score": null,
+      "rrf_rank": 11,
+      "rrf_score": 0.014084507042253521,
+      "original_query_rrf_rank": 11,
+      "original_query_rrf_score": 0.014084507042253521,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "RRF_RANKING_MISS"
+    },
+    {
+      "case_key": "retrieval_eval_v1_cross_project_conflict_005",
+      "category": "cross_project_conflict",
+      "original_query": "data-portal의 파트너 프로필 조회 timeout 장애",
+      "rewritten_query": "data-portal 파트너 프로필 조회 timeout 장애",
+      "expected_incident_id": "dcfcf63e-ab2e-47df-8bd8-d25c16d88dc4",
+      "vector_rank": 4,
+      "vector_score": 0.031525397977019365,
+      "bm25_rank": null,
+      "bm25_score": null,
+      "rrf_rank": 4,
+      "rrf_score": 0.015625,
+      "original_query_rrf_rank": 4,
+      "original_query_rrf_score": 0.015625,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "RRF_RANKING_MISS"
+    },
+    {
+      "case_key": "retrieval_eval_v1_cross_project_conflict_006",
+      "category": "cross_project_conflict",
+      "original_query": "batch-platform의 파트너 프로필 조회 지연 장애",
+      "rewritten_query": "batch-platform 파트너 프로필 조회 지연 장애 요약",
+      "expected_incident_id": "e3b07adc-a00a-4afb-ac77-ae9ba8ddbdd8",
+      "vector_rank": 9,
+      "vector_score": 0.0,
+      "bm25_rank": null,
+      "bm25_score": null,
+      "rrf_rank": 9,
+      "rrf_score": 0.014492753623188406,
+      "original_query_rrf_rank": 10,
+      "original_query_rrf_score": 0.014285714285714285,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "RRF_RANKING_MISS"
+    },
+    {
+      "case_key": "retrieval_eval_v1_exact_keyword_003",
+      "category": "exact_keyword",
+      "original_query": "SQLGrammarException report_status_cd findDaily",
+      "rewritten_query": "SQLGrammarException report_status_cd findDaily 원인",
+      "expected_incident_id": "3caa466f-49bd-4762-bb00-d4f27ac9f314",
+      "vector_rank": 3,
+      "vector_score": 0.027879366709833597,
+      "bm25_rank": 1,
+      "bm25_score": 8.33453,
+      "rrf_rank": 1,
+      "rrf_score": 0.032266458495966696,
+      "original_query_rrf_rank": 1,
+      "original_query_rrf_score": 0.032266458495966696,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "CONFIDENCE_REJECT"
+    },
+    {
+      "case_key": "retrieval_eval_v1_exact_keyword_004",
+      "category": "exact_keyword",
+      "original_query": "AccessDeniedException REPORT_ADMIN AdminPermissionEvaluator",
+      "rewritten_query": "AccessDeniedException REPORT_ADMIN AdminPermissionEvaluator 원인",
+      "expected_incident_id": "433dff0c-eeaf-481f-99cf-b9d041befd1e",
+      "vector_rank": 5,
+      "vector_score": 0.025762670766495743,
+      "bm25_rank": 1,
+      "bm25_score": 9.203881,
+      "rrf_rank": 1,
+      "rrf_score": 0.03177805800756621,
+      "original_query_rrf_rank": 1,
+      "original_query_rrf_score": 0.03177805800756621,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "CONFIDENCE_REJECT"
+    },
+    {
+      "case_key": "retrieval_eval_v1_exact_keyword_005",
+      "category": "exact_keyword",
+      "original_query": "PKIX SSLHandshakeException AdminSecureHttpClient",
+      "rewritten_query": "PKIX SSLHandshakeException AdminSecureHttpClient 원인",
+      "expected_incident_id": "1e841c64-16f9-44e8-a856-a636ca807f1b",
+      "vector_rank": 2,
+      "vector_score": 0.030273072477971397,
+      "bm25_rank": 1,
+      "bm25_score": 6.71027,
+      "rrf_rank": 1,
+      "rrf_score": 0.03252247488101534,
+      "original_query_rrf_rank": 1,
+      "original_query_rrf_score": 0.031544957774465976,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "CONFIDENCE_REJECT"
+    },
+    {
+      "case_key": "retrieval_eval_v1_exact_keyword_006",
+      "category": "exact_keyword",
+      "original_query": "KafkaSerializationException schema version v3 BatchKafkaEventPublisher",
+      "rewritten_query": "KafkaSerializationException schema version v3 원인",
+      "expected_incident_id": "f7684112-d72d-4bc2-a9c6-162002937333",
+      "vector_rank": 8,
+      "vector_score": 0.005706322242753803,
+      "bm25_rank": 1,
+      "bm25_score": 12.960131,
+      "rrf_rank": 1,
+      "rrf_score": 0.031099324975891997,
+      "original_query_rrf_rank": 1,
+      "original_query_rrf_score": 0.03252247488101534,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "CONFIDENCE_REJECT"
+    },
+    {
+      "case_key": "retrieval_eval_v1_exact_keyword_007",
+      "category": "exact_keyword",
+      "original_query": "Docker container exited code 137 BatchContainerSupervisor",
+      "rewritten_query": "Docker container exited code 137 BatchContainerSupervisor 원인",
+      "expected_incident_id": "ed080f24-e33f-4a24-9df8-0c0d5b22b93b",
+      "vector_rank": 6,
+      "vector_score": 0.0001504280317342621,
+      "bm25_rank": 1,
+      "bm25_score": 15.662828,
+      "rrf_rank": 1,
+      "rrf_score": 0.031544957774465976,
+      "original_query_rrf_rank": 1,
+      "original_query_rrf_score": 0.030679156908665108,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "CONFIDENCE_REJECT"
+    },
+    {
+      "case_key": "retrieval_eval_v1_exact_keyword_008",
+      "category": "exact_keyword",
+      "original_query": "feature-flags.yml FileNotFoundException DataFeatureFlagLoader",
+      "rewritten_query": "feature-flags.yml FileNotFoundException DataFeatureFlagLoader 원인",
+      "expected_incident_id": "14861fa5-b251-48a5-822b-947f83fc8e34",
+      "vector_rank": 4,
+      "vector_score": 0.05217483517905752,
+      "bm25_rank": 1,
+      "bm25_score": 11.447879,
+      "rrf_rank": 1,
+      "rrf_score": 0.032018442622950824,
+      "original_query_rrf_rank": 1,
+      "original_query_rrf_score": 0.032018442622950824,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "CONFIDENCE_REJECT"
+    },
+    {
+      "case_key": "retrieval_eval_v1_same_error_different_cause_002",
+      "category": "same_error_different_cause",
+      "original_query": "결제 승인 흐름의 null 참조 장애를 찾아줘",
+      "rewritten_query": "결제 승인 null 참조 장애 사례",
+      "expected_incident_id": "307fca68-d871-463c-b2e9-9bc51652fd0b",
+      "vector_rank": 13,
+      "vector_score": 0.0,
+      "bm25_rank": 3,
+      "bm25_score": 2.0071294,
+      "rrf_rank": 3,
+      "rrf_score": 0.029571646010002173,
+      "original_query_rrf_rank": 2,
+      "original_query_rrf_score": 0.030017921146953404,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "QUERY_REWRITE_ISSUE"
+    },
+    {
+      "case_key": "retrieval_eval_v1_same_error_different_cause_004",
+      "category": "same_error_different_cause",
+      "original_query": "관리자 리포트 권한 role이 맞지 않아 접근 거부된 장애",
+      "rewritten_query": "관리자 리포트 권한 role 접근 거부 원인",
+      "expected_incident_id": "433dff0c-eeaf-481f-99cf-b9d041befd1e",
+      "vector_rank": 5,
+      "vector_score": 0.023307173459917396,
+      "bm25_rank": 1,
+      "bm25_score": 3.355135,
+      "rrf_rank": 1,
+      "rrf_score": 0.03177805800756621,
+      "original_query_rrf_rank": 8,
+      "original_query_rrf_score": 0.014705882352941176,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "CONFIDENCE_REJECT"
+    },
+    {
+      "case_key": "retrieval_eval_v1_same_error_different_cause_005",
+      "category": "same_error_different_cause",
+      "original_query": "배치 권한 검사에서 REPORT_ADMIN role 때문에 막힌 케이스",
+      "rewritten_query": "배치 권한 검사 REPORT_ADMIN role 차단 사례",
+      "expected_incident_id": "5772b2f7-ba7a-4538-bfa0-a5b460e99270",
+      "vector_rank": 6,
+      "vector_score": 0.0024644595901989197,
+      "bm25_rank": 1,
+      "bm25_score": 9.203881,
+      "rrf_rank": 1,
+      "rrf_score": 0.031544957774465976,
+      "original_query_rrf_rank": 1,
+      "original_query_rrf_score": 0.031544957774465976,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "CONFIDENCE_REJECT"
+    },
+    {
+      "case_key": "retrieval_eval_v1_same_error_different_cause_006",
+      "category": "same_error_different_cause",
+      "original_query": "데이터 포털 웹훅 상태값 파싱이 안 된 JSON 매핑 장애",
+      "rewritten_query": "데이터 포털 웹훅 상태값 JSON 매핑 장애 원인",
+      "expected_incident_id": "074fa857-4bf2-4ba1-9c42-b5db1f97cb2e",
+      "vector_rank": 11,
+      "vector_score": 0.0,
+      "bm25_rank": null,
+      "bm25_score": null,
+      "rrf_rank": 11,
+      "rrf_score": 0.014084507042253521,
+      "original_query_rrf_rank": 12,
+      "original_query_rrf_score": 0.013888888888888888,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "RRF_RANKING_MISS"
+    },
+    {
+      "case_key": "retrieval_eval_v1_same_error_different_cause_007",
+      "category": "same_error_different_cause",
+      "original_query": "관리자 웹훅 enum 값 역직렬화가 실패한 사례",
+      "rewritten_query": "관리자 웹훅 enum 역직렬화 실패 사례",
+      "expected_incident_id": "087f5d77-20eb-4487-84da-4253cc128eca",
+      "vector_rank": 1,
+      "vector_score": 0.056278869340065096,
+      "bm25_rank": null,
+      "bm25_score": null,
+      "rrf_rank": 1,
+      "rrf_score": 0.01639344262295082,
+      "original_query_rrf_rank": 1,
+      "original_query_rrf_score": 0.01639344262295082,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "CONFIDENCE_REJECT"
+    },
+    {
+      "case_key": "retrieval_eval_v1_same_error_different_cause_008",
+      "category": "same_error_different_cause",
+      "original_query": "주문 확정 중 같은 row를 동시에 갱신해서 충돌난 장애",
+      "rewritten_query": "주문 확정 동일 row 동시 갱신 충돌 원인",
+      "expected_incident_id": "36b6be9d-8fb0-497d-983b-f010e0d0a564",
+      "vector_rank": 11,
+      "vector_score": 0.0,
+      "bm25_rank": 1,
+      "bm25_score": 2.0030935,
+      "rrf_rank": 1,
+      "rrf_score": 0.03047794966520434,
+      "original_query_rrf_rank": 10,
+      "original_query_rrf_score": 0.014285714285714285,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "CONFIDENCE_REJECT"
+    },
+    {
+      "case_key": "retrieval_eval_v1_same_error_different_cause_009",
+      "category": "same_error_different_cause",
+      "original_query": "배치 주문 confirm 중 동시성 충돌이 난 케이스",
+      "rewritten_query": "배치 주문 confirm 동시성 충돌 사례",
+      "expected_incident_id": "d4253455-0df0-4733-8c52-a768a47d47f9",
+      "vector_rank": 1,
+      "vector_score": 0.042627088104588706,
+      "bm25_rank": null,
+      "bm25_score": null,
+      "rrf_rank": 1,
+      "rrf_score": 0.01639344262295082,
+      "original_query_rrf_rank": 1,
+      "original_query_rrf_score": 0.01639344262295082,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "CONFIDENCE_REJECT"
+    },
+    {
+      "case_key": "retrieval_eval_v1_same_error_different_cause_010",
+      "category": "same_error_different_cause",
+      "original_query": "데이터 포털 Redis 클라이언트 수 제한에 걸린 장애",
+      "rewritten_query": "데이터 포털 Redis 클라이언트 수 제한 장애 원인",
+      "expected_incident_id": "f0ec1c83-4ae3-4841-8446-a9f29dc2c5c8",
+      "vector_rank": 11,
+      "vector_score": 0.0,
+      "bm25_rank": null,
+      "bm25_score": null,
+      "rrf_rank": 11,
+      "rrf_score": 0.014084507042253521,
+      "original_query_rrf_rank": 12,
+      "original_query_rrf_score": 0.013888888888888888,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "RRF_RANKING_MISS"
+    },
+    {
+      "case_key": "retrieval_eval_v1_semantic_paraphrase_002",
+      "category": "semantic_paraphrase",
+      "original_query": "결제 요청 객체가 비어 있을 때 발생한 장애 해결 방향 알려줘",
+      "rewritten_query": "결제 요청 객체 비어 있음 장애 해결 방법",
+      "expected_incident_id": "7f929778-811d-4ec0-b344-74f54f61b5aa",
+      "vector_rank": 1,
+      "vector_score": 0.36536579076721787,
+      "bm25_rank": 1,
+      "bm25_score": 2.1220152,
+      "rrf_rank": 1,
+      "rrf_score": 0.03278688524590164,
+      "original_query_rrf_rank": 1,
+      "original_query_rrf_score": 0.03278688524590164,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "CONFIDENCE_REJECT"
+    },
+    {
+      "case_key": "retrieval_eval_v1_semantic_paraphrase_003",
+      "category": "semantic_paraphrase",
+      "original_query": "리포트 조회에서 없는 상태 컬럼 때문에 터진 사례 찾아줘",
+      "rewritten_query": "리포트 조회 없는 상태 컬럼 사례",
+      "expected_incident_id": "3caa466f-49bd-4762-bb00-d4f27ac9f314",
+      "vector_rank": 5,
+      "vector_score": 0.017034429211643998,
+      "bm25_rank": null,
+      "bm25_score": null,
+      "rrf_rank": 5,
+      "rrf_score": 0.015384615384615385,
+      "original_query_rrf_rank": 4,
+      "original_query_rrf_score": 0.015625,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "QUERY_REWRITE_ISSUE"
+    },
+    {
+      "case_key": "retrieval_eval_v1_semantic_paraphrase_004",
+      "category": "semantic_paraphrase",
+      "original_query": "관리자 권한이 있는데 리포트 접근이 막힌 장애 원인이 뭐야?",
+      "rewritten_query": "관리자 권한 리포트 접근 차단 원인",
+      "expected_incident_id": "433dff0c-eeaf-481f-99cf-b9d041befd1e",
+      "vector_rank": 8,
+      "vector_score": 0.017003693703032452,
+      "bm25_rank": null,
+      "bm25_score": null,
+      "rrf_rank": 8,
+      "rrf_score": 0.014705882352941176,
+      "original_query_rrf_rank": 7,
+      "original_query_rrf_score": 0.014925373134328358,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "QUERY_REWRITE_ISSUE"
+    },
+    {
+      "case_key": "retrieval_eval_v1_semantic_paraphrase_005",
+      "category": "semantic_paraphrase",
+      "original_query": "외부 HTTPS 호출에서 인증서 체인 문제로 실패한 건 어떻게 처리했어?",
+      "rewritten_query": "외부 HTTPS 호출 인증서 체인 문제 해결 방법",
+      "expected_incident_id": "1e841c64-16f9-44e8-a856-a636ca807f1b",
+      "vector_rank": 9,
+      "vector_score": 0.0,
+      "bm25_rank": null,
+      "bm25_score": null,
+      "rrf_rank": 9,
+      "rrf_score": 0.014492753623188406,
+      "original_query_rrf_rank": 9,
+      "original_query_rrf_score": 0.014492753623188406,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "RRF_RANKING_MISS"
+    },
+    {
+      "case_key": "retrieval_eval_v1_semantic_paraphrase_006",
+      "category": "semantic_paraphrase",
+      "original_query": "배치 이벤트 발행 중 스키마 버전이 안 맞아서 직렬화가 실패한 사례",
+      "rewritten_query": "배치 이벤트 스키마 버전 불일치 직렬화 실패 사례",
+      "expected_incident_id": "f7684112-d72d-4bc2-a9c6-162002937333",
+      "vector_rank": 11,
+      "vector_score": 0.0,
+      "bm25_rank": null,
+      "bm25_score": null,
+      "rrf_rank": 11,
+      "rrf_score": 0.014084507042253521,
+      "original_query_rrf_rank": 9,
+      "original_query_rrf_score": 0.014492753623188406,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "QUERY_REWRITE_ISSUE"
+    },
+    {
+      "case_key": "retrieval_eval_v1_semantic_paraphrase_007",
+      "category": "semantic_paraphrase",
+      "original_query": "배치 컨테이너가 메모리 문제처럼 종료된 과거 장애 요약해줘",
+      "rewritten_query": "배치 컨테이너 메모리 문제 종료 장애 사례 요약",
+      "expected_incident_id": "ed080f24-e33f-4a24-9df8-0c0d5b22b93b",
+      "vector_rank": 2,
+      "vector_score": 0.029024117774804625,
+      "bm25_rank": null,
+      "bm25_score": null,
+      "rrf_rank": 2,
+      "rrf_score": 0.016129032258064516,
+      "original_query_rrf_rank": 1,
+      "original_query_rrf_score": 0.01639344262295082,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "QUERY_REWRITE_ISSUE"
+    },
+    {
+      "case_key": "retrieval_eval_v1_semantic_paraphrase_008",
+      "category": "semantic_paraphrase",
+      "original_query": "feature flag 설정을 못 읽어서 배포 후 기능 토글 로딩이 실패한 케이스",
+      "rewritten_query": "feature flag 설정 불가 배포 후 기능 토글 로딩 실패 사례",
+      "expected_incident_id": "14861fa5-b251-48a5-822b-947f83fc8e34",
+      "vector_rank": 6,
+      "vector_score": 0.005428933945090364,
+      "bm25_rank": 1,
+      "bm25_score": 2.139207,
+      "rrf_rank": 3,
+      "rrf_score": 0.031544957774465976,
+      "original_query_rrf_rank": 1,
+      "original_query_rrf_score": 0.032018442622950824,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "QUERY_REWRITE_ISSUE"
+    },
+    {
+      "case_key": "retrieval_eval_v1_semantic_paraphrase_009",
+      "category": "semantic_paraphrase",
+      "original_query": "Redis 접속 수가 꽉 차서 캐시 조회가 실패한 장애 해결 내용",
+      "rewritten_query": "Redis 접속 수 초과 장애 해결 방법",
+      "expected_incident_id": "f0ec1c83-4ae3-4841-8446-a9f29dc2c5c8",
+      "vector_rank": 11,
+      "vector_score": 0.0,
+      "bm25_rank": null,
+      "bm25_score": null,
+      "rrf_rank": 11,
+      "rrf_score": 0.014084507042253521,
+      "original_query_rrf_rank": 13,
+      "original_query_rrf_score": 0.0136986301369863,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "RRF_RANKING_MISS"
+    },
+    {
+      "case_key": "retrieval_eval_v1_semantic_paraphrase_010",
+      "category": "semantic_paraphrase",
+      "original_query": "파트너 프로필 API가 3초 안에 안 끝나서 지연된 장애 있었어?",
+      "rewritten_query": "파트너 프로필 API 3초 지연 장애 사례",
+      "expected_incident_id": "dcfcf63e-ab2e-47df-8bd8-d25c16d88dc4",
+      "vector_rank": 8,
+      "vector_score": 0.022301440318282406,
+      "bm25_rank": 3,
+      "bm25_score": 1.8331603,
+      "rrf_rank": 3,
+      "rrf_score": 0.03057889822595705,
+      "original_query_rrf_rank": 6,
+      "original_query_rrf_score": 0.015151515151515152,
+      "confidence": "not_recorded_after_reject",
+      "confidence_threshold": {
+        "vector_min_score": 0.45,
+        "high_confidence_score": 0.65,
+        "llm_min_confidence_score": 0.5
+      },
+      "abstained": true,
+      "failure_type": "CONFIDENCE_REJECT"
+    }
+  ],
+  "query_rewrite_comparison": [
+    {
+      "case_key": "retrieval_eval_v1_ambiguous_query_001",
+      "original_query": "로그인 장애 원인 알려줘",
+      "rewritten_query": "로그인 장애 원인",
+      "original_query_rrf_rank": 1,
+      "rewritten_query_rrf_rank": 1,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_ambiguous_query_002",
+      "original_query": "결제 장애 있었던 거 요약해줘",
+      "rewritten_query": "결제 장애 요약",
+      "original_query_rrf_rank": 1,
+      "rewritten_query_rrf_rank": 1,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_ambiguous_query_003",
+      "original_query": "권한 문제로 막힌 장애 찾아줘",
+      "rewritten_query": "권한 문제 장애 사례",
+      "original_query_rrf_rank": 11,
+      "rewritten_query_rrf_rank": 6,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_ambiguous_query_004",
+      "original_query": "배치에서 이벤트 발행 실패한 사례",
+      "rewritten_query": "배치 이벤트 발행 실패 사례",
+      "original_query_rrf_rank": 8,
+      "rewritten_query_rrf_rank": 8,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_ambiguous_query_005",
+      "original_query": "캐시 쪽 장애 원인이 뭐였어?",
+      "rewritten_query": "캐시 장애 원인",
+      "original_query_rrf_rank": 13,
+      "rewritten_query_rrf_rank": 12,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_ambiguous_query_006",
+      "original_query": "외부 연동 호출 실패한 장애 설명해줘",
+      "rewritten_query": "외부 연동 호출 실패 장애 설명",
+      "original_query_rrf_rank": 5,
+      "rewritten_query_rrf_rank": 4,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_cross_project_conflict_001",
+      "original_query": "로그인 클래스 로딩 실패가 data-portal에서 발생한 사례",
+      "rewritten_query": "로그인 클래스 로딩 실패 data-portal 사례",
+      "original_query_rrf_rank": 1,
+      "rewritten_query_rrf_rank": 1,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_cross_project_conflict_002",
+      "original_query": "로그인 클래스 로딩 실패가 admin-portal에서 난 사례",
+      "rewritten_query": "로그인 클래스 로딩 실패 admin-portal 사례",
+      "original_query_rrf_rank": 5,
+      "rewritten_query_rrf_rank": 4,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_cross_project_conflict_003",
+      "original_query": "배치 플랫폼에서 Redis 접속 수 초과로 캐시 장애 난 사례",
+      "rewritten_query": "배치 플랫폼 Redis 접속 수 초과 캐시 장애 사례",
+      "original_query_rrf_rank": 5,
+      "rewritten_query_rrf_rank": 6,
+      "declined": true
+    },
+    {
+      "case_key": "retrieval_eval_v1_cross_project_conflict_004",
+      "original_query": "관리자 포털에서 Redis 접속 제한으로 캐시 조회가 실패한 사례",
+      "rewritten_query": "관리자 포털 Redis 접속 제한 캐시 조회 실패 사례",
+      "original_query_rrf_rank": 11,
+      "rewritten_query_rrf_rank": 11,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_cross_project_conflict_005",
+      "original_query": "data-portal의 파트너 프로필 조회 timeout 장애",
+      "rewritten_query": "data-portal 파트너 프로필 조회 timeout 장애",
+      "original_query_rrf_rank": 4,
+      "rewritten_query_rrf_rank": 4,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_cross_project_conflict_006",
+      "original_query": "batch-platform의 파트너 프로필 조회 지연 장애",
+      "rewritten_query": "batch-platform 파트너 프로필 조회 지연 장애 요약",
+      "original_query_rrf_rank": 10,
+      "rewritten_query_rrf_rank": 9,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_exact_keyword_001",
+      "original_query": "ClassNotFoundException JwtTokenProvider login 장애",
+      "rewritten_query": "ClassNotFoundException JwtTokenProvider login 장애 원인",
+      "original_query_rrf_rank": 1,
+      "rewritten_query_rrf_rank": 1,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_exact_keyword_002",
+      "original_query": "payment request is null NullPointerException pay",
+      "rewritten_query": "payment request null NullPointerException 원인",
+      "original_query_rrf_rank": 1,
+      "rewritten_query_rrf_rank": 1,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_exact_keyword_003",
+      "original_query": "SQLGrammarException report_status_cd findDaily",
+      "rewritten_query": "SQLGrammarException report_status_cd findDaily 원인",
+      "original_query_rrf_rank": 1,
+      "rewritten_query_rrf_rank": 1,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_exact_keyword_004",
+      "original_query": "AccessDeniedException REPORT_ADMIN AdminPermissionEvaluator",
+      "rewritten_query": "AccessDeniedException REPORT_ADMIN AdminPermissionEvaluator 원인",
+      "original_query_rrf_rank": 1,
+      "rewritten_query_rrf_rank": 1,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_exact_keyword_005",
+      "original_query": "PKIX SSLHandshakeException AdminSecureHttpClient",
+      "rewritten_query": "PKIX SSLHandshakeException AdminSecureHttpClient 원인",
+      "original_query_rrf_rank": 1,
+      "rewritten_query_rrf_rank": 1,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_exact_keyword_006",
+      "original_query": "KafkaSerializationException schema version v3 BatchKafkaEventPublisher",
+      "rewritten_query": "KafkaSerializationException schema version v3 원인",
+      "original_query_rrf_rank": 1,
+      "rewritten_query_rrf_rank": 1,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_exact_keyword_007",
+      "original_query": "Docker container exited code 137 BatchContainerSupervisor",
+      "rewritten_query": "Docker container exited code 137 BatchContainerSupervisor 원인",
+      "original_query_rrf_rank": 1,
+      "rewritten_query_rrf_rank": 1,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_exact_keyword_008",
+      "original_query": "feature-flags.yml FileNotFoundException DataFeatureFlagLoader",
+      "rewritten_query": "feature-flags.yml FileNotFoundException DataFeatureFlagLoader 원인",
+      "original_query_rrf_rank": 1,
+      "rewritten_query_rrf_rank": 1,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_same_error_different_cause_001",
+      "original_query": "로그인 도메인에서 클래스 로딩 실패가 났던 원인을 찾아줘",
+      "rewritten_query": "로그인 도메인 클래스 로딩 실패 원인",
+      "original_query_rrf_rank": 1,
+      "rewritten_query_rrf_rank": 1,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_same_error_different_cause_002",
+      "original_query": "결제 승인 흐름의 null 참조 장애를 찾아줘",
+      "rewritten_query": "결제 승인 null 참조 장애 사례",
+      "original_query_rrf_rank": 2,
+      "rewritten_query_rrf_rank": 3,
+      "declined": true
+    },
+    {
+      "case_key": "retrieval_eval_v1_same_error_different_cause_003",
+      "original_query": "결제 pay 요청 자체가 비어 있어서 난 null 문제는 뭐였어?",
+      "rewritten_query": "결제 pay 요청 null 문제 원인",
+      "original_query_rrf_rank": 1,
+      "rewritten_query_rrf_rank": 1,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_same_error_different_cause_004",
+      "original_query": "관리자 리포트 권한 role이 맞지 않아 접근 거부된 장애",
+      "rewritten_query": "관리자 리포트 권한 role 접근 거부 원인",
+      "original_query_rrf_rank": 8,
+      "rewritten_query_rrf_rank": 1,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_same_error_different_cause_005",
+      "original_query": "배치 권한 검사에서 REPORT_ADMIN role 때문에 막힌 케이스",
+      "rewritten_query": "배치 권한 검사 REPORT_ADMIN role 차단 사례",
+      "original_query_rrf_rank": 1,
+      "rewritten_query_rrf_rank": 1,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_same_error_different_cause_006",
+      "original_query": "데이터 포털 웹훅 상태값 파싱이 안 된 JSON 매핑 장애",
+      "rewritten_query": "데이터 포털 웹훅 상태값 JSON 매핑 장애 원인",
+      "original_query_rrf_rank": 12,
+      "rewritten_query_rrf_rank": 11,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_same_error_different_cause_007",
+      "original_query": "관리자 웹훅 enum 값 역직렬화가 실패한 사례",
+      "rewritten_query": "관리자 웹훅 enum 역직렬화 실패 사례",
+      "original_query_rrf_rank": 1,
+      "rewritten_query_rrf_rank": 1,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_same_error_different_cause_008",
+      "original_query": "주문 확정 중 같은 row를 동시에 갱신해서 충돌난 장애",
+      "rewritten_query": "주문 확정 동일 row 동시 갱신 충돌 원인",
+      "original_query_rrf_rank": 10,
+      "rewritten_query_rrf_rank": 1,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_same_error_different_cause_009",
+      "original_query": "배치 주문 confirm 중 동시성 충돌이 난 케이스",
+      "rewritten_query": "배치 주문 confirm 동시성 충돌 사례",
+      "original_query_rrf_rank": 1,
+      "rewritten_query_rrf_rank": 1,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_same_error_different_cause_010",
+      "original_query": "데이터 포털 Redis 클라이언트 수 제한에 걸린 장애",
+      "rewritten_query": "데이터 포털 Redis 클라이언트 수 제한 장애 원인",
+      "original_query_rrf_rank": 12,
+      "rewritten_query_rrf_rank": 11,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_semantic_paraphrase_001",
+      "original_query": "로그인 직후 인증 토큰 클래스를 못 찾아서 실패한 건 왜였어?",
+      "rewritten_query": "로그인 인증 토큰 클래스 못 찾음 원인",
+      "original_query_rrf_rank": 1,
+      "rewritten_query_rrf_rank": 1,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_semantic_paraphrase_002",
+      "original_query": "결제 요청 객체가 비어 있을 때 발생한 장애 해결 방향 알려줘",
+      "rewritten_query": "결제 요청 객체 비어 있음 장애 해결 방법",
+      "original_query_rrf_rank": 1,
+      "rewritten_query_rrf_rank": 1,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_semantic_paraphrase_003",
+      "original_query": "리포트 조회에서 없는 상태 컬럼 때문에 터진 사례 찾아줘",
+      "rewritten_query": "리포트 조회 없는 상태 컬럼 사례",
+      "original_query_rrf_rank": 4,
+      "rewritten_query_rrf_rank": 5,
+      "declined": true
+    },
+    {
+      "case_key": "retrieval_eval_v1_semantic_paraphrase_004",
+      "original_query": "관리자 권한이 있는데 리포트 접근이 막힌 장애 원인이 뭐야?",
+      "rewritten_query": "관리자 권한 리포트 접근 차단 원인",
+      "original_query_rrf_rank": 7,
+      "rewritten_query_rrf_rank": 8,
+      "declined": true
+    },
+    {
+      "case_key": "retrieval_eval_v1_semantic_paraphrase_005",
+      "original_query": "외부 HTTPS 호출에서 인증서 체인 문제로 실패한 건 어떻게 처리했어?",
+      "rewritten_query": "외부 HTTPS 호출 인증서 체인 문제 해결 방법",
+      "original_query_rrf_rank": 9,
+      "rewritten_query_rrf_rank": 9,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_semantic_paraphrase_006",
+      "original_query": "배치 이벤트 발행 중 스키마 버전이 안 맞아서 직렬화가 실패한 사례",
+      "rewritten_query": "배치 이벤트 스키마 버전 불일치 직렬화 실패 사례",
+      "original_query_rrf_rank": 9,
+      "rewritten_query_rrf_rank": 11,
+      "declined": true
+    },
+    {
+      "case_key": "retrieval_eval_v1_semantic_paraphrase_007",
+      "original_query": "배치 컨테이너가 메모리 문제처럼 종료된 과거 장애 요약해줘",
+      "rewritten_query": "배치 컨테이너 메모리 문제 종료 장애 사례 요약",
+      "original_query_rrf_rank": 1,
+      "rewritten_query_rrf_rank": 2,
+      "declined": true
+    },
+    {
+      "case_key": "retrieval_eval_v1_semantic_paraphrase_008",
+      "original_query": "feature flag 설정을 못 읽어서 배포 후 기능 토글 로딩이 실패한 케이스",
+      "rewritten_query": "feature flag 설정 불가 배포 후 기능 토글 로딩 실패 사례",
+      "original_query_rrf_rank": 1,
+      "rewritten_query_rrf_rank": 3,
+      "declined": true
+    },
+    {
+      "case_key": "retrieval_eval_v1_semantic_paraphrase_009",
+      "original_query": "Redis 접속 수가 꽉 차서 캐시 조회가 실패한 장애 해결 내용",
+      "rewritten_query": "Redis 접속 수 초과 장애 해결 방법",
+      "original_query_rrf_rank": 13,
+      "rewritten_query_rrf_rank": 11,
+      "declined": false
+    },
+    {
+      "case_key": "retrieval_eval_v1_semantic_paraphrase_010",
+      "original_query": "파트너 프로필 API가 3초 안에 안 끝나서 지연된 장애 있었어?",
+      "rewritten_query": "파트너 프로필 API 3초 지연 장애 사례",
+      "original_query_rrf_rank": 6,
+      "rewritten_query_rrf_rank": 3,
+      "declined": false
+    }
+  ],
+  "confidence_score_analysis": {
+    "calculation": {
+      "input_score": "vector_score",
+      "vector_score_formula": "max(0.0, 1.0 - cosine_distance)",
+      "rrf_score_formula": "sum(1 / (rrf_k + rank))",
+      "uses_rrf_as_probability": false,
+      "current_thresholds": {
+        "high_confidence_score": 0.65,
+        "vector_min_score": 0.45,
+        "llm_min_confidence_score": 0.5
+      },
+      "compatibility": "The gate compares vector_score to 0.45/0.65. Stored RRF scores are around 0.014-0.033 and are not compatible with probability-like thresholds, but the current code does not pass RRF score into confidence filtering."
+    },
+    "score_ranges": {
+      "vector_score": {
+        "count": 1200,
+        "min": 0.0,
+        "max": 0.666159153101784,
+        "mean": 0.03977198436920317
+      },
+      "bm25_score": {
+        "count": 94,
+        "min": 1.626753,
+        "max": 15.662828,
+        "mean": 4.265434631914894
+      },
+      "rrf_score": {
+        "count": 600,
+        "min": 0.013513513513513514,
+        "max": 0.03278688524590164,
+        "mean": 0.016235913823227307
+      },
+      "expected_vector_score": {
+        "count": 40,
+        "min": 0.0,
+        "max": 0.666159153101784,
+        "mean": 0.1273103664265181
+      },
+      "expected_rrf_score": {
+        "count": 40,
+        "min": 0.013888888888888888,
+        "max": 0.03278688524590164,
+        "mean": 0.023899885266816526
+      }
+    }
+  },
+  "threshold_simulation": [
+    {
+      "threshold": 0.45,
+      "answerable_recall": 0.175,
+      "final_top1_accuracy": 0.175,
+      "no_result_accuracy": 1.0
+    },
+    {
+      "threshold": 0.6,
+      "answerable_recall": 0.075,
+      "final_top1_accuracy": 0.075,
+      "no_result_accuracy": 1.0
+    },
+    {
+      "threshold": 0.5,
+      "answerable_recall": 0.15,
+      "final_top1_accuracy": 0.15,
+      "no_result_accuracy": 1.0
+    },
+    {
+      "threshold": 0.4,
+      "answerable_recall": 0.175,
+      "final_top1_accuracy": 0.175,
+      "no_result_accuracy": 1.0
+    },
+    {
+      "threshold": 0.3,
+      "answerable_recall": 0.2,
+      "final_top1_accuracy": 0.2,
+      "no_result_accuracy": 0.6666666666666666
+    }
+  ]
+}

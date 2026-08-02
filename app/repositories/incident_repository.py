@@ -1,12 +1,20 @@
 from __future__ import annotations
 
 import uuid
+from dataclasses import dataclass
 from datetime import datetime, timedelta
 
-from sqlalchemy import desc, nulls_last, select
+from sqlalchemy import desc, nulls_last, select, text
 from sqlalchemy.orm import Session
 
 from app.models.incident import Incident
+
+
+@dataclass(frozen=True)
+class IncidentBm25SearchHit:
+    incident_id: uuid.UUID
+    bm25_score: float
+    rank: int
 
 
 class IncidentRepository:
@@ -65,3 +73,62 @@ class IncidentRepository:
             .limit(limit)
         )
         return list(self._session.scalars(stmt).all())
+
+    def search_bm25(
+        self,
+        *,
+        project_name: str,
+        query: str,
+        limit: int = 10,
+    ) -> list[IncidentBm25SearchHit]:
+        """pg_search BM25 기반 incident 단독 검색."""
+        clean_project_name = project_name.strip()
+        clean_query = query.strip()
+        if not clean_project_name or not clean_query or limit <= 0:
+            return []
+
+        rows = self._session.execute(
+            text("""
+                WITH bm25_hits AS (
+                    SELECT
+                        id AS incident_id,
+                        pdb.score(id) AS bm25_score
+                    FROM incidents
+                    WHERE project_name = :project_name
+                      AND public.incident_searchable_text(
+                            primary_error_summary,
+                            primary_error_type,
+                            primary_error_message,
+                            error_keywords,
+                            domain_tags,
+                            suspected_cause,
+                            root_cause_summary,
+                            resolution_summary
+                          ) ||| :query
+                    ORDER BY pdb.score(id) DESC, id ASC
+                    LIMIT :limit
+                )
+                SELECT
+                    incident_id,
+                    bm25_score,
+                    rank() OVER (
+                        ORDER BY bm25_score DESC, incident_id ASC
+                    ) AS rank
+                FROM bm25_hits
+                ORDER BY rank ASC;
+            """),
+            {
+                "project_name": clean_project_name,
+                "query": clean_query,
+                "limit": limit,
+            },
+        ).all()
+
+        return [
+            IncidentBm25SearchHit(
+                incident_id=incident_id,
+                bm25_score=float(bm25_score),
+                rank=int(rank),
+            )
+            for incident_id, bm25_score, rank in rows
+        ]

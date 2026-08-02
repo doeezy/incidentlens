@@ -1,0 +1,1455 @@
+{
+  "generated_at": "2026-08-01T14:11:19.980531+00:00",
+  "runs": {
+    "intent_stripped_baseline": {
+      "run_id": "c244fba7-ee7d-408d-aa79-ab4efdda67d8",
+      "run_name": "query_rewrite_prompt_intent_stripped_baseline",
+      "retrieval_version": "hybrid-rrf-confidence:v2",
+      "parameters": {
+        "top_k": 3,
+        "candidate_limit": 20,
+        "rrf_k": 60
+      },
+      "metrics": {
+        "retrieval_top1_accuracy": 0.825,
+        "retrieval_top3_accuracy": 0.975,
+        "retrieval_mrr": 0.8979166666666666,
+        "final_top1_accuracy": 0.85,
+        "final_top3_accuracy": 0.975,
+        "final_mrr": 0.9083333333333334,
+        "no_result_accuracy": 1.0,
+        "abstain_ratio": 0.15217391304347827,
+        "mean_latency_ms": 5760.041509107079
+      },
+      "confidence_telemetry": {
+        "evaluated_candidates": 138,
+        "llm_calls": 138,
+        "batch_llm_calls": null,
+        "individual_llm_calls": null,
+        "avg_llm_calls_per_case": 3.0,
+        "llm_failures": 0,
+        "fallback_executions": null,
+        "passed_candidates": 58,
+        "rejected_candidates": 80,
+        "rejected_by": {
+          "llm_low_confidence": 80
+        }
+      }
+    },
+    "sequential_confidence_baseline": {
+      "run_id": "9e27379d-89ac-4ef2-bc5e-3c50a005caa2",
+      "run_name": "sequential_confidence_baseline_v1",
+      "retrieval_version": "hybrid-rrf-confidence:sequential-v1",
+      "parameters": {
+        "top_k": 3,
+        "candidate_limit": 20,
+        "rrf_k": 60
+      },
+      "metrics": {
+        "retrieval_top1_accuracy": 0.825,
+        "retrieval_top3_accuracy": 0.975,
+        "retrieval_mrr": 0.8979166666666666,
+        "final_top1_accuracy": 0.825,
+        "final_top3_accuracy": 0.825,
+        "final_mrr": 0.825,
+        "no_result_accuracy": 1.0,
+        "abstain_ratio": 0.15217391304347827,
+        "mean_latency_ms": 3717.7564185315177
+      },
+      "confidence_telemetry": {
+        "evaluated_candidates": 61,
+        "llm_calls": 61,
+        "batch_llm_calls": null,
+        "individual_llm_calls": null,
+        "avg_llm_calls_per_case": 1.326086956521739,
+        "llm_failures": 0,
+        "fallback_executions": null,
+        "passed_candidates": 39,
+        "rejected_candidates": 22,
+        "rejected_by": {
+          "llm_low_confidence": 22
+        }
+      }
+    },
+    "batch_multi_candidate_confidence_baseline": {
+      "run_id": "9845f7cd-e880-4021-9b9b-f7b144650c8b",
+      "run_name": "batch_multi_candidate_confidence_baseline_v1",
+      "retrieval_version": "hybrid-rrf-confidence:batch-multi-candidate-v1",
+      "parameters": {
+        "top_k": 3,
+        "candidate_limit": 20,
+        "rrf_k": 60
+      },
+      "metrics": {
+        "retrieval_top1_accuracy": 0.825,
+        "retrieval_top3_accuracy": 0.975,
+        "retrieval_mrr": 0.8979166666666666,
+        "final_top1_accuracy": 0.95,
+        "final_top3_accuracy": 0.975,
+        "final_mrr": 0.9625,
+        "no_result_accuracy": 1.0,
+        "abstain_ratio": 0.15217391304347827,
+        "mean_latency_ms": 6322.981319815406
+      },
+      "confidence_telemetry": {
+        "evaluated_candidates": 138,
+        "llm_calls": 46,
+        "batch_llm_calls": 46,
+        "individual_llm_calls": 0,
+        "avg_llm_calls_per_case": 1.0,
+        "llm_failures": 0,
+        "fallback_executions": 0,
+        "passed_candidates": 47,
+        "rejected_candidates": 91,
+        "rejected_by": {
+          "batch_low_confidence": 90,
+          "batch_should_exclude": 1
+        }
+      }
+    }
+  },
+  "change_counts_vs_intent": {
+    "improved": 4,
+    "same": 42,
+    "regressed": 0
+  },
+  "improved_cases_vs_intent": [
+    {
+      "case_key": "enriched_seed_v1_ambiguous_query_001",
+      "change": "improved",
+      "original_query": "data-portal 로그인 장애 원인 알려줘",
+      "base_rewritten_query": "data-portal 로그인 장애",
+      "current_rewritten_query": "data-portal 로그인 장애",
+      "base_final_rank": 2,
+      "current_final_rank": 1,
+      "base_final_status": "top3",
+      "current_final_status": "top1",
+      "base_confidence": "medium",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 2,
+        "vector_score": 0.5967590700282862,
+        "bm25_rank": 8,
+        "bm25_score": 2.885301,
+        "rrf_rank": 2,
+        "rrf_score": 0.030834914611005692
+      },
+      "current_ranks": {
+        "vector_rank": 2,
+        "vector_score": 0.5967590700282862,
+        "bm25_rank": 8,
+        "bm25_score": 2.885301,
+        "rrf_rank": 2,
+        "rrf_score": 0.030834914611005692
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_ambiguous_query_006",
+      "change": "improved",
+      "original_query": "admin-portal 외부 연동 호출 실패한 장애 설명해줘",
+      "base_rewritten_query": "admin-portal 외부 연동 호출 실패",
+      "current_rewritten_query": "admin-portal 외부 연동 호출 실패",
+      "base_final_rank": 3,
+      "current_final_rank": 1,
+      "base_final_status": "top3",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 3,
+        "vector_score": 0.5965140980353797,
+        "bm25_rank": 2,
+        "bm25_score": 6.6184273,
+        "rrf_rank": 3,
+        "rrf_score": 0.03200204813108039
+      },
+      "current_ranks": {
+        "vector_rank": 3,
+        "vector_score": 0.5965140980353797,
+        "bm25_rank": 2,
+        "bm25_score": 6.6184273,
+        "rrf_rank": 3,
+        "rrf_score": 0.03200204813108039
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_cross_project_conflict_002",
+      "change": "improved",
+      "original_query": "admin-portal 로그인 클래스 로딩 실패 사례",
+      "base_rewritten_query": "admin-portal 로그인 클래스 로딩 실패",
+      "current_rewritten_query": "admin-portal 로그인 클래스 로딩 실패",
+      "base_final_rank": 2,
+      "current_final_rank": 1,
+      "base_final_status": "top3",
+      "current_final_status": "top1",
+      "base_confidence": "medium",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.6515434675414643,
+        "bm25_rank": 5,
+        "bm25_score": 4.134512,
+        "rrf_rank": 3,
+        "rrf_score": 0.03177805800756621
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.6515567586928462,
+        "bm25_rank": 5,
+        "bm25_score": 4.134512,
+        "rrf_rank": 3,
+        "rrf_score": 0.03177805800756621
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_exact_keyword_001",
+      "change": "improved",
+      "original_query": "JwtTokenProvider ClassNotFoundException DataAuthService login",
+      "base_rewritten_query": "JwtTokenProvider ClassNotFoundException DataAuthService login",
+      "current_rewritten_query": "JwtTokenProvider ClassNotFoundException DataAuthService login",
+      "base_final_rank": 2,
+      "current_final_rank": 1,
+      "base_final_status": "top3",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 2,
+        "vector_score": 0.6814438299076641,
+        "bm25_rank": 1,
+        "bm25_score": 15.277652,
+        "rrf_rank": 2,
+        "rrf_score": 0.03252247488101534
+      },
+      "current_ranks": {
+        "vector_rank": 2,
+        "vector_score": 0.6814787165960664,
+        "bm25_rank": 1,
+        "bm25_score": 15.277652,
+        "rrf_rank": 2,
+        "rrf_score": 0.03252247488101534
+      }
+    }
+  ],
+  "regressed_cases_vs_intent": [],
+  "same_cases_vs_intent": [
+    {
+      "case_key": "enriched_seed_v1_ambiguous_query_002",
+      "change": "same",
+      "original_query": "data-portal 결제 장애 해결 내용 요약해줘",
+      "base_rewritten_query": "data-portal 결제 장애 해결 내용",
+      "current_rewritten_query": "data-portal 결제 장애 해결 내용",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.6700105394792137,
+        "bm25_rank": 1,
+        "bm25_score": 6.1881285,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.6700105394792137,
+        "bm25_rank": 1,
+        "bm25_score": 6.1881285,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_ambiguous_query_003",
+      "change": "same",
+      "original_query": "admin-portal 권한 문제로 막힌 장애 찾아줘",
+      "base_rewritten_query": "admin-portal 권한 문제",
+      "current_rewritten_query": "admin-portal 권한 문제 장애",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.6960631326248884,
+        "bm25_rank": 1,
+        "bm25_score": 8.68602,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.6893823173626342,
+        "bm25_rank": 1,
+        "bm25_score": 8.68602,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_ambiguous_query_004",
+      "change": "same",
+      "original_query": "batch-platform 이벤트 발행 실패 사례",
+      "base_rewritten_query": "batch-platform 이벤트 발행 실패",
+      "current_rewritten_query": "batch-platform 이벤트 발행 실패",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 2,
+        "vector_score": 0.5735628674836557,
+        "bm25_rank": 1,
+        "bm25_score": 8.969263,
+        "rrf_rank": 1,
+        "rrf_score": 0.03252247488101534
+      },
+      "current_ranks": {
+        "vector_rank": 2,
+        "vector_score": 0.5735628674836557,
+        "bm25_rank": 1,
+        "bm25_score": 8.969263,
+        "rrf_rank": 1,
+        "rrf_score": 0.03252247488101534
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_ambiguous_query_005",
+      "change": "same",
+      "original_query": "data-portal 캐시 쪽 장애 원인이 뭐였어?",
+      "base_rewritten_query": "data-portal 캐시 장애 원인",
+      "current_rewritten_query": "data-portal 캐시 장애 원인",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 7,
+        "vector_score": 0.48870041637763617,
+        "bm25_rank": 1,
+        "bm25_score": 4.5762777,
+        "rrf_rank": 2,
+        "rrf_score": 0.03131881575727918
+      },
+      "current_ranks": {
+        "vector_rank": 7,
+        "vector_score": 0.48870041637763617,
+        "bm25_rank": 1,
+        "bm25_score": 4.5762777,
+        "rrf_rank": 2,
+        "rrf_score": 0.03131881575727918
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_cross_project_conflict_001",
+      "change": "same",
+      "original_query": "data-portal 로그인 클래스 로딩 실패 사례",
+      "base_rewritten_query": "data-portal 로그인 클래스 로딩 실패",
+      "current_rewritten_query": "data-portal 로그인 클래스 로딩 실패",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.6731492548455521,
+        "bm25_rank": 1,
+        "bm25_score": 8.689074,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.6731492548455521,
+        "bm25_rank": 1,
+        "bm25_score": 8.689074,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_cross_project_conflict_003",
+      "change": "same",
+      "original_query": "batch-platform Redis 접속 수 초과 캐시 장애",
+      "base_rewritten_query": "batch-platform Redis 접속 수 초과 캐시 장애",
+      "current_rewritten_query": "batch-platform Redis 접속 수 초과 캐시 장애",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.6121406056585438,
+        "bm25_rank": 1,
+        "bm25_score": 12.019599,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.6121406056585438,
+        "bm25_rank": 1,
+        "bm25_score": 12.019599,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_cross_project_conflict_004",
+      "change": "same",
+      "original_query": "admin-portal Redis 연결 풀 고갈로 캐시 조회가 실패한 사례",
+      "base_rewritten_query": "admin-portal Redis 연결 풀 고갈 캐시 조회 실패",
+      "current_rewritten_query": "admin-portal Redis 연결 풀 고갈 캐시 조회 실패",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.7567043192305858,
+        "bm25_rank": 1,
+        "bm25_score": 22.085127,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.7572902593399625,
+        "bm25_rank": 1,
+        "bm25_score": 22.085127,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_cross_project_conflict_005",
+      "change": "same",
+      "original_query": "data-portal 파트너 프로필 조회 3000ms timeout 장애",
+      "base_rewritten_query": "data-portal 파트너 프로필 조회 3000ms timeout 장애",
+      "current_rewritten_query": "data-portal 파트너 프로필 조회 3000ms timeout",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.7089160011965757,
+        "bm25_rank": 1,
+        "bm25_score": 14.102721,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.714020716624795,
+        "bm25_rank": 1,
+        "bm25_score": 14.102721,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_cross_project_conflict_006",
+      "change": "same",
+      "original_query": "batch-platform 파트너 프로필 API 응답 지연 timeout 장애",
+      "base_rewritten_query": "batch-platform 파트너 프로필 API 응답 지연 timeout",
+      "current_rewritten_query": "batch-platform 파트너 프로필 API 응답 지연 timeout",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.6380909685124354,
+        "bm25_rank": 1,
+        "bm25_score": 12.6069,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.6380909685124354,
+        "bm25_rank": 1,
+        "bm25_score": 12.6069,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_exact_keyword_002",
+      "change": "same",
+      "original_query": "paymentMethod NullPointerException PAY-4021 DataPaymentService",
+      "base_rewritten_query": "paymentMethod NullPointerException PAY-4021 DataPaymentService",
+      "current_rewritten_query": "paymentMethod NullPointerException PAY-4021 DataPaymentService",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.6911903547885891,
+        "bm25_rank": 1,
+        "bm25_score": 17.108011,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.6911903547885891,
+        "bm25_rank": 1,
+        "bm25_score": 17.108011,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_exact_keyword_003",
+      "change": "same",
+      "original_query": "report_status_cd SQLGrammarException DataReportQueryRepository",
+      "base_rewritten_query": "report_status_cd SQLGrammarException DataReportQueryRepository",
+      "current_rewritten_query": "report_status_cd SQLGrammarException DataReportQueryRepository",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.6476232757876098,
+        "bm25_rank": 1,
+        "bm25_score": 17.154629,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.6476232757876098,
+        "bm25_rank": 1,
+        "bm25_score": 17.154629,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_exact_keyword_004",
+      "change": "same",
+      "original_query": "REPORT_ADMIN AccessDeniedException AdminPermissionEvaluator",
+      "base_rewritten_query": "REPORT_ADMIN AccessDeniedException AdminPermissionEvaluator",
+      "current_rewritten_query": "REPORT_ADMIN AccessDeniedException AdminPermissionEvaluator",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.6107223242073301,
+        "bm25_rank": 1,
+        "bm25_score": 12.808667,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.6107223242073301,
+        "bm25_rank": 1,
+        "bm25_score": 12.808667,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_exact_keyword_005",
+      "change": "same",
+      "original_query": "PKIX SSLHandshakeException AdminSecureHttpClient truststore",
+      "base_rewritten_query": "PKIX SSLHandshakeException AdminSecureHttpClient truststore",
+      "current_rewritten_query": "PKIX SSLHandshakeException AdminSecureHttpClient truststore",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.682879999344644,
+        "bm25_rank": 1,
+        "bm25_score": 14.41587,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.682879999344644,
+        "bm25_rank": 1,
+        "bm25_score": 14.41587,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_exact_keyword_006",
+      "change": "same",
+      "original_query": "KafkaSerializationException schema version v3 BatchKafkaEventPublisher",
+      "base_rewritten_query": "KafkaSerializationException schema version v3 BatchKafkaEventPublisher",
+      "current_rewritten_query": "KafkaSerializationException schema version v3 BatchKafkaEventPublisher",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.700198446389069,
+        "bm25_rank": 1,
+        "bm25_score": 19.554817,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.700198446389069,
+        "bm25_rank": 1,
+        "bm25_score": 19.554817,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_exact_keyword_007",
+      "change": "same",
+      "original_query": "Docker container exited code 137 BatchContainerSupervisor",
+      "base_rewritten_query": "Docker container exited code 137 BatchContainerSupervisor",
+      "current_rewritten_query": "Docker container exited code 137 BatchContainerSupervisor",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.7167789100640757,
+        "bm25_rank": 1,
+        "bm25_score": 24.924232,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.7167789100640757,
+        "bm25_rank": 1,
+        "bm25_score": 24.924232,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_exact_keyword_008",
+      "change": "same",
+      "original_query": "feature-flags.yml FileNotFoundException DataFeatureFlagLoader",
+      "base_rewritten_query": "feature-flags.yml FileNotFoundException DataFeatureFlagLoader",
+      "current_rewritten_query": "feature-flags.yml FileNotFoundException DataFeatureFlagLoader",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.6824833699259624,
+        "bm25_rank": 1,
+        "bm25_score": 18.772326,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.6824833699259624,
+        "bm25_rank": 1,
+        "bm25_score": 18.772326,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_no_relevant_result_001",
+      "change": "same",
+      "original_query": "이미지 업로드 썸네일 생성 실패 장애 원인",
+      "base_rewritten_query": "이미지 업로드 썸네일 생성 실패",
+      "current_rewritten_query": "이미지 업로드 썸네일 생성 실패",
+      "base_final_rank": null,
+      "current_final_rank": null,
+      "base_final_status": "no_result_correct",
+      "current_final_status": "no_result_correct",
+      "base_confidence": null,
+      "current_confidence": null,
+      "base_ranks": {
+        "vector_rank": null,
+        "vector_score": null,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": null,
+        "rrf_score": null
+      },
+      "current_ranks": {
+        "vector_rank": null,
+        "vector_score": null,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": null,
+        "rrf_score": null
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_no_relevant_result_002",
+      "change": "same",
+      "original_query": "메일 발송 SMTP 인증 실패 해결 방법",
+      "base_rewritten_query": "메일 발송 SMTP 인증 실패",
+      "current_rewritten_query": "메일 발송 SMTP 인증 실패",
+      "base_final_rank": null,
+      "current_final_rank": null,
+      "base_final_status": "no_result_correct",
+      "current_final_status": "no_result_correct",
+      "base_confidence": null,
+      "current_confidence": null,
+      "base_ranks": {
+        "vector_rank": null,
+        "vector_score": null,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": null,
+        "rrf_score": null
+      },
+      "current_ranks": {
+        "vector_rank": null,
+        "vector_score": null,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": null,
+        "rrf_score": null
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_no_relevant_result_003",
+      "change": "same",
+      "original_query": "관리자 화면 CSS 깨짐과 정적 리소스 캐시 문제",
+      "base_rewritten_query": "관리자 화면 CSS 깨짐 정적 리소스 캐시 문제",
+      "current_rewritten_query": "관리자 화면 CSS 깨짐 정적 리소스 캐시 문제",
+      "base_final_rank": null,
+      "current_final_rank": null,
+      "base_final_status": "no_result_correct",
+      "current_final_status": "no_result_correct",
+      "base_confidence": null,
+      "current_confidence": null,
+      "base_ranks": {
+        "vector_rank": null,
+        "vector_score": null,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": null,
+        "rrf_score": null
+      },
+      "current_ranks": {
+        "vector_rank": null,
+        "vector_score": null,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": null,
+        "rrf_score": null
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_no_relevant_result_004",
+      "change": "same",
+      "original_query": "S3 백업 파일 압축 해제 실패 사례",
+      "base_rewritten_query": "S3 백업 파일 압축 해제 실패",
+      "current_rewritten_query": "S3 백업 파일 압축 해제 실패",
+      "base_final_rank": null,
+      "current_final_rank": null,
+      "base_final_status": "no_result_correct",
+      "current_final_status": "no_result_correct",
+      "base_confidence": null,
+      "current_confidence": null,
+      "base_ranks": {
+        "vector_rank": null,
+        "vector_score": null,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": null,
+        "rrf_score": null
+      },
+      "current_ranks": {
+        "vector_rank": null,
+        "vector_score": null,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": null,
+        "rrf_score": null
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_no_relevant_result_005",
+      "change": "same",
+      "original_query": "Elasticsearch 색인 shard allocation 실패",
+      "base_rewritten_query": "Elasticsearch 색인 shard allocation 실패",
+      "current_rewritten_query": "Elasticsearch 색인 shard allocation 실패",
+      "base_final_rank": null,
+      "current_final_rank": null,
+      "base_final_status": "no_result_correct",
+      "current_final_status": "no_result_correct",
+      "base_confidence": null,
+      "current_confidence": null,
+      "base_ranks": {
+        "vector_rank": null,
+        "vector_score": null,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": null,
+        "rrf_score": null
+      },
+      "current_ranks": {
+        "vector_rank": null,
+        "vector_score": null,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": null,
+        "rrf_score": null
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_no_relevant_result_006",
+      "change": "same",
+      "original_query": "사용자 프로필 이미지 크롭 기능 오류",
+      "base_rewritten_query": "사용자 프로필 이미지 크롭 기능 오류",
+      "current_rewritten_query": "사용자 프로필 이미지 크롭 기능 오류",
+      "base_final_rank": null,
+      "current_final_rank": null,
+      "base_final_status": "no_result_correct",
+      "current_final_status": "no_result_correct",
+      "base_confidence": null,
+      "current_confidence": null,
+      "base_ranks": {
+        "vector_rank": null,
+        "vector_score": null,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": null,
+        "rrf_score": null
+      },
+      "current_ranks": {
+        "vector_rank": null,
+        "vector_score": null,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": null,
+        "rrf_score": null
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_same_error_different_cause_001",
+      "change": "same",
+      "original_query": "data-portal 로그인에서 JwtTokenProvider classpath 문제로 난 클래스 로딩 실패",
+      "base_rewritten_query": "data-portal 로그인 JwtTokenProvider classpath 클래스 로딩 실패",
+      "current_rewritten_query": "data-portal 로그인 JwtTokenProvider classpath 클래스 로딩 실패",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.7508008968951905,
+        "bm25_rank": 1,
+        "bm25_score": 13.095841,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.7508008968951905,
+        "bm25_rank": 1,
+        "bm25_score": 13.095841,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_same_error_different_cause_002",
+      "change": "same",
+      "original_query": "admin-portal 로그인 인증에서 JwtTokenProvider 패키지 경로가 맞지 않았던 장애",
+      "base_rewritten_query": "admin-portal 로그인 인증 JwtTokenProvider 패키지 경로 오류",
+      "current_rewritten_query": "admin-portal 로그인 인증 JwtTokenProvider 패키지 경로 문제",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.7132595876542885,
+        "bm25_rank": 1,
+        "bm25_score": 11.317867,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.7071507150959033,
+        "bm25_rank": 1,
+        "bm25_score": 11.317867,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_same_error_different_cause_003",
+      "change": "same",
+      "original_query": "데이터 포털 결제 승인 전에 paymentMethod를 참조해서 난 null 문제",
+      "base_rewritten_query": "데이터 포털 결제 승인 전 paymentMethod null 문제",
+      "current_rewritten_query": "데이터 포털 결제 승인 paymentMethod null 오류",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.7178266088741444,
+        "bm25_rank": 1,
+        "bm25_score": 17.626303,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.7182574357057089,
+        "bm25_rank": 1,
+        "bm25_score": 17.626303,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_same_error_different_cause_004",
+      "change": "same",
+      "original_query": "관리자 포털 결제 승인 흐름에서 결제수단 검증 전에 터진 null 장애",
+      "base_rewritten_query": "관리자 포털 결제 승인 결제수단 검증 이전 NullPointerException",
+      "current_rewritten_query": "관리자 포털 결제 승인 결제수단 검증 전 NullPointerException 장애",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.6971216725205462,
+        "bm25_rank": 1,
+        "bm25_score": 15.20073,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.706424254428745,
+        "bm25_rank": 1,
+        "bm25_score": 15.20073,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_same_error_different_cause_005",
+      "change": "same",
+      "original_query": "관리자 리포트 권한 role 매핑 누락으로 접근 거부된 장애",
+      "base_rewritten_query": "관리자 리포트 권한 role 매핑 누락 접근 거부",
+      "current_rewritten_query": "관리자 리포트 권한 role 매핑 누락 접근 거부",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.5153388296367967,
+        "bm25_rank": 1,
+        "bm25_score": 10.419428,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.5153388296367967,
+        "bm25_rank": 1,
+        "bm25_score": 10.419428,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_same_error_different_cause_006",
+      "change": "same",
+      "original_query": "배치 권한 검사에서 REPORT_ADMIN role 때문에 막힌 케이스",
+      "base_rewritten_query": "배치 권한 검사 REPORT_ADMIN role 문제",
+      "current_rewritten_query": "배치 권한 검사 REPORT_ADMIN role 차단",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.5599950011307308,
+        "bm25_rank": 1,
+        "bm25_score": 15.634626,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.5637769742472205,
+        "bm25_rank": 1,
+        "bm25_score": 15.634626,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_same_error_different_cause_007",
+      "change": "same",
+      "original_query": "데이터 포털 webhook EventStatus enum 역직렬화 실패 장애",
+      "base_rewritten_query": "데이터 포털 webhook EventStatus enum 역직렬화 실패",
+      "current_rewritten_query": "데이터 포털 webhook EventStatus enum 역직렬화 실패",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.7050738831506111,
+        "bm25_rank": 1,
+        "bm25_score": 11.842604,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.7050738831506111,
+        "bm25_rank": 1,
+        "bm25_score": 11.842604,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_same_error_different_cause_008",
+      "change": "same",
+      "original_query": "관리자 webhook에서 새 status enum 값 때문에 JSON 매핑 실패한 사례",
+      "base_rewritten_query": "관리자 webhook 새 status enum 값 JSON 매핑 실패",
+      "current_rewritten_query": "관리자 webhook 새 status enum JSON 매핑 실패",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.697393152450093,
+        "bm25_rank": 1,
+        "bm25_score": 19.85041,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.7030646426916163,
+        "bm25_rank": 1,
+        "bm25_score": 19.85041,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_same_error_different_cause_009",
+      "change": "same",
+      "original_query": "주문 confirm 중 중복 요청이 같은 row를 동시에 갱신한 optimistic lock 장애",
+      "base_rewritten_query": "주문 confirm 중복 요청 optimistic lock 장애",
+      "current_rewritten_query": "주문 confirm 중복 요청 같은 row 동시 갱신 optimistic lock 장애",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.6522839689238306,
+        "bm25_rank": 1,
+        "bm25_score": 19.762947,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.6760516554273347,
+        "bm25_rank": 1,
+        "bm25_score": 27.264416,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_same_error_different_cause_010",
+      "change": "same",
+      "original_query": "배치 주문 confirm 중 같은 row 동시 갱신으로 충돌난 케이스",
+      "base_rewritten_query": "배치 주문 confirm 같은 row 동시 갱신 충돌",
+      "current_rewritten_query": "배치 주문 confirm 동시 갱신 충돌",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.5532124362748077,
+        "bm25_rank": 1,
+        "bm25_score": 9.258816,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.5267662997078093,
+        "bm25_rank": 1,
+        "bm25_score": 5.4544415,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_semantic_paraphrase_001",
+      "change": "same",
+      "original_query": "로그인 직후 인증 토큰 클래스를 못 찾아서 실패한 원인이 뭐야?",
+      "base_rewritten_query": "로그인 인증 토큰 클래스 로딩 실패",
+      "current_rewritten_query": "로그인 인증 토큰 클래스 로딩 실패",
+      "base_final_rank": 2,
+      "current_final_rank": 2,
+      "base_final_status": "top3",
+      "current_final_status": "top3",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 2,
+        "vector_score": 0.4887195275845633,
+        "bm25_rank": 2,
+        "bm25_score": 5.803773,
+        "rrf_rank": 2,
+        "rrf_score": 0.03225806451612903
+      },
+      "current_ranks": {
+        "vector_rank": 2,
+        "vector_score": 0.4887195275845633,
+        "bm25_rank": 2,
+        "bm25_score": 5.803773,
+        "rrf_rank": 2,
+        "rrf_score": 0.03225806451612903
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_semantic_paraphrase_002",
+      "change": "same",
+      "original_query": "결제 승인에서 결제수단 값이 비어 터진 장애는 어떻게 해결했어?",
+      "base_rewritten_query": "결제 승인 결제수단 값 비어 오류",
+      "current_rewritten_query": "결제 승인 결제수단 값 없음 장애",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.46336548386305787,
+        "bm25_rank": 1,
+        "bm25_score": 6.5179853,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.48100020241657004,
+        "bm25_rank": 1,
+        "bm25_score": 6.5179853,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_semantic_paraphrase_003",
+      "change": "same",
+      "original_query": "리포트 화면에서 없는 상태 컬럼을 조회해서 500이 난 사례 찾아줘",
+      "base_rewritten_query": "리포트 화면 상태 컬럼 없음 500 오류",
+      "current_rewritten_query": "리포트 화면 상태 컬럼 없음 500 오류",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.48605502814097845,
+        "bm25_rank": 1,
+        "bm25_score": 10.605376,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.48605502814097845,
+        "bm25_rank": 1,
+        "bm25_score": 10.605376,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_semantic_paraphrase_004",
+      "change": "same",
+      "original_query": "관리자 리포트 접근이 권한 role 때문에 막힌 장애 원인이 뭐야?",
+      "base_rewritten_query": "관리자 리포트 접근 권한 role 차단",
+      "current_rewritten_query": "관리자 리포트 접근 권한 role 장애",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.517540515052675,
+        "bm25_rank": 1,
+        "bm25_score": 10.419428,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.5262227816995514,
+        "bm25_rank": 1,
+        "bm25_score": 10.419428,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_semantic_paraphrase_005",
+      "change": "same",
+      "original_query": "외부 HTTPS 호출에서 인증서 체인을 신뢰하지 못한 문제는 어떻게 처리했어?",
+      "base_rewritten_query": "외부 HTTPS 호출 인증서 체인 신뢰 실패 처리 방법",
+      "current_rewritten_query": "외부 HTTPS 호출 인증서 체인 신뢰 실패 처리",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.562190116112655,
+        "bm25_rank": 1,
+        "bm25_score": 9.244949,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.5735398164022345,
+        "bm25_rank": 1,
+        "bm25_score": 9.244949,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_semantic_paraphrase_006",
+      "change": "same",
+      "original_query": "배치 이벤트 발행 중 스키마 버전이 맞지 않아 직렬화가 실패한 사례",
+      "base_rewritten_query": "배치 이벤트 발행 스키마 버전 불일치 직렬화 실패",
+      "current_rewritten_query": "배치 이벤트 발행 스키마 버전 불일치 직렬화 실패",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.35311736278572947,
+        "bm25_rank": 1,
+        "bm25_score": 9.026372,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.35311736278572947,
+        "bm25_rank": 1,
+        "bm25_score": 9.026372,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_semantic_paraphrase_007",
+      "change": "same",
+      "original_query": "배치 컨테이너가 메모리 제한 때문에 비정상 종료된 장애 요약해줘",
+      "base_rewritten_query": "배치 컨테이너 메모리 제한 비정상 종료",
+      "current_rewritten_query": "배치 컨테이너 메모리 제한 비정상 종료",
+      "base_final_rank": null,
+      "current_final_rank": null,
+      "base_final_status": "miss",
+      "current_final_status": "miss",
+      "base_confidence": null,
+      "current_confidence": null,
+      "base_ranks": {
+        "vector_rank": 2,
+        "vector_score": 0.3180625773336345,
+        "bm25_rank": 8,
+        "bm25_score": 1.7035671,
+        "rrf_rank": 4,
+        "rrf_score": 0.030834914611005692
+      },
+      "current_ranks": {
+        "vector_rank": 2,
+        "vector_score": 0.3180625773336345,
+        "bm25_rank": 8,
+        "bm25_score": 1.7035671,
+        "rrf_rank": 4,
+        "rrf_score": 0.030834914611005692
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_semantic_paraphrase_008",
+      "change": "same",
+      "original_query": "기능 토글 설정 파일이 배포 이미지에 없어 로딩 실패한 케이스",
+      "base_rewritten_query": "기능 토글 설정 파일 배포 이미지 없음 로딩 실패",
+      "current_rewritten_query": "기능 토글 설정 파일 배포 이미지 없음 로딩 실패",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.4685926502111615,
+        "bm25_rank": 1,
+        "bm25_score": 13.828791,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.4685926502111615,
+        "bm25_rank": 1,
+        "bm25_score": 13.828791,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_semantic_paraphrase_009",
+      "change": "same",
+      "original_query": "캐시 서버 연결 수가 꽉 차서 Redis 조회가 실패한 장애 해결 내용",
+      "base_rewritten_query": "캐시 서버 연결 수 초과 Redis 조회 실패",
+      "current_rewritten_query": "캐시 서버 연결 수 포화 Redis 조회 실패 장애",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.4920099923134432,
+        "bm25_rank": 1,
+        "bm25_score": 15.825266,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.5223818339374159,
+        "bm25_rank": 1,
+        "bm25_score": 15.825266,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_semantic_paraphrase_010",
+      "change": "same",
+      "original_query": "파트너 프로필 API가 3초 안에 응답하지 않아 지연된 장애 있었어?",
+      "base_rewritten_query": "파트너 프로필 API 3초 응답 지연 장애",
+      "current_rewritten_query": "파트너 프로필 API 3초 이상 응답 지연 장애",
+      "base_final_rank": 1,
+      "current_final_rank": 1,
+      "base_final_status": "top1",
+      "current_final_status": "top1",
+      "base_confidence": "high",
+      "current_confidence": "high",
+      "base_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.47985510414048205,
+        "bm25_rank": 1,
+        "bm25_score": 11.443844,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      },
+      "current_ranks": {
+        "vector_rank": 1,
+        "vector_score": 0.4949040724549276,
+        "bm25_rank": 1,
+        "bm25_score": 11.443844,
+        "rrf_rank": 1,
+        "rrf_score": 0.03278688524590164
+      }
+    }
+  ]
+}
