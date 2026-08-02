@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AlertCircle, CheckCircle2, RotateCcw } from '@lucide/vue'
+import { AlertCircle, CheckCircle2 } from '@lucide/vue'
 import { computed, onMounted, ref } from 'vue'
 import { requestAnswer } from '../api/answer'
 import { createConversation, getConversation } from '../api/conversation'
@@ -12,6 +12,7 @@ import TracePanel from '../components/TracePanel.vue'
 import type { IncidentAgentResponse, IncidentSearchResult } from '../types/answer'
 import type { ChatMessageModel, ConversationMessageRead } from '../types/conversation'
 import type { AgentTrace } from '../types/trace'
+import { formatTime } from '../utils/format'
 
 type ToastState = {
   type: 'success' | 'error'
@@ -23,6 +24,8 @@ const selectedProject = ref<string | null>(null)
 const conversationId = ref<string | null>(null)
 const messages = ref<ChatMessageModel[]>([])
 const lastAnswerResults = ref<Record<string, IncidentSearchResult[]>>({})
+const selectedTraceMessageId = ref<string | null>(null)
+const selectedIncidentId = ref<string | null>(null)
 
 const loadingProjects = ref(true)
 const creatingConversation = ref(false)
@@ -36,6 +39,30 @@ const latestTrace = computed<AgentTrace | null>(() => {
   }
   return null
 })
+
+const selectedTraceMessage = computed<ChatMessageModel | null>(() => {
+  if (selectedTraceMessageId.value) {
+    const selected = messages.value.find(
+      (message) => message.id === selectedTraceMessageId.value && message.role === 'ASSISTANT',
+    )
+    if (selected?.trace) return selected
+  }
+
+  for (let index = messages.value.length - 1; index >= 0; index -= 1) {
+    const message = messages.value[index]
+    if (message.role === 'ASSISTANT' && message.trace) return message
+  }
+  return null
+})
+
+const selectedTrace = computed<AgentTrace | null>(() => selectedTraceMessage.value?.trace || null)
+
+const selectedTraceLabel = computed(() => {
+  if (!selectedTraceMessage.value) return '표시할 Trace 없음'
+  return `${formatTime(selectedTraceMessage.value.createdAt)} Assistant 답변 기준`
+})
+
+const selectedTraceQuestion = computed(() => selectedTrace.value?.query.original_query || null)
 
 const inputDisabled = computed(
   () => !conversationId.value || creatingConversation.value || loadingAnswer.value,
@@ -60,14 +87,14 @@ async function loadProjects() {
 }
 
 async function selectProject(project: string) {
+  if (project === selectedProject.value && conversationId.value) return
   if (creatingConversation.value) return
   creatingConversation.value = true
   try {
     const id = await createConversation(project)
+    resetConversationState()
     conversationId.value = id
     selectedProject.value = project
-    messages.value = []
-    lastAnswerResults.value = {}
     showToast('success', `${project} Conversation이 생성되었습니다.`)
   } catch {
     showToast('error', 'Conversation 생성에 실패했습니다.')
@@ -121,6 +148,11 @@ async function syncConversation(answer: IncidentAgentResponse) {
       ...lastAnswerResults.value,
       [latestAssistant.id]: answer.search_results,
     }
+    selectedTraceMessageId.value = latestAssistant.id
+    selectedIncidentId.value =
+      latestAssistant.trace_json?.confidence.selected_incident_id ||
+      latestAssistant.trace_json?.answer.incident_id ||
+      null
   }
 
   messages.value = conversation.messages.map(toChatMessage)
@@ -143,6 +175,23 @@ function showToast(type: ToastState['type'], message: string) {
     if (toast.value?.message === message) toast.value = null
   }, 3500)
 }
+
+function selectTrace(messageId: string) {
+  selectedTraceMessageId.value = messageId
+  selectedIncidentId.value = null
+}
+
+function selectIncident(incidentId: string) {
+  selectedIncidentId.value = selectedIncidentId.value === incidentId ? null : incidentId
+}
+
+function resetConversationState() {
+  conversationId.value = null
+  messages.value = []
+  lastAnswerResults.value = {}
+  selectedTraceMessageId.value = null
+  selectedIncidentId.value = null
+}
 </script>
 
 <template>
@@ -162,15 +211,6 @@ function showToast(type: ToastState['type'], message: string) {
             <span class="rounded-md border border-blue-200 bg-blue-50 px-3 py-2 text-sm font-semibold text-blue-700">
               {{ selectedProject }}
             </span>
-            <button
-              type="button"
-              class="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
-              :disabled="creatingConversation || loadingAnswer"
-              @click="selectedProject && selectProject(selectedProject)"
-            >
-              <RotateCcw class="h-4 w-4" />
-              Project 변경
-            </button>
           </div>
         </div>
       </header>
@@ -196,6 +236,10 @@ function showToast(type: ToastState['type'], message: string) {
           :messages="messages"
           :selected-project="selectedProject"
           :loading-answer="loadingAnswer"
+          :selected-trace-message-id="selectedTraceMessage?.id || null"
+          :selected-incident-id="selectedIncidentId"
+          @select-trace="selectTrace"
+          @select-incident="selectIncident"
         >
           <MessageInput
             :disabled="inputDisabled"
@@ -208,7 +252,13 @@ function showToast(type: ToastState['type'], message: string) {
           />
         </ChatWindow>
 
-        <TracePanel :trace="latestTrace" />
+        <TracePanel
+          :trace="selectedTrace || latestTrace"
+          :trace-label="selectedTraceLabel"
+          :trace-question="selectedTraceQuestion"
+          :project-name="selectedProject"
+          :selected-incident-id="selectedIncidentId"
+        />
       </div>
     </div>
 

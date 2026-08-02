@@ -8,6 +8,13 @@ const props = defineProps<{
   messages: ChatMessageModel[]
   selectedProject: string | null
   loadingAnswer: boolean
+  selectedTraceMessageId: string | null
+  selectedIncidentId: string | null
+}>()
+
+const emit = defineEmits<{
+  selectTrace: [messageId: string]
+  selectIncident: [incidentId: string]
 }>()
 
 const scrollContainer = ref<HTMLElement | null>(null)
@@ -59,7 +66,15 @@ watch(
         </div>
       </div>
 
-      <ChatMessage v-for="message in messages" :key="message.id" :message="message" />
+      <ChatMessage
+        v-for="message in messages"
+        :key="message.id"
+        :message="message"
+        :selected-trace-message-id="selectedTraceMessageId"
+        :selected-incident-id="selectedIncidentId"
+        @select-trace="emit('selectTrace', $event)"
+        @select-incident="emit('selectIncident', $event)"
+      />
 
       <div v-if="loadingAnswer" class="flex items-start gap-3">
         <div class="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-blue-600 text-xs font-bold text-white">

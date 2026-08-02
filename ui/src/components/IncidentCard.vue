@@ -1,35 +1,38 @@
 <script setup lang="ts">
 import { GitPullRequest, Ticket, TriangleAlert } from '@lucide/vue'
 import type { IncidentSearchResult } from '../types/answer'
+import { formatConfidenceScore, formatTime, shortId } from '../utils/format'
 import ConfidenceBadge from './ConfidenceBadge.vue'
 
 defineProps<{
   incident: IncidentSearchResult
+  selected: boolean
 }>()
-
-function shortId(id: string) {
-  return id.slice(0, 8)
-}
 
 function formatDate(value?: string | null) {
   if (!value) return '-'
-  return new Intl.DateTimeFormat('ko-KR', {
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-  }).format(new Date(value))
+  return formatTime(value)
 }
 </script>
 
 <template>
-  <article class="rounded-lg border border-slate-200 bg-slate-50 p-3">
+  <button
+    type="button"
+    class="w-full rounded-lg border p-3 text-left transition focus:outline-none focus:ring-4 focus:ring-blue-50"
+    :class="
+      selected
+        ? 'border-blue-300 bg-blue-50 shadow-sm'
+        : 'border-slate-200 bg-slate-50 hover:border-blue-200 hover:bg-white'
+    "
+    :aria-pressed="selected"
+  >
     <div class="flex items-start justify-between gap-3">
       <div class="min-w-0">
         <div class="flex items-center gap-2 text-xs font-semibold text-slate-500">
           <TriangleAlert class="h-3.5 w-3.5 text-blue-600" />
           <span>INC-{{ shortId(incident.incident_id) }}</span>
           <span class="rounded bg-white px-1.5 py-0.5 text-slate-500">{{ incident.status }}</span>
+          <span v-if="selected" class="rounded bg-blue-600 px-1.5 py-0.5 text-white">Selected</span>
         </div>
         <h4 class="mt-1 line-clamp-2 text-sm font-semibold text-slate-900">
           {{ incident.summary || incident.error_type || incident.error_message }}
@@ -44,7 +47,7 @@ function formatDate(value?: string | null) {
 
     <div class="mt-3 flex flex-wrap items-center gap-2 text-[11px] text-slate-500">
       <span>RRF #{{ incident.rrf_rank || '-' }}</span>
-      <span>Score {{ incident.confidence_score.toFixed(2) }}</span>
+      <span>Score {{ formatConfidenceScore(incident.confidence_score) }}</span>
       <span>{{ formatDate(incident.first_detected_at) }}</span>
     </div>
 
@@ -64,5 +67,5 @@ function formatDate(value?: string | null) {
         {{ incident.evidence_prs[0].pr_key || 'PR' }}
       </span>
     </div>
-  </article>
+  </button>
 </template>

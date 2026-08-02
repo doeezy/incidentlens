@@ -12,6 +12,12 @@ const emit = defineEmits<{
   select: [project: string]
   retry: []
 }>()
+
+function onChange(event: Event) {
+  const project = (event.target as HTMLSelectElement).value
+  if (!project) return
+  emit('select', project)
+}
 </script>
 
 <template>
@@ -35,26 +41,27 @@ const emit = defineEmits<{
       </button>
     </div>
 
-    <div v-if="loading" class="mt-4 flex flex-wrap gap-2">
-      <div v-for="index in 3" :key="index" class="h-9 w-32 animate-pulse rounded-md bg-slate-100" />
+    <div v-if="loading" class="mt-4">
+      <div class="h-11 w-full max-w-sm animate-pulse rounded-md bg-slate-100" />
     </div>
 
-    <div v-else class="mt-4 flex flex-wrap gap-2">
-      <button
-        v-for="project in projects"
-        :key="project"
-        type="button"
-        class="rounded-md border px-3.5 py-2 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-60"
-        :class="
-          selectedProject === project
-            ? 'border-blue-600 bg-blue-600 text-white shadow-sm'
-            : 'border-slate-200 bg-white text-slate-700 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700'
-        "
-        :disabled="creating"
-        @click="emit('select', project)"
+    <div v-else class="mt-4 max-w-sm">
+      <label class="sr-only" for="project-select">프로젝트 선택</label>
+      <select
+        id="project-select"
+        class="h-11 w-full rounded-md border border-slate-200 bg-white px-3 text-sm font-medium text-slate-800 outline-none transition focus:border-blue-300 focus:ring-4 focus:ring-blue-50 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400"
+        :value="selectedProject || ''"
+        :disabled="creating || !projects.length"
+        @change="onChange"
       >
-        {{ project }}
-      </button>
+        <option value="" disabled>프로젝트를 선택하세요</option>
+        <option v-for="project in projects" :key="project" :value="project">
+          {{ project }}
+        </option>
+      </select>
+      <p v-if="!projects.length" class="mt-2 text-xs text-slate-500">
+        선택 가능한 프로젝트가 없습니다.
+      </p>
     </div>
   </section>
 </template>

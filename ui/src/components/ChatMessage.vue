@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Workflow } from '@lucide/vue'
 import MarkdownIt from 'markdown-it'
 import type { ChatMessageModel } from '../types/conversation'
 import ConfidenceBadge from './ConfidenceBadge.vue'
@@ -6,6 +7,13 @@ import IncidentCard from './IncidentCard.vue'
 
 const props = defineProps<{
   message: ChatMessageModel
+  selectedTraceMessageId: string | null
+  selectedIncidentId: string | null
+}>()
+
+const emit = defineEmits<{
+  selectTrace: [messageId: string]
+  selectIncident: [incidentId: string]
 }>()
 
 const markdown = new MarkdownIt({
@@ -63,6 +71,21 @@ function formatTime(value: string) {
             >
               {{ message.trace.query.intent }}
             </span>
+            <button
+              v-if="message.trace"
+              type="button"
+              class="inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-[11px] font-semibold transition"
+              :class="
+                selectedTraceMessageId === message.id
+                  ? 'border-blue-200 bg-blue-50 text-blue-700'
+                  : 'border-slate-200 bg-white text-slate-500 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700'
+              "
+              :aria-pressed="selectedTraceMessageId === message.id"
+              @click="emit('selectTrace', message.id)"
+            >
+              <Workflow class="h-3.5 w-3.5" />
+              Trace 보기
+            </button>
           </div>
 
           <div class="markdown-body text-sm" v-html="renderMarkdown(message.content)" />
@@ -87,6 +110,8 @@ function formatTime(value: string) {
               v-for="incident in message.incidents.slice(0, 3)"
               :key="incident.incident_id"
               :incident="incident"
+              :selected="selectedIncidentId === incident.incident_id"
+              @click="emit('selectIncident', incident.incident_id)"
             />
           </div>
         </template>
