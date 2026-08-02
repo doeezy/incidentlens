@@ -1,0 +1,2000 @@
+{
+  "run": {
+    "id": "fa8a0e14-ece6-445a-a88b-737d35cf36ca",
+    "run_name": "retrieval_eval_v1_confidence_v2_baseline",
+    "retrieval_version": "hybrid-rrf-confidence:v2",
+    "parameters": {
+      "rrf_k": 60,
+      "top_k": 3,
+      "run_name": "retrieval_eval_v1_confidence_v2_baseline",
+      "candidate_limit": 20,
+      "confidence_telemetry": {
+        "llm_calls": 138,
+        "rejected_by": {
+          "llm_low_confidence": 105
+        },
+        "llm_failures": 0,
+        "passed_candidates": 33,
+        "pre_llm_rejections": 0,
+        "evaluated_candidates": 138,
+        "avg_llm_calls_per_case": 3.0,
+        "llm_low_confidence_rejections": 105
+      }
+    },
+    "total_cases": 46,
+    "completed_cases": 46
+  },
+  "analysis_scope": {
+    "target_failure_type": "RRF_RANKING_MISS",
+    "case_count": 17,
+    "top_k": 3,
+    "stored_candidate_limit": 20,
+    "expanded_candidate_limit": 100,
+    "rrf_k": 60
+  },
+  "project_incident_counts": {
+    "data-portal": 14,
+    "admin-portal": 12,
+    "batch-platform": 12
+  },
+  "primary_type_counts": {
+    "BM25_MISS_AND_VECTOR_NOT_TOP3": 17
+  },
+  "secondary_type_counts": {
+    "CANDIDATE_LIMIT_NOT_RELEVANT_PROJECT_SMALL": 17,
+    "VECTOR_NOT_TOP3": 17,
+    "BM25_MISS": 17,
+    "QUERY_REWRITE_RANK_DROP": 7
+  },
+  "factor_counts": {
+    "vector_miss": 0,
+    "vector_not_top3": 17,
+    "bm25_miss": 17,
+    "bm25_not_top3": 17,
+    "query_rewrite_top3_loss": 0,
+    "query_rewrite_rank_drop": 7,
+    "candidate_limit_direct": 0
+  },
+  "cases": [
+    {
+      "case_key": "retrieval_eval_v1_ambiguous_query_003",
+      "category": "ambiguous_query",
+      "project_name": "admin-portal",
+      "project_incident_count": 12,
+      "original_query": "권한 문제로 막힌 장애 찾아줘",
+      "rewritten_query": "권한 문제 장애 사례",
+      "expected_incident_id": "433dff0c-eeaf-481f-99cf-b9d041befd1e",
+      "incident": {
+        "project_name": "admin-portal",
+        "summary": null,
+        "error_type": "AccessDeniedException",
+        "error_message": "role REPORT_ADMIN required",
+        "keywords": [],
+        "domain_tags": [],
+        "root_cause": null,
+        "resolution": null
+      },
+      "stored_rrf_top3_candidates": [
+        {
+          "rank": 1,
+          "incident_id": "313f2864-d8a0-480c-a487-d7fb5afa81b9",
+          "vector_score": 0.046815548796360185,
+          "bm25_score": null,
+          "rrf_score": 0.01639344262295082,
+          "incident": {
+            "project_name": "admin-portal",
+            "summary": null,
+            "error_type": "KafkaSerializationException",
+            "error_message": "cannot serialize schema version v3",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": "src/main/java/com/example/stream/AdminKafkaEventPublisher.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+          }
+        },
+        {
+          "rank": 2,
+          "incident_id": "087f5d77-20eb-4487-84da-4253cc128eca",
+          "vector_score": 0.02866796605568267,
+          "bm25_score": null,
+          "rrf_score": 0.016129032258064516,
+          "incident": {
+            "project_name": "admin-portal",
+            "summary": null,
+            "error_type": "JsonMappingException",
+            "error_message": "Cannot deserialize value of type EventStatus",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": null
+          }
+        },
+        {
+          "rank": 3,
+          "incident_id": "1e841c64-16f9-44e8-a856-a636ca807f1b",
+          "vector_score": 0.018231944061762095,
+          "bm25_score": null,
+          "rrf_score": 0.015873015873015872,
+          "incident": {
+            "project_name": "admin-portal",
+            "summary": null,
+            "error_type": "SSLHandshakeException",
+            "error_message": "PKIX path building failed",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": null
+          }
+        }
+      ],
+      "stored_rewritten_ranks": {
+        "vector_rank": 6,
+        "vector_score": 0.0025038468882017106,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 6,
+        "rrf_score": 0.015151515151515152
+      },
+      "original_query_ranks": {
+        "vector_rank": 11,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 11,
+        "rrf_score": 0.014084507042253521
+      },
+      "expanded_limit_rewritten_ranks": {
+        "vector_rank": 6,
+        "vector_score": 0.0025038468882017106,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 6,
+        "rrf_score": 0.015151515151515152
+      },
+      "primary_type": "BM25_MISS_AND_VECTOR_NOT_TOP3",
+      "secondary_types": [
+        "CANDIDATE_LIMIT_NOT_RELEVANT_PROJECT_SMALL",
+        "VECTOR_NOT_TOP3",
+        "BM25_MISS"
+      ],
+      "analysis_summary": "정답이 BM25에는 잡히지 않았고 Vector에서도 Top3 밖이라 RRF 합산에서 보강 신호가 없었다. vector_rank=6, bm25_rank=None, rrf_rank=6."
+    },
+    {
+      "case_key": "retrieval_eval_v1_ambiguous_query_004",
+      "category": "ambiguous_query",
+      "project_name": "batch-platform",
+      "project_incident_count": 12,
+      "original_query": "배치에서 이벤트 발행 실패한 사례",
+      "rewritten_query": "배치 이벤트 발행 실패 사례",
+      "expected_incident_id": "f7684112-d72d-4bc2-a9c6-162002937333",
+      "incident": {
+        "project_name": "batch-platform",
+        "summary": null,
+        "error_type": "KafkaSerializationException",
+        "error_message": "cannot serialize schema version v3",
+        "keywords": [],
+        "domain_tags": [],
+        "root_cause": null,
+        "resolution": null
+      },
+      "stored_rrf_top3_candidates": [
+        {
+          "rank": 1,
+          "incident_id": "e89555ef-89a2-4c64-91a8-3f268bf8ea7a",
+          "vector_score": 0.03673742657538159,
+          "bm25_score": null,
+          "rrf_score": 0.01639344262295082,
+          "incident": {
+            "project_name": "batch-platform",
+            "summary": null,
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": null
+          }
+        },
+        {
+          "rank": 2,
+          "incident_id": "d4253455-0df0-4733-8c52-a768a47d47f9",
+          "vector_score": 0.026568601320719254,
+          "bm25_score": null,
+          "rrf_score": 0.016129032258064516,
+          "incident": {
+            "project_name": "batch-platform",
+            "summary": null,
+            "error_type": "OptimisticLockException",
+            "error_message": "row was updated or deleted by another transaction",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": null
+          }
+        },
+        {
+          "rank": 3,
+          "incident_id": "ed080f24-e33f-4a24-9df8-0c0d5b22b93b",
+          "vector_score": 0.02277211685706859,
+          "bm25_score": null,
+          "rrf_score": 0.015873015873015872,
+          "incident": {
+            "project_name": "batch-platform",
+            "summary": null,
+            "error_type": "ContainerExitError",
+            "error_message": "Docker container exited with code 137",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": null
+          }
+        }
+      ],
+      "stored_rewritten_ranks": {
+        "vector_rank": 8,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 8,
+        "rrf_score": 0.014705882352941176
+      },
+      "original_query_ranks": {
+        "vector_rank": 8,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 8,
+        "rrf_score": 0.014705882352941176
+      },
+      "expanded_limit_rewritten_ranks": {
+        "vector_rank": 8,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 8,
+        "rrf_score": 0.014705882352941176
+      },
+      "primary_type": "BM25_MISS_AND_VECTOR_NOT_TOP3",
+      "secondary_types": [
+        "CANDIDATE_LIMIT_NOT_RELEVANT_PROJECT_SMALL",
+        "VECTOR_NOT_TOP3",
+        "BM25_MISS"
+      ],
+      "analysis_summary": "정답이 BM25에는 잡히지 않았고 Vector에서도 Top3 밖이라 RRF 합산에서 보강 신호가 없었다. vector_rank=8, bm25_rank=None, rrf_rank=8."
+    },
+    {
+      "case_key": "retrieval_eval_v1_ambiguous_query_005",
+      "category": "ambiguous_query",
+      "project_name": "data-portal",
+      "project_incident_count": 14,
+      "original_query": "캐시 쪽 장애 원인이 뭐였어?",
+      "rewritten_query": "캐시 장애 원인",
+      "expected_incident_id": "f0ec1c83-4ae3-4841-8446-a9f29dc2c5c8",
+      "incident": {
+        "project_name": "data-portal",
+        "summary": null,
+        "error_type": "RedisConnectionException",
+        "error_message": "ERR max number of clients reached",
+        "keywords": [],
+        "domain_tags": [],
+        "root_cause": null,
+        "resolution": "src/main/java/com/example/cache/DataRedisCacheClient.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+      },
+      "stored_rrf_top3_candidates": [
+        {
+          "rank": 1,
+          "incident_id": "072e1cca-72be-4116-b1de-618b9b42c499",
+          "vector_score": 0.23875405947817174,
+          "bm25_score": 2.0212057,
+          "rrf_score": 0.03278688524590164,
+          "incident": {
+            "project_name": "data-portal",
+            "summary": "AuthService 클래스의 login 메서드에서 ClassNotFoundException이 발생했습니다.",
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "keywords": [
+              "AuthService",
+              "ClassNotFoundException",
+              "ERROR",
+              "com.example.auth.JwtTokenProvider",
+              "login",
+              "stack trace",
+              "로그인",
+              "인증 오류",
+              "장애",
+              "JwtTokenProvider"
+            ],
+            "domain_tags": [
+              "auth",
+              "login"
+            ],
+            "root_cause": null,
+            "resolution": "빌드 설정에 JwtTokenProvider 라이브러리를 추가하고 AuthService 클래스에서 JwtTokenProvider 로딩 코드를 수정하여 오류를 해결했습니다."
+          }
+        },
+        {
+          "rank": 2,
+          "incident_id": "7f929778-811d-4ec0-b344-74f54f61b5aa",
+          "vector_score": 0.18446765064069381,
+          "bm25_score": null,
+          "rrf_score": 0.016129032258064516,
+          "incident": {
+            "project_name": "data-portal",
+            "summary": "2026년 5월 7일 10시 05분에 PaymentService 클래스의 pay 메서드에서 NullPointerException 예외가 발생했습니다.",
+            "error_type": "NullPointerException",
+            "error_message": "payment request is null",
+            "keywords": [
+              "ERROR",
+              "NullPointerException",
+              "PaymentService",
+              "pay",
+              "payment request is null",
+              "null",
+              "payment request",
+              "결제 실패",
+              "로그"
+            ],
+            "domain_tags": [
+              "payment"
+            ],
+            "root_cause": null,
+            "resolution": null
+          }
+        },
+        {
+          "rank": 3,
+          "incident_id": "dcfcf63e-ab2e-47df-8bd8-d25c16d88dc4",
+          "vector_score": 0.03959983357276242,
+          "bm25_score": null,
+          "rrf_score": 0.015873015873015872,
+          "incident": {
+            "project_name": "data-portal",
+            "summary": null,
+            "error_type": "TimeoutException",
+            "error_message": "partner profile API timed out after 3000ms",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": "src/main/java/com/example/integration/DataPartnerApiClient.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+          }
+        }
+      ],
+      "stored_rewritten_ranks": {
+        "vector_rank": 12,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 12,
+        "rrf_score": 0.013888888888888888
+      },
+      "original_query_ranks": {
+        "vector_rank": 13,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 13,
+        "rrf_score": 0.0136986301369863
+      },
+      "expanded_limit_rewritten_ranks": {
+        "vector_rank": 12,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 12,
+        "rrf_score": 0.013888888888888888
+      },
+      "primary_type": "BM25_MISS_AND_VECTOR_NOT_TOP3",
+      "secondary_types": [
+        "CANDIDATE_LIMIT_NOT_RELEVANT_PROJECT_SMALL",
+        "VECTOR_NOT_TOP3",
+        "BM25_MISS"
+      ],
+      "analysis_summary": "정답이 BM25에는 잡히지 않았고 Vector에서도 Top3 밖이라 RRF 합산에서 보강 신호가 없었다. vector_rank=12, bm25_rank=None, rrf_rank=12."
+    },
+    {
+      "case_key": "retrieval_eval_v1_ambiguous_query_006",
+      "category": "ambiguous_query",
+      "project_name": "admin-portal",
+      "project_incident_count": 12,
+      "original_query": "외부 연동 호출 실패한 장애 설명해줘",
+      "rewritten_query": "외부 연동 호출 실패 장애 설명",
+      "expected_incident_id": "ddf82944-5f08-46f8-9e95-f6b3ddafa590",
+      "incident": {
+        "project_name": "admin-portal",
+        "summary": null,
+        "error_type": "TimeoutException",
+        "error_message": "partner profile API timed out after 3000ms",
+        "keywords": [],
+        "domain_tags": [],
+        "root_cause": null,
+        "resolution": "src/main/java/com/example/integration/AdminPartnerApiClient.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+      },
+      "stored_rrf_top3_candidates": [
+        {
+          "rank": 1,
+          "incident_id": "21071d6e-449f-480f-bb8b-671e3f6ba8a3",
+          "vector_score": 0.03227379735208302,
+          "bm25_score": null,
+          "rrf_score": 0.01639344262295082,
+          "incident": {
+            "project_name": "admin-portal",
+            "summary": null,
+            "error_type": "ContainerExitError",
+            "error_message": "Docker container exited with code 137",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": "src/main/java/com/example/runtime/AdminContainerSupervisor.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+          }
+        },
+        {
+          "rank": 2,
+          "incident_id": "313f2864-d8a0-480c-a487-d7fb5afa81b9",
+          "vector_score": 0.030607366623556342,
+          "bm25_score": null,
+          "rrf_score": 0.016129032258064516,
+          "incident": {
+            "project_name": "admin-portal",
+            "summary": null,
+            "error_type": "KafkaSerializationException",
+            "error_message": "cannot serialize schema version v3",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": "src/main/java/com/example/stream/AdminKafkaEventPublisher.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+          }
+        },
+        {
+          "rank": 3,
+          "incident_id": "7efeab5b-e531-496c-8a41-69d72e239439",
+          "vector_score": 0.0187979875090456,
+          "bm25_score": null,
+          "rrf_score": 0.015873015873015872,
+          "incident": {
+            "project_name": "admin-portal",
+            "summary": null,
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": "src/main/java/com/example/auth/AdminAuthService.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+          }
+        }
+      ],
+      "stored_rewritten_ranks": {
+        "vector_rank": 4,
+        "vector_score": 0.013393843336766853,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 4,
+        "rrf_score": 0.015625
+      },
+      "original_query_ranks": {
+        "vector_rank": 5,
+        "vector_score": 0.011998427058020678,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 5,
+        "rrf_score": 0.015384615384615385
+      },
+      "expanded_limit_rewritten_ranks": {
+        "vector_rank": 4,
+        "vector_score": 0.013420518263102088,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 4,
+        "rrf_score": 0.015625
+      },
+      "primary_type": "BM25_MISS_AND_VECTOR_NOT_TOP3",
+      "secondary_types": [
+        "CANDIDATE_LIMIT_NOT_RELEVANT_PROJECT_SMALL",
+        "VECTOR_NOT_TOP3",
+        "BM25_MISS"
+      ],
+      "analysis_summary": "정답이 BM25에는 잡히지 않았고 Vector에서도 Top3 밖이라 RRF 합산에서 보강 신호가 없었다. vector_rank=4, bm25_rank=None, rrf_rank=4."
+    },
+    {
+      "case_key": "retrieval_eval_v1_cross_project_conflict_002",
+      "category": "cross_project_conflict",
+      "project_name": "admin-portal",
+      "project_incident_count": 12,
+      "original_query": "로그인 클래스 로딩 실패가 admin-portal에서 난 사례",
+      "rewritten_query": "로그인 클래스 로딩 실패 admin-portal 사례",
+      "expected_incident_id": "7efeab5b-e531-496c-8a41-69d72e239439",
+      "incident": {
+        "project_name": "admin-portal",
+        "summary": null,
+        "error_type": "ClassNotFoundException",
+        "error_message": "com.example.auth.JwtTokenProvider",
+        "keywords": [],
+        "domain_tags": [],
+        "root_cause": null,
+        "resolution": "src/main/java/com/example/auth/AdminAuthService.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+      },
+      "stored_rrf_top3_candidates": [
+        {
+          "rank": 1,
+          "incident_id": "433dff0c-eeaf-481f-99cf-b9d041befd1e",
+          "vector_score": 0.03600529218546544,
+          "bm25_score": 3.355135,
+          "rrf_score": 0.032266458495966696,
+          "incident": {
+            "project_name": "admin-portal",
+            "summary": null,
+            "error_type": "AccessDeniedException",
+            "error_message": "role REPORT_ADMIN required",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": null
+          }
+        },
+        {
+          "rank": 2,
+          "incident_id": "087f5d77-20eb-4487-84da-4253cc128eca",
+          "vector_score": 0.05004540422344983,
+          "bm25_score": null,
+          "rrf_score": 0.01639344262295082,
+          "incident": {
+            "project_name": "admin-portal",
+            "summary": null,
+            "error_type": "JsonMappingException",
+            "error_message": "Cannot deserialize value of type EventStatus",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": null
+          }
+        },
+        {
+          "rank": 3,
+          "incident_id": "1e841c64-16f9-44e8-a856-a636ca807f1b",
+          "vector_score": 0.04182052121779778,
+          "bm25_score": null,
+          "rrf_score": 0.016129032258064516,
+          "incident": {
+            "project_name": "admin-portal",
+            "summary": null,
+            "error_type": "SSLHandshakeException",
+            "error_message": "PKIX path building failed",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": null
+          }
+        }
+      ],
+      "stored_rewritten_ranks": {
+        "vector_rank": 4,
+        "vector_score": 0.0212778499407823,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 4,
+        "rrf_score": 0.015625
+      },
+      "original_query_ranks": {
+        "vector_rank": 5,
+        "vector_score": 0.024480147109487427,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 5,
+        "rrf_score": 0.015384615384615385
+      },
+      "expanded_limit_rewritten_ranks": {
+        "vector_rank": 4,
+        "vector_score": 0.0212778499407823,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 4,
+        "rrf_score": 0.015625
+      },
+      "primary_type": "BM25_MISS_AND_VECTOR_NOT_TOP3",
+      "secondary_types": [
+        "CANDIDATE_LIMIT_NOT_RELEVANT_PROJECT_SMALL",
+        "VECTOR_NOT_TOP3",
+        "BM25_MISS"
+      ],
+      "analysis_summary": "정답이 BM25에는 잡히지 않았고 Vector에서도 Top3 밖이라 RRF 합산에서 보강 신호가 없었다. vector_rank=4, bm25_rank=None, rrf_rank=4."
+    },
+    {
+      "case_key": "retrieval_eval_v1_cross_project_conflict_003",
+      "category": "cross_project_conflict",
+      "project_name": "batch-platform",
+      "project_incident_count": 12,
+      "original_query": "배치 플랫폼에서 Redis 접속 수 초과로 캐시 장애 난 사례",
+      "rewritten_query": "배치 플랫폼 Redis 접속 수 초과 캐시 장애 사례",
+      "expected_incident_id": "9233f432-d5ef-4d51-b607-6f5a2eb28305",
+      "incident": {
+        "project_name": "batch-platform",
+        "summary": null,
+        "error_type": "RedisConnectionException",
+        "error_message": "ERR max number of clients reached",
+        "keywords": [],
+        "domain_tags": [],
+        "root_cause": null,
+        "resolution": null
+      },
+      "stored_rrf_top3_candidates": [
+        {
+          "rank": 1,
+          "incident_id": "ed080f24-e33f-4a24-9df8-0c0d5b22b93b",
+          "vector_score": 0.04421775261779248,
+          "bm25_score": null,
+          "rrf_score": 0.01639344262295082,
+          "incident": {
+            "project_name": "batch-platform",
+            "summary": null,
+            "error_type": "ContainerExitError",
+            "error_message": "Docker container exited with code 137",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": null
+          }
+        },
+        {
+          "rank": 2,
+          "incident_id": "e89555ef-89a2-4c64-91a8-3f268bf8ea7a",
+          "vector_score": 0.025236476871570712,
+          "bm25_score": null,
+          "rrf_score": 0.016129032258064516,
+          "incident": {
+            "project_name": "batch-platform",
+            "summary": null,
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": null
+          }
+        },
+        {
+          "rank": 3,
+          "incident_id": "d4253455-0df0-4733-8c52-a768a47d47f9",
+          "vector_score": 0.01602513788961568,
+          "bm25_score": null,
+          "rrf_score": 0.015873015873015872,
+          "incident": {
+            "project_name": "batch-platform",
+            "summary": null,
+            "error_type": "OptimisticLockException",
+            "error_message": "row was updated or deleted by another transaction",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": null
+          }
+        }
+      ],
+      "stored_rewritten_ranks": {
+        "vector_rank": 6,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 6,
+        "rrf_score": 0.015151515151515152
+      },
+      "original_query_ranks": {
+        "vector_rank": 5,
+        "vector_score": 0.008799997199078202,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 5,
+        "rrf_score": 0.015384615384615385
+      },
+      "expanded_limit_rewritten_ranks": {
+        "vector_rank": 6,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 6,
+        "rrf_score": 0.015151515151515152
+      },
+      "primary_type": "BM25_MISS_AND_VECTOR_NOT_TOP3",
+      "secondary_types": [
+        "QUERY_REWRITE_RANK_DROP",
+        "CANDIDATE_LIMIT_NOT_RELEVANT_PROJECT_SMALL",
+        "VECTOR_NOT_TOP3",
+        "BM25_MISS"
+      ],
+      "analysis_summary": "정답이 BM25에는 잡히지 않았고 Vector에서도 Top3 밖이라 RRF 합산에서 보강 신호가 없었다. vector_rank=6, bm25_rank=None, rrf_rank=6."
+    },
+    {
+      "case_key": "retrieval_eval_v1_cross_project_conflict_004",
+      "category": "cross_project_conflict",
+      "project_name": "admin-portal",
+      "project_incident_count": 12,
+      "original_query": "관리자 포털에서 Redis 접속 제한으로 캐시 조회가 실패한 사례",
+      "rewritten_query": "관리자 포털 Redis 접속 제한 캐시 조회 실패 사례",
+      "expected_incident_id": "6f48f638-1d3f-46af-bd87-a77f17652e57",
+      "incident": {
+        "project_name": "admin-portal",
+        "summary": null,
+        "error_type": "RedisConnectionException",
+        "error_message": "ERR max number of clients reached",
+        "keywords": [],
+        "domain_tags": [],
+        "root_cause": null,
+        "resolution": "src/main/java/com/example/cache/AdminRedisCacheClient.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+      },
+      "stored_rrf_top3_candidates": [
+        {
+          "rank": 1,
+          "incident_id": "1e841c64-16f9-44e8-a856-a636ca807f1b",
+          "vector_score": 0.06432861265103706,
+          "bm25_score": null,
+          "rrf_score": 0.01639344262295082,
+          "incident": {
+            "project_name": "admin-portal",
+            "summary": null,
+            "error_type": "SSLHandshakeException",
+            "error_message": "PKIX path building failed",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": null
+          }
+        },
+        {
+          "rank": 2,
+          "incident_id": "7efeab5b-e531-496c-8a41-69d72e239439",
+          "vector_score": 0.05448860961064561,
+          "bm25_score": null,
+          "rrf_score": 0.016129032258064516,
+          "incident": {
+            "project_name": "admin-portal",
+            "summary": null,
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": "src/main/java/com/example/auth/AdminAuthService.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+          }
+        },
+        {
+          "rank": 3,
+          "incident_id": "433dff0c-eeaf-481f-99cf-b9d041befd1e",
+          "vector_score": 0.03997814749111295,
+          "bm25_score": null,
+          "rrf_score": 0.015873015873015872,
+          "incident": {
+            "project_name": "admin-portal",
+            "summary": null,
+            "error_type": "AccessDeniedException",
+            "error_message": "role REPORT_ADMIN required",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": null
+          }
+        }
+      ],
+      "stored_rewritten_ranks": {
+        "vector_rank": 11,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 11,
+        "rrf_score": 0.014084507042253521
+      },
+      "original_query_ranks": {
+        "vector_rank": 11,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 11,
+        "rrf_score": 0.014084507042253521
+      },
+      "expanded_limit_rewritten_ranks": {
+        "vector_rank": 11,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 11,
+        "rrf_score": 0.014084507042253521
+      },
+      "primary_type": "BM25_MISS_AND_VECTOR_NOT_TOP3",
+      "secondary_types": [
+        "CANDIDATE_LIMIT_NOT_RELEVANT_PROJECT_SMALL",
+        "VECTOR_NOT_TOP3",
+        "BM25_MISS"
+      ],
+      "analysis_summary": "정답이 BM25에는 잡히지 않았고 Vector에서도 Top3 밖이라 RRF 합산에서 보강 신호가 없었다. vector_rank=11, bm25_rank=None, rrf_rank=11."
+    },
+    {
+      "case_key": "retrieval_eval_v1_cross_project_conflict_005",
+      "category": "cross_project_conflict",
+      "project_name": "data-portal",
+      "project_incident_count": 14,
+      "original_query": "data-portal의 파트너 프로필 조회 timeout 장애",
+      "rewritten_query": "data-portal 파트너 프로필 조회 timeout 장애",
+      "expected_incident_id": "dcfcf63e-ab2e-47df-8bd8-d25c16d88dc4",
+      "incident": {
+        "project_name": "data-portal",
+        "summary": null,
+        "error_type": "TimeoutException",
+        "error_message": "partner profile API timed out after 3000ms",
+        "keywords": [],
+        "domain_tags": [],
+        "root_cause": null,
+        "resolution": "src/main/java/com/example/integration/DataPartnerApiClient.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+      },
+      "stored_rrf_top3_candidates": [
+        {
+          "rank": 1,
+          "incident_id": "072e1cca-72be-4116-b1de-618b9b42c499",
+          "vector_score": 0.4837829676370393,
+          "bm25_score": 2.0212057,
+          "rrf_score": 0.03278688524590164,
+          "incident": {
+            "project_name": "data-portal",
+            "summary": "AuthService 클래스의 login 메서드에서 ClassNotFoundException이 발생했습니다.",
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "keywords": [
+              "AuthService",
+              "ClassNotFoundException",
+              "ERROR",
+              "com.example.auth.JwtTokenProvider",
+              "login",
+              "stack trace",
+              "로그인",
+              "인증 오류",
+              "장애",
+              "JwtTokenProvider"
+            ],
+            "domain_tags": [
+              "auth",
+              "login"
+            ],
+            "root_cause": null,
+            "resolution": "빌드 설정에 JwtTokenProvider 라이브러리를 추가하고 AuthService 클래스에서 JwtTokenProvider 로딩 코드를 수정하여 오류를 해결했습니다."
+          }
+        },
+        {
+          "rank": 2,
+          "incident_id": "7f929778-811d-4ec0-b344-74f54f61b5aa",
+          "vector_score": 0.48370077646745413,
+          "bm25_score": null,
+          "rrf_score": 0.016129032258064516,
+          "incident": {
+            "project_name": "data-portal",
+            "summary": "2026년 5월 7일 10시 05분에 PaymentService 클래스의 pay 메서드에서 NullPointerException 예외가 발생했습니다.",
+            "error_type": "NullPointerException",
+            "error_message": "payment request is null",
+            "keywords": [
+              "ERROR",
+              "NullPointerException",
+              "PaymentService",
+              "pay",
+              "payment request is null",
+              "null",
+              "payment request",
+              "결제 실패",
+              "로그"
+            ],
+            "domain_tags": [
+              "payment"
+            ],
+            "root_cause": null,
+            "resolution": null
+          }
+        },
+        {
+          "rank": 3,
+          "incident_id": "14861fa5-b251-48a5-822b-947f83fc8e34",
+          "vector_score": 0.03741484221746694,
+          "bm25_score": null,
+          "rrf_score": 0.015873015873015872,
+          "incident": {
+            "project_name": "data-portal",
+            "summary": null,
+            "error_type": "FileNotFoundException",
+            "error_message": "/etc/incidentlens/feature-flags.yml",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": "src/main/java/com/example/config/DataFeatureFlagLoader.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+          }
+        }
+      ],
+      "stored_rewritten_ranks": {
+        "vector_rank": 4,
+        "vector_score": 0.031525397977019365,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 4,
+        "rrf_score": 0.015625
+      },
+      "original_query_ranks": {
+        "vector_rank": 4,
+        "vector_score": 0.03319705504322101,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 4,
+        "rrf_score": 0.015625
+      },
+      "expanded_limit_rewritten_ranks": {
+        "vector_rank": 4,
+        "vector_score": 0.031525397977019365,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 4,
+        "rrf_score": 0.015625
+      },
+      "primary_type": "BM25_MISS_AND_VECTOR_NOT_TOP3",
+      "secondary_types": [
+        "CANDIDATE_LIMIT_NOT_RELEVANT_PROJECT_SMALL",
+        "VECTOR_NOT_TOP3",
+        "BM25_MISS"
+      ],
+      "analysis_summary": "정답이 BM25에는 잡히지 않았고 Vector에서도 Top3 밖이라 RRF 합산에서 보강 신호가 없었다. vector_rank=4, bm25_rank=None, rrf_rank=4."
+    },
+    {
+      "case_key": "retrieval_eval_v1_cross_project_conflict_006",
+      "category": "cross_project_conflict",
+      "project_name": "batch-platform",
+      "project_incident_count": 12,
+      "original_query": "batch-platform의 파트너 프로필 조회 지연 장애",
+      "rewritten_query": "batch-platform 파트너 프로필 조회 지연 장애",
+      "expected_incident_id": "e3b07adc-a00a-4afb-ac77-ae9ba8ddbdd8",
+      "incident": {
+        "project_name": "batch-platform",
+        "summary": null,
+        "error_type": "TimeoutException",
+        "error_message": "partner profile API timed out after 3000ms",
+        "keywords": [],
+        "domain_tags": [],
+        "root_cause": null,
+        "resolution": null
+      },
+      "stored_rrf_top3_candidates": [
+        {
+          "rank": 1,
+          "incident_id": "ed080f24-e33f-4a24-9df8-0c0d5b22b93b",
+          "vector_score": 0.04091889091125267,
+          "bm25_score": null,
+          "rrf_score": 0.01639344262295082,
+          "incident": {
+            "project_name": "batch-platform",
+            "summary": null,
+            "error_type": "ContainerExitError",
+            "error_message": "Docker container exited with code 137",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": null
+          }
+        },
+        {
+          "rank": 2,
+          "incident_id": "e89555ef-89a2-4c64-91a8-3f268bf8ea7a",
+          "vector_score": 0.01704480118075613,
+          "bm25_score": null,
+          "rrf_score": 0.016129032258064516,
+          "incident": {
+            "project_name": "batch-platform",
+            "summary": null,
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": null
+          }
+        },
+        {
+          "rank": 3,
+          "incident_id": "d4253455-0df0-4733-8c52-a768a47d47f9",
+          "vector_score": 0.010722274431004264,
+          "bm25_score": null,
+          "rrf_score": 0.015873015873015872,
+          "incident": {
+            "project_name": "batch-platform",
+            "summary": null,
+            "error_type": "OptimisticLockException",
+            "error_message": "row was updated or deleted by another transaction",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": null
+          }
+        }
+      ],
+      "stored_rewritten_ranks": {
+        "vector_rank": 11,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 11,
+        "rrf_score": 0.014084507042253521
+      },
+      "original_query_ranks": {
+        "vector_rank": 10,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 10,
+        "rrf_score": 0.014285714285714285
+      },
+      "expanded_limit_rewritten_ranks": {
+        "vector_rank": 11,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 11,
+        "rrf_score": 0.014084507042253521
+      },
+      "primary_type": "BM25_MISS_AND_VECTOR_NOT_TOP3",
+      "secondary_types": [
+        "QUERY_REWRITE_RANK_DROP",
+        "CANDIDATE_LIMIT_NOT_RELEVANT_PROJECT_SMALL",
+        "VECTOR_NOT_TOP3",
+        "BM25_MISS"
+      ],
+      "analysis_summary": "정답이 BM25에는 잡히지 않았고 Vector에서도 Top3 밖이라 RRF 합산에서 보강 신호가 없었다. vector_rank=11, bm25_rank=None, rrf_rank=11."
+    },
+    {
+      "case_key": "retrieval_eval_v1_same_error_different_cause_006",
+      "category": "same_error_different_cause",
+      "project_name": "data-portal",
+      "project_incident_count": 14,
+      "original_query": "데이터 포털 웹훅 상태값 파싱이 안 된 JSON 매핑 장애",
+      "rewritten_query": "데이터 포털 웹훅 상태값 파싱 JSON 매핑 장애 원인",
+      "expected_incident_id": "074fa857-4bf2-4ba1-9c42-b5db1f97cb2e",
+      "incident": {
+        "project_name": "data-portal",
+        "summary": null,
+        "error_type": "JsonMappingException",
+        "error_message": "Cannot deserialize value of type EventStatus",
+        "keywords": [],
+        "domain_tags": [],
+        "root_cause": null,
+        "resolution": "src/main/java/com/example/api/DataWebhookController.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+      },
+      "stored_rrf_top3_candidates": [
+        {
+          "rank": 1,
+          "incident_id": "072e1cca-72be-4116-b1de-618b9b42c499",
+          "vector_score": 0.36817198969200404,
+          "bm25_score": 2.0212057,
+          "rrf_score": 0.03252247488101534,
+          "incident": {
+            "project_name": "data-portal",
+            "summary": "AuthService 클래스의 login 메서드에서 ClassNotFoundException이 발생했습니다.",
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "keywords": [
+              "AuthService",
+              "ClassNotFoundException",
+              "ERROR",
+              "com.example.auth.JwtTokenProvider",
+              "login",
+              "stack trace",
+              "로그인",
+              "인증 오류",
+              "장애",
+              "JwtTokenProvider"
+            ],
+            "domain_tags": [
+              "auth",
+              "login"
+            ],
+            "root_cause": null,
+            "resolution": "빌드 설정에 JwtTokenProvider 라이브러리를 추가하고 AuthService 클래스에서 JwtTokenProvider 로딩 코드를 수정하여 오류를 해결했습니다."
+          }
+        },
+        {
+          "rank": 2,
+          "incident_id": "7f929778-811d-4ec0-b344-74f54f61b5aa",
+          "vector_score": 0.45612553704081926,
+          "bm25_score": null,
+          "rrf_score": 0.01639344262295082,
+          "incident": {
+            "project_name": "data-portal",
+            "summary": "2026년 5월 7일 10시 05분에 PaymentService 클래스의 pay 메서드에서 NullPointerException 예외가 발생했습니다.",
+            "error_type": "NullPointerException",
+            "error_message": "payment request is null",
+            "keywords": [
+              "ERROR",
+              "NullPointerException",
+              "PaymentService",
+              "pay",
+              "payment request is null",
+              "null",
+              "payment request",
+              "결제 실패",
+              "로그"
+            ],
+            "domain_tags": [
+              "payment"
+            ],
+            "root_cause": null,
+            "resolution": null
+          }
+        },
+        {
+          "rank": 3,
+          "incident_id": "14861fa5-b251-48a5-822b-947f83fc8e34",
+          "vector_score": 0.06713033559747672,
+          "bm25_score": null,
+          "rrf_score": 0.015873015873015872,
+          "incident": {
+            "project_name": "data-portal",
+            "summary": null,
+            "error_type": "FileNotFoundException",
+            "error_message": "/etc/incidentlens/feature-flags.yml",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": "src/main/java/com/example/config/DataFeatureFlagLoader.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+          }
+        }
+      ],
+      "stored_rewritten_ranks": {
+        "vector_rank": 11,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 11,
+        "rrf_score": 0.014084507042253521
+      },
+      "original_query_ranks": {
+        "vector_rank": 12,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 12,
+        "rrf_score": 0.013888888888888888
+      },
+      "expanded_limit_rewritten_ranks": {
+        "vector_rank": 11,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 11,
+        "rrf_score": 0.014084507042253521
+      },
+      "primary_type": "BM25_MISS_AND_VECTOR_NOT_TOP3",
+      "secondary_types": [
+        "CANDIDATE_LIMIT_NOT_RELEVANT_PROJECT_SMALL",
+        "VECTOR_NOT_TOP3",
+        "BM25_MISS"
+      ],
+      "analysis_summary": "정답이 BM25에는 잡히지 않았고 Vector에서도 Top3 밖이라 RRF 합산에서 보강 신호가 없었다. vector_rank=11, bm25_rank=None, rrf_rank=11."
+    },
+    {
+      "case_key": "retrieval_eval_v1_same_error_different_cause_008",
+      "category": "same_error_different_cause",
+      "project_name": "data-portal",
+      "project_incident_count": 14,
+      "original_query": "주문 확정 중 같은 row를 동시에 갱신해서 충돌난 장애",
+      "rewritten_query": "주문 확정 동시 갱신 충돌 원인",
+      "expected_incident_id": "36b6be9d-8fb0-497d-983b-f010e0d0a564",
+      "incident": {
+        "project_name": "data-portal",
+        "summary": null,
+        "error_type": "OptimisticLockException",
+        "error_message": "row was updated or deleted by another transaction",
+        "keywords": [],
+        "domain_tags": [],
+        "root_cause": null,
+        "resolution": "src/main/java/com/example/order/DataOrderCommandService.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+      },
+      "stored_rrf_top3_candidates": [
+        {
+          "rank": 1,
+          "incident_id": "7f929778-811d-4ec0-b344-74f54f61b5aa",
+          "vector_score": 0.3141009729298403,
+          "bm25_score": null,
+          "rrf_score": 0.01639344262295082,
+          "incident": {
+            "project_name": "data-portal",
+            "summary": "2026년 5월 7일 10시 05분에 PaymentService 클래스의 pay 메서드에서 NullPointerException 예외가 발생했습니다.",
+            "error_type": "NullPointerException",
+            "error_message": "payment request is null",
+            "keywords": [
+              "ERROR",
+              "NullPointerException",
+              "PaymentService",
+              "pay",
+              "payment request is null",
+              "null",
+              "payment request",
+              "결제 실패",
+              "로그"
+            ],
+            "domain_tags": [
+              "payment"
+            ],
+            "root_cause": null,
+            "resolution": null
+          }
+        },
+        {
+          "rank": 2,
+          "incident_id": "072e1cca-72be-4116-b1de-618b9b42c499",
+          "vector_score": 0.20889363228233027,
+          "bm25_score": null,
+          "rrf_score": 0.016129032258064516,
+          "incident": {
+            "project_name": "data-portal",
+            "summary": "AuthService 클래스의 login 메서드에서 ClassNotFoundException이 발생했습니다.",
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "keywords": [
+              "AuthService",
+              "ClassNotFoundException",
+              "ERROR",
+              "com.example.auth.JwtTokenProvider",
+              "login",
+              "stack trace",
+              "로그인",
+              "인증 오류",
+              "장애",
+              "JwtTokenProvider"
+            ],
+            "domain_tags": [
+              "auth",
+              "login"
+            ],
+            "root_cause": null,
+            "resolution": "빌드 설정에 JwtTokenProvider 라이브러리를 추가하고 AuthService 클래스에서 JwtTokenProvider 로딩 코드를 수정하여 오류를 해결했습니다."
+          }
+        },
+        {
+          "rank": 3,
+          "incident_id": "f0ec1c83-4ae3-4841-8446-a9f29dc2c5c8",
+          "vector_score": 0.023236906935154233,
+          "bm25_score": null,
+          "rrf_score": 0.015873015873015872,
+          "incident": {
+            "project_name": "data-portal",
+            "summary": null,
+            "error_type": "RedisConnectionException",
+            "error_message": "ERR max number of clients reached",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": "src/main/java/com/example/cache/DataRedisCacheClient.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+          }
+        }
+      ],
+      "stored_rewritten_ranks": {
+        "vector_rank": 13,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 13,
+        "rrf_score": 0.0136986301369863
+      },
+      "original_query_ranks": {
+        "vector_rank": 10,
+        "vector_score": 0.0026181012070921605,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 10,
+        "rrf_score": 0.014285714285714285
+      },
+      "expanded_limit_rewritten_ranks": {
+        "vector_rank": 13,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 13,
+        "rrf_score": 0.0136986301369863
+      },
+      "primary_type": "BM25_MISS_AND_VECTOR_NOT_TOP3",
+      "secondary_types": [
+        "QUERY_REWRITE_RANK_DROP",
+        "CANDIDATE_LIMIT_NOT_RELEVANT_PROJECT_SMALL",
+        "VECTOR_NOT_TOP3",
+        "BM25_MISS"
+      ],
+      "analysis_summary": "정답이 BM25에는 잡히지 않았고 Vector에서도 Top3 밖이라 RRF 합산에서 보강 신호가 없었다. vector_rank=13, bm25_rank=None, rrf_rank=13."
+    },
+    {
+      "case_key": "retrieval_eval_v1_same_error_different_cause_010",
+      "category": "same_error_different_cause",
+      "project_name": "data-portal",
+      "project_incident_count": 14,
+      "original_query": "데이터 포털 Redis 클라이언트 수 제한에 걸린 장애",
+      "rewritten_query": "데이터 포털 Redis 클라이언트 수 제한 장애 원인",
+      "expected_incident_id": "f0ec1c83-4ae3-4841-8446-a9f29dc2c5c8",
+      "incident": {
+        "project_name": "data-portal",
+        "summary": null,
+        "error_type": "RedisConnectionException",
+        "error_message": "ERR max number of clients reached",
+        "keywords": [],
+        "domain_tags": [],
+        "root_cause": null,
+        "resolution": "src/main/java/com/example/cache/DataRedisCacheClient.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+      },
+      "stored_rrf_top3_candidates": [
+        {
+          "rank": 1,
+          "incident_id": "072e1cca-72be-4116-b1de-618b9b42c499",
+          "vector_score": 0.34229069344677954,
+          "bm25_score": 2.0212057,
+          "rrf_score": 0.03278688524590164,
+          "incident": {
+            "project_name": "data-portal",
+            "summary": "AuthService 클래스의 login 메서드에서 ClassNotFoundException이 발생했습니다.",
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "keywords": [
+              "AuthService",
+              "ClassNotFoundException",
+              "ERROR",
+              "com.example.auth.JwtTokenProvider",
+              "login",
+              "stack trace",
+              "로그인",
+              "인증 오류",
+              "장애",
+              "JwtTokenProvider"
+            ],
+            "domain_tags": [
+              "auth",
+              "login"
+            ],
+            "root_cause": null,
+            "resolution": "빌드 설정에 JwtTokenProvider 라이브러리를 추가하고 AuthService 클래스에서 JwtTokenProvider 로딩 코드를 수정하여 오류를 해결했습니다."
+          }
+        },
+        {
+          "rank": 2,
+          "incident_id": "7f929778-811d-4ec0-b344-74f54f61b5aa",
+          "vector_score": 0.27921979826138,
+          "bm25_score": null,
+          "rrf_score": 0.016129032258064516,
+          "incident": {
+            "project_name": "data-portal",
+            "summary": "2026년 5월 7일 10시 05분에 PaymentService 클래스의 pay 메서드에서 NullPointerException 예외가 발생했습니다.",
+            "error_type": "NullPointerException",
+            "error_message": "payment request is null",
+            "keywords": [
+              "ERROR",
+              "NullPointerException",
+              "PaymentService",
+              "pay",
+              "payment request is null",
+              "null",
+              "payment request",
+              "결제 실패",
+              "로그"
+            ],
+            "domain_tags": [
+              "payment"
+            ],
+            "root_cause": null,
+            "resolution": null
+          }
+        },
+        {
+          "rank": 3,
+          "incident_id": "dcfcf63e-ab2e-47df-8bd8-d25c16d88dc4",
+          "vector_score": 0.053366140830139575,
+          "bm25_score": null,
+          "rrf_score": 0.015873015873015872,
+          "incident": {
+            "project_name": "data-portal",
+            "summary": null,
+            "error_type": "TimeoutException",
+            "error_message": "partner profile API timed out after 3000ms",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": "src/main/java/com/example/integration/DataPartnerApiClient.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+          }
+        }
+      ],
+      "stored_rewritten_ranks": {
+        "vector_rank": 11,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 11,
+        "rrf_score": 0.014084507042253521
+      },
+      "original_query_ranks": {
+        "vector_rank": 12,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 12,
+        "rrf_score": 0.013888888888888888
+      },
+      "expanded_limit_rewritten_ranks": {
+        "vector_rank": 11,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 11,
+        "rrf_score": 0.014084507042253521
+      },
+      "primary_type": "BM25_MISS_AND_VECTOR_NOT_TOP3",
+      "secondary_types": [
+        "CANDIDATE_LIMIT_NOT_RELEVANT_PROJECT_SMALL",
+        "VECTOR_NOT_TOP3",
+        "BM25_MISS"
+      ],
+      "analysis_summary": "정답이 BM25에는 잡히지 않았고 Vector에서도 Top3 밖이라 RRF 합산에서 보강 신호가 없었다. vector_rank=11, bm25_rank=None, rrf_rank=11."
+    },
+    {
+      "case_key": "retrieval_eval_v1_semantic_paraphrase_003",
+      "category": "semantic_paraphrase",
+      "project_name": "data-portal",
+      "project_incident_count": 14,
+      "original_query": "리포트 조회에서 없는 상태 컬럼 때문에 터진 사례 찾아줘",
+      "rewritten_query": "리포트 조회 상태 컬럼 없어서 오류 사례",
+      "expected_incident_id": "3caa466f-49bd-4762-bb00-d4f27ac9f314",
+      "incident": {
+        "project_name": "data-portal",
+        "summary": null,
+        "error_type": "SQLGrammarException",
+        "error_message": "column report_status_cd does not exist",
+        "keywords": [],
+        "domain_tags": [],
+        "root_cause": null,
+        "resolution": "src/main/java/com/example/report/DataReportQueryRepository.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+      },
+      "stored_rrf_top3_candidates": [
+        {
+          "rank": 1,
+          "incident_id": "072e1cca-72be-4116-b1de-618b9b42c499",
+          "vector_score": 0.29666513873526423,
+          "bm25_score": 2.0212057,
+          "rrf_score": 0.03252247488101534,
+          "incident": {
+            "project_name": "data-portal",
+            "summary": "AuthService 클래스의 login 메서드에서 ClassNotFoundException이 발생했습니다.",
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "keywords": [
+              "AuthService",
+              "ClassNotFoundException",
+              "ERROR",
+              "com.example.auth.JwtTokenProvider",
+              "login",
+              "stack trace",
+              "로그인",
+              "인증 오류",
+              "장애",
+              "JwtTokenProvider"
+            ],
+            "domain_tags": [
+              "auth",
+              "login"
+            ],
+            "root_cause": null,
+            "resolution": "빌드 설정에 JwtTokenProvider 라이브러리를 추가하고 AuthService 클래스에서 JwtTokenProvider 로딩 코드를 수정하여 오류를 해결했습니다."
+          }
+        },
+        {
+          "rank": 2,
+          "incident_id": "7f929778-811d-4ec0-b344-74f54f61b5aa",
+          "vector_score": 0.32791977009199846,
+          "bm25_score": null,
+          "rrf_score": 0.01639344262295082,
+          "incident": {
+            "project_name": "data-portal",
+            "summary": "2026년 5월 7일 10시 05분에 PaymentService 클래스의 pay 메서드에서 NullPointerException 예외가 발생했습니다.",
+            "error_type": "NullPointerException",
+            "error_message": "payment request is null",
+            "keywords": [
+              "ERROR",
+              "NullPointerException",
+              "PaymentService",
+              "pay",
+              "payment request is null",
+              "null",
+              "payment request",
+              "결제 실패",
+              "로그"
+            ],
+            "domain_tags": [
+              "payment"
+            ],
+            "root_cause": null,
+            "resolution": null
+          }
+        },
+        {
+          "rank": 3,
+          "incident_id": "14861fa5-b251-48a5-822b-947f83fc8e34",
+          "vector_score": 0.04038147215702437,
+          "bm25_score": null,
+          "rrf_score": 0.015873015873015872,
+          "incident": {
+            "project_name": "data-portal",
+            "summary": null,
+            "error_type": "FileNotFoundException",
+            "error_message": "/etc/incidentlens/feature-flags.yml",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": "src/main/java/com/example/config/DataFeatureFlagLoader.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+          }
+        }
+      ],
+      "stored_rewritten_ranks": {
+        "vector_rank": 5,
+        "vector_score": 0.015694288063916817,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 5,
+        "rrf_score": 0.015384615384615385
+      },
+      "original_query_ranks": {
+        "vector_rank": 4,
+        "vector_score": 0.03024081825016267,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 4,
+        "rrf_score": 0.015625
+      },
+      "expanded_limit_rewritten_ranks": {
+        "vector_rank": 5,
+        "vector_score": 0.015920661451723994,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 5,
+        "rrf_score": 0.015384615384615385
+      },
+      "primary_type": "BM25_MISS_AND_VECTOR_NOT_TOP3",
+      "secondary_types": [
+        "QUERY_REWRITE_RANK_DROP",
+        "CANDIDATE_LIMIT_NOT_RELEVANT_PROJECT_SMALL",
+        "VECTOR_NOT_TOP3",
+        "BM25_MISS"
+      ],
+      "analysis_summary": "정답이 BM25에는 잡히지 않았고 Vector에서도 Top3 밖이라 RRF 합산에서 보강 신호가 없었다. vector_rank=5, bm25_rank=None, rrf_rank=5."
+    },
+    {
+      "case_key": "retrieval_eval_v1_semantic_paraphrase_004",
+      "category": "semantic_paraphrase",
+      "project_name": "admin-portal",
+      "project_incident_count": 12,
+      "original_query": "관리자 권한이 있는데 리포트 접근이 막힌 장애 원인이 뭐야?",
+      "rewritten_query": "관리자 권한 리포트 접근 차단 원인",
+      "expected_incident_id": "433dff0c-eeaf-481f-99cf-b9d041befd1e",
+      "incident": {
+        "project_name": "admin-portal",
+        "summary": null,
+        "error_type": "AccessDeniedException",
+        "error_message": "role REPORT_ADMIN required",
+        "keywords": [],
+        "domain_tags": [],
+        "root_cause": null,
+        "resolution": null
+      },
+      "stored_rrf_top3_candidates": [
+        {
+          "rank": 1,
+          "incident_id": "313f2864-d8a0-480c-a487-d7fb5afa81b9",
+          "vector_score": 0.04271054396402285,
+          "bm25_score": null,
+          "rrf_score": 0.01639344262295082,
+          "incident": {
+            "project_name": "admin-portal",
+            "summary": null,
+            "error_type": "KafkaSerializationException",
+            "error_message": "cannot serialize schema version v3",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": "src/main/java/com/example/stream/AdminKafkaEventPublisher.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+          }
+        },
+        {
+          "rank": 2,
+          "incident_id": "c4a14ead-6af3-4a3f-98a9-99899d5cc1f4",
+          "vector_score": 0.04103974511861752,
+          "bm25_score": null,
+          "rrf_score": 0.016129032258064516,
+          "incident": {
+            "project_name": "admin-portal",
+            "summary": null,
+            "error_type": "NullPointerException",
+            "error_message": "paymentMethod is null",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": "src/main/java/com/example/payment/AdminPaymentService.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+          }
+        },
+        {
+          "rank": 3,
+          "incident_id": "7efeab5b-e531-496c-8a41-69d72e239439",
+          "vector_score": 0.03070753213056876,
+          "bm25_score": null,
+          "rrf_score": 0.015873015873015872,
+          "incident": {
+            "project_name": "admin-portal",
+            "summary": null,
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": "src/main/java/com/example/auth/AdminAuthService.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+          }
+        }
+      ],
+      "stored_rewritten_ranks": {
+        "vector_rank": 8,
+        "vector_score": 0.017003693703032452,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 8,
+        "rrf_score": 0.014705882352941176
+      },
+      "original_query_ranks": {
+        "vector_rank": 7,
+        "vector_score": 0.017875108888390834,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 7,
+        "rrf_score": 0.014925373134328358
+      },
+      "expanded_limit_rewritten_ranks": {
+        "vector_rank": 8,
+        "vector_score": 0.017003693703032452,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 8,
+        "rrf_score": 0.014705882352941176
+      },
+      "primary_type": "BM25_MISS_AND_VECTOR_NOT_TOP3",
+      "secondary_types": [
+        "QUERY_REWRITE_RANK_DROP",
+        "CANDIDATE_LIMIT_NOT_RELEVANT_PROJECT_SMALL",
+        "VECTOR_NOT_TOP3",
+        "BM25_MISS"
+      ],
+      "analysis_summary": "정답이 BM25에는 잡히지 않았고 Vector에서도 Top3 밖이라 RRF 합산에서 보강 신호가 없었다. vector_rank=8, bm25_rank=None, rrf_rank=8."
+    },
+    {
+      "case_key": "retrieval_eval_v1_semantic_paraphrase_005",
+      "category": "semantic_paraphrase",
+      "project_name": "admin-portal",
+      "project_incident_count": 12,
+      "original_query": "외부 HTTPS 호출에서 인증서 체인 문제로 실패한 건 어떻게 처리했어?",
+      "rewritten_query": "외부 HTTPS 호출 인증서 체인 문제 해결 방법",
+      "expected_incident_id": "1e841c64-16f9-44e8-a856-a636ca807f1b",
+      "incident": {
+        "project_name": "admin-portal",
+        "summary": null,
+        "error_type": "SSLHandshakeException",
+        "error_message": "PKIX path building failed",
+        "keywords": [],
+        "domain_tags": [],
+        "root_cause": null,
+        "resolution": null
+      },
+      "stored_rrf_top3_candidates": [
+        {
+          "rank": 1,
+          "incident_id": "ddf82944-5f08-46f8-9e95-f6b3ddafa590",
+          "vector_score": 0.04322738708537033,
+          "bm25_score": null,
+          "rrf_score": 0.01639344262295082,
+          "incident": {
+            "project_name": "admin-portal",
+            "summary": null,
+            "error_type": "TimeoutException",
+            "error_message": "partner profile API timed out after 3000ms",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": "src/main/java/com/example/integration/AdminPartnerApiClient.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+          }
+        },
+        {
+          "rank": 2,
+          "incident_id": "6f48f638-1d3f-46af-bd87-a77f17652e57",
+          "vector_score": 0.042255563936701934,
+          "bm25_score": null,
+          "rrf_score": 0.016129032258064516,
+          "incident": {
+            "project_name": "admin-portal",
+            "summary": null,
+            "error_type": "RedisConnectionException",
+            "error_message": "ERR max number of clients reached",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": "src/main/java/com/example/cache/AdminRedisCacheClient.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+          }
+        },
+        {
+          "rank": 3,
+          "incident_id": "b343b1f2-3972-4349-8c26-5027276b68f1",
+          "vector_score": 0.029195539356027478,
+          "bm25_score": null,
+          "rrf_score": 0.015873015873015872,
+          "incident": {
+            "project_name": "admin-portal",
+            "summary": null,
+            "error_type": "SQLGrammarException",
+            "error_message": "column report_status_cd does not exist",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": "src/main/java/com/example/report/AdminReportQueryRepository.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+          }
+        }
+      ],
+      "stored_rewritten_ranks": {
+        "vector_rank": 9,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 9,
+        "rrf_score": 0.014492753623188406
+      },
+      "original_query_ranks": {
+        "vector_rank": 9,
+        "vector_score": 0.0022685014584336027,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 9,
+        "rrf_score": 0.014492753623188406
+      },
+      "expanded_limit_rewritten_ranks": {
+        "vector_rank": 9,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 9,
+        "rrf_score": 0.014492753623188406
+      },
+      "primary_type": "BM25_MISS_AND_VECTOR_NOT_TOP3",
+      "secondary_types": [
+        "CANDIDATE_LIMIT_NOT_RELEVANT_PROJECT_SMALL",
+        "VECTOR_NOT_TOP3",
+        "BM25_MISS"
+      ],
+      "analysis_summary": "정답이 BM25에는 잡히지 않았고 Vector에서도 Top3 밖이라 RRF 합산에서 보강 신호가 없었다. vector_rank=9, bm25_rank=None, rrf_rank=9."
+    },
+    {
+      "case_key": "retrieval_eval_v1_semantic_paraphrase_006",
+      "category": "semantic_paraphrase",
+      "project_name": "batch-platform",
+      "project_incident_count": 12,
+      "original_query": "배치 이벤트 발행 중 스키마 버전이 안 맞아서 직렬화가 실패한 사례",
+      "rewritten_query": "배치 이벤트 발행 스키마 버전 불일치 직렬화 실패 사례",
+      "expected_incident_id": "f7684112-d72d-4bc2-a9c6-162002937333",
+      "incident": {
+        "project_name": "batch-platform",
+        "summary": null,
+        "error_type": "KafkaSerializationException",
+        "error_message": "cannot serialize schema version v3",
+        "keywords": [],
+        "domain_tags": [],
+        "root_cause": null,
+        "resolution": null
+      },
+      "stored_rrf_top3_candidates": [
+        {
+          "rank": 1,
+          "incident_id": "e89555ef-89a2-4c64-91a8-3f268bf8ea7a",
+          "vector_score": 0.03189378129636977,
+          "bm25_score": null,
+          "rrf_score": 0.01639344262295082,
+          "incident": {
+            "project_name": "batch-platform",
+            "summary": null,
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": null
+          }
+        },
+        {
+          "rank": 2,
+          "incident_id": "d4253455-0df0-4733-8c52-a768a47d47f9",
+          "vector_score": 0.0264784308317072,
+          "bm25_score": null,
+          "rrf_score": 0.016129032258064516,
+          "incident": {
+            "project_name": "batch-platform",
+            "summary": null,
+            "error_type": "OptimisticLockException",
+            "error_message": "row was updated or deleted by another transaction",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": null
+          }
+        },
+        {
+          "rank": 3,
+          "incident_id": "ed080f24-e33f-4a24-9df8-0c0d5b22b93b",
+          "vector_score": 0.015271025964320506,
+          "bm25_score": null,
+          "rrf_score": 0.015873015873015872,
+          "incident": {
+            "project_name": "batch-platform",
+            "summary": null,
+            "error_type": "ContainerExitError",
+            "error_message": "Docker container exited with code 137",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": null
+          }
+        }
+      ],
+      "stored_rewritten_ranks": {
+        "vector_rank": 10,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 10,
+        "rrf_score": 0.014285714285714285
+      },
+      "original_query_ranks": {
+        "vector_rank": 9,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 9,
+        "rrf_score": 0.014492753623188406
+      },
+      "expanded_limit_rewritten_ranks": {
+        "vector_rank": 10,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 10,
+        "rrf_score": 0.014285714285714285
+      },
+      "primary_type": "BM25_MISS_AND_VECTOR_NOT_TOP3",
+      "secondary_types": [
+        "QUERY_REWRITE_RANK_DROP",
+        "CANDIDATE_LIMIT_NOT_RELEVANT_PROJECT_SMALL",
+        "VECTOR_NOT_TOP3",
+        "BM25_MISS"
+      ],
+      "analysis_summary": "정답이 BM25에는 잡히지 않았고 Vector에서도 Top3 밖이라 RRF 합산에서 보강 신호가 없었다. vector_rank=10, bm25_rank=None, rrf_rank=10."
+    },
+    {
+      "case_key": "retrieval_eval_v1_semantic_paraphrase_009",
+      "category": "semantic_paraphrase",
+      "project_name": "data-portal",
+      "project_incident_count": 14,
+      "original_query": "Redis 접속 수가 꽉 차서 캐시 조회가 실패한 장애 해결 내용",
+      "rewritten_query": "Redis 접속 수 초과 캐시 조회 실패 해결 방법",
+      "expected_incident_id": "f0ec1c83-4ae3-4841-8446-a9f29dc2c5c8",
+      "incident": {
+        "project_name": "data-portal",
+        "summary": null,
+        "error_type": "RedisConnectionException",
+        "error_message": "ERR max number of clients reached",
+        "keywords": [],
+        "domain_tags": [],
+        "root_cause": null,
+        "resolution": "src/main/java/com/example/cache/DataRedisCacheClient.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+      },
+      "stored_rrf_top3_candidates": [
+        {
+          "rank": 1,
+          "incident_id": "7f929778-811d-4ec0-b344-74f54f61b5aa",
+          "vector_score": 0.22708110371735912,
+          "bm25_score": 2.1220152,
+          "rrf_score": 0.03252247488101534,
+          "incident": {
+            "project_name": "data-portal",
+            "summary": "2026년 5월 7일 10시 05분에 PaymentService 클래스의 pay 메서드에서 NullPointerException 예외가 발생했습니다.",
+            "error_type": "NullPointerException",
+            "error_message": "payment request is null",
+            "keywords": [
+              "ERROR",
+              "NullPointerException",
+              "PaymentService",
+              "pay",
+              "payment request is null",
+              "null",
+              "payment request",
+              "결제 실패",
+              "로그"
+            ],
+            "domain_tags": [
+              "payment"
+            ],
+            "root_cause": null,
+            "resolution": null
+          }
+        },
+        {
+          "rank": 2,
+          "incident_id": "072e1cca-72be-4116-b1de-618b9b42c499",
+          "vector_score": 0.27408388037323417,
+          "bm25_score": null,
+          "rrf_score": 0.01639344262295082,
+          "incident": {
+            "project_name": "data-portal",
+            "summary": "AuthService 클래스의 login 메서드에서 ClassNotFoundException이 발생했습니다.",
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "keywords": [
+              "AuthService",
+              "ClassNotFoundException",
+              "ERROR",
+              "com.example.auth.JwtTokenProvider",
+              "login",
+              "stack trace",
+              "로그인",
+              "인증 오류",
+              "장애",
+              "JwtTokenProvider"
+            ],
+            "domain_tags": [
+              "auth",
+              "login"
+            ],
+            "root_cause": null,
+            "resolution": "빌드 설정에 JwtTokenProvider 라이브러리를 추가하고 AuthService 클래스에서 JwtTokenProvider 로딩 코드를 수정하여 오류를 해결했습니다."
+          }
+        },
+        {
+          "rank": 3,
+          "incident_id": "074fa857-4bf2-4ba1-9c42-b5db1f97cb2e",
+          "vector_score": 0.03800936832514856,
+          "bm25_score": null,
+          "rrf_score": 0.015873015873015872,
+          "incident": {
+            "project_name": "data-portal",
+            "summary": null,
+            "error_type": "JsonMappingException",
+            "error_message": "Cannot deserialize value of type EventStatus",
+            "keywords": [],
+            "domain_tags": [],
+            "root_cause": null,
+            "resolution": "src/main/java/com/example/api/DataWebhookController.java (modified, +2/-1): @@ -20,6 +20,10 @@"
+          }
+        }
+      ],
+      "stored_rewritten_ranks": {
+        "vector_rank": 14,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 14,
+        "rrf_score": 0.013513513513513514
+      },
+      "original_query_ranks": {
+        "vector_rank": 13,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 13,
+        "rrf_score": 0.0136986301369863
+      },
+      "expanded_limit_rewritten_ranks": {
+        "vector_rank": 14,
+        "vector_score": 0.0,
+        "bm25_rank": null,
+        "bm25_score": null,
+        "rrf_rank": 14,
+        "rrf_score": 0.013513513513513514
+      },
+      "primary_type": "BM25_MISS_AND_VECTOR_NOT_TOP3",
+      "secondary_types": [
+        "QUERY_REWRITE_RANK_DROP",
+        "CANDIDATE_LIMIT_NOT_RELEVANT_PROJECT_SMALL",
+        "VECTOR_NOT_TOP3",
+        "BM25_MISS"
+      ],
+      "analysis_summary": "정답이 BM25에는 잡히지 않았고 Vector에서도 Top3 밖이라 RRF 합산에서 보강 신호가 없었다. vector_rank=14, bm25_rank=None, rrf_rank=14."
+    }
+  ]
+}

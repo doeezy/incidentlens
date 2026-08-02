@@ -38,6 +38,12 @@ ENV/
 .coverage
 htmlcov/
 
+# Frontend
+node_modules/
+dist/
+screenshots/
+*.tsbuildinfo
+
 # IDE / OS
 .idea/
 .vscode/

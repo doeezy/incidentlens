@@ -1,0 +1,3632 @@
+{
+  "generated_at": "2026-08-01T11:36:08.189468+00:00",
+  "seed_marker": "seed=hybrid-search-v1",
+  "validation": {
+    "case_count": 46,
+    "distribution": {
+      "exact_keyword": 8,
+      "semantic_paraphrase": 10,
+      "same_error_different_cause": 10,
+      "cross_project_conflict": 6,
+      "ambiguous_query": 6,
+      "no_relevant_result": 6
+    },
+    "duplicate_case_key": false,
+    "duplicate_question": false,
+    "answerable_expected_ids_exist": true,
+    "no_result_expected_id_null": true
+  },
+  "cases": [
+    {
+      "case_key": "enriched_seed_v1_exact_keyword_001",
+      "category": "exact_keyword",
+      "project_name": "data-portal",
+      "question": "JwtTokenProvider ClassNotFoundException DataAuthService login",
+      "expected_incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+      "expected_incident_summary": "데이터 포털에서 auth 모듈의 DataAuthService 클래스 login 메서드에서 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 오류가 발생했다.",
+      "answer_basis": "Incident error_type=ClassNotFoundException, module=auth, class=DataAuthService | primary_error_message=com.example.auth.JwtTokenProvider | raw_log 근거: 데이터 포털에서 auth 모듈의 DataAuthService 클래스 login 메서드에서 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 오류가 발생했다.; 데이터 포털 로그인 인증 클래스 로딩 중 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 예외가 발생했다. | raw_ticket 근거: data-portal-service#910000 / 데이터 포털 로그인 인증 클래스인 JwtTokenProvider를 로딩하지 못하여 ClassNotFoundException 오류가 발생하였습니다. / cause=JwtTokenProvider 라이브러리 또는 패키지 경로가 런타임 classpath와 맞지 않았습니다. | raw_pr 근거: data-portal-service#920000 / 데이터 포털 로그인 인증 과정에서 JwtTokenProvider 클래스를 찾을 수 없는 문제를 빌드 의존성과 import 경로 수정으로 해결했다. / resolution=빌드 의존성과 import 경로를 정리하여 JwtTokenProvider 클래스 로딩 실패 문제를 해결하였다.",
+      "expected_no_result": false,
+      "expected_intent": "ROOT_CAUSE",
+      "difficulty": "easy",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+            "normalized_summary": "데이터 포털에서 auth 모듈의 DataAuthService 클래스 login 메서드에서 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 오류가 발생했다.",
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "extracted_keywords": [
+              "ClassNotFoundException",
+              "DataAuthService",
+              "ERROR",
+              "JwtTokenProvider",
+              "auth",
+              "login"
+            ],
+            "domain_tags": [
+              "authentication",
+              "data portal"
+            ]
+          },
+          {
+            "incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+            "normalized_summary": "데이터 포털 로그인 인증 클래스 로딩 중 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 예외가 발생했다.",
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "extracted_keywords": [
+              "ClassNotFoundException",
+              "DataAuthService",
+              "ERROR",
+              "com.example.auth.JwtTokenProvider",
+              "login"
+            ],
+            "domain_tags": [
+              "authentication",
+              "data portal"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+            "ticket_key": "data-portal-service#910000",
+            "title": "[hybrid-search-v1] 데이터 포털 로그인 인증 클래스 로딩 실패 - ClassNotFoundException",
+            "normalized_summary": "데이터 포털 로그인 인증 클래스인 JwtTokenProvider를 로딩하지 못하여 ClassNotFoundException 오류가 발생하였습니다.",
+            "suspected_cause": "JwtTokenProvider 라이브러리 또는 패키지 경로가 런타임 classpath와 맞지 않았습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "ClassNotFoundException",
+              "JwtTokenProvider",
+              "data-portal",
+              "hybrid-search-v1",
+              "login"
+            ],
+            "domain_tags": [
+              "login"
+            ]
+          }
+        ],
+        "prs": [
+          {
+            "incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+            "pr_key": "data-portal-service#920000",
+            "title": "[hybrid-search-v1] fix: 데이터 포털 로그인 인증 클래스 로딩 실패",
+            "status": "merged",
+            "normalized_summary": "데이터 포털 로그인 인증 과정에서 JwtTokenProvider 클래스를 찾을 수 없는 문제를 빌드 의존성과 import 경로 수정으로 해결했다.",
+            "suspected_fix_for": "JwtTokenProvider 라이브러리 또는 패키지 경로가 런타임 classpath와 맞지 않아 발생한 ClassNotFoundException 문제를 해결하기 위함.",
+            "resolution_note": "빌드 의존성과 import 경로를 정리하여 JwtTokenProvider 클래스 로딩 실패 문제를 해결하였다.",
+            "diff_summary": "src/main/java/com/example/auth/DataAuthService.java 파일에서 JwtTokenProvider 클래스 로딩 실패를 일으키는 ClassNotFoundException 발생 코드를 제거하고, 빌드 의존성과 import 경로를 정리하는 주석 추가 및 메트릭 증가 코드를 삽입하였다.",
+            "changed_files": [
+              "src/main/java/com/example/auth/DataAuthService.java"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_exact_keyword_002",
+      "category": "exact_keyword",
+      "project_name": "data-portal",
+      "question": "paymentMethod NullPointerException PAY-4021 DataPaymentService",
+      "expected_incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+      "expected_incident_summary": "데이터 포털 결제 승인 중 NullPointerException이 발생하였다.",
+      "answer_basis": "Incident error_type=NullPointerException, module=payment, class=DataPaymentService | primary_error_message=paymentMethod is null | raw_log 근거: 데이터 포털 결제 승인 중 NullPointerException이 발생하였다.; 데이터 포털 결제 승인 중 NullPointerException이 발생하였다. | raw_ticket 근거: data-portal-service#910001 / 데이터 포털 결제 승인 중 paymentMethod가 null 참조되어 NullPointerException이 발생했습니다. / cause=결제 수단 검증 전에 paymentMethod를 참조했습니다. | raw_pr 근거: data-portal-service#920001 / 데이터 포털 결제 승인 과정에서 paymentMethod 널 참조 문제를 방지하도록 null 검사 및 기본값 검증 기능을 추가하였다. / resolution=paymentMethod에 대해 null guard와 기본값 검증을 추가하여 NullPointerException 발생을 방지함.",
+      "expected_no_result": false,
+      "expected_intent": "ROOT_CAUSE",
+      "difficulty": "easy",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+            "normalized_summary": "데이터 포털 결제 승인 중 NullPointerException이 발생하였다.",
+            "error_type": "NullPointerException",
+            "error_message": "paymentMethod is null",
+            "extracted_keywords": [
+              "NullPointerException",
+              "approve",
+              "paymentMethod",
+              "결제"
+            ],
+            "domain_tags": [
+              "payment"
+            ]
+          },
+          {
+            "incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+            "normalized_summary": "데이터 포털 결제 승인 중 NullPointerException이 발생하였다.",
+            "error_type": "NullPointerException",
+            "error_message": "paymentMethod is null",
+            "extracted_keywords": [
+              "DataPaymentService",
+              "NullPointerException",
+              "approve",
+              "paymentMethod"
+            ],
+            "domain_tags": [
+              "payment"
+            ]
+          },
+          {
+            "incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+            "normalized_summary": "데이터 포털 결제 모듈의 DataPaymentService 클래스에서 approve 메서드 실행 중 NullPointerException이 발생하였다.",
+            "error_type": "NullPointerException",
+            "error_message": "paymentMethod is null",
+            "extracted_keywords": [
+              "DataPaymentService",
+              "NullPointerException",
+              "approve",
+              "payment",
+              "paymentMethod is null"
+            ],
+            "domain_tags": [
+              "payment"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+            "ticket_key": "data-portal-service#910001",
+            "title": "[hybrid-search-v1] 데이터 포털 결제 승인 중 널 참조 - NullPointerException",
+            "normalized_summary": "데이터 포털 결제 승인 중 paymentMethod가 null 참조되어 NullPointerException이 발생했습니다.",
+            "suspected_cause": "결제 수단 검증 전에 paymentMethod를 참조했습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "NullPointerException",
+              "PAY-4021",
+              "data-portal",
+              "hybrid-search-v1",
+              "paymentMethod"
+            ],
+            "domain_tags": [
+              "payment"
+            ]
+          }
+        ],
+        "prs": [
+          {
+            "incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+            "pr_key": "data-portal-service#920001",
+            "title": "[hybrid-search-v1] fix: 데이터 포털 결제 승인 중 널 참조",
+            "status": "merged",
+            "normalized_summary": "데이터 포털 결제 승인 과정에서 paymentMethod 널 참조 문제를 방지하도록 null 검사 및 기본값 검증 기능을 추가하였다.",
+            "suspected_fix_for": "결제 수단 검증 전에 paymentMethod를 참조하여 발생한 NullPointerException 문제를 해결함.",
+            "resolution_note": "paymentMethod에 대해 null guard와 기본값 검증을 추가하여 NullPointerException 발생을 방지함.",
+            "diff_summary": "src/main/java/com/example/payment/DataPaymentService.java 파일에서 기존에 있던 'paymentMethod is null'에 대한 NullPointerException 발생 코드를 수정하여 null guard와 결제 수단 기본값 검증 로직을 2줄 추가하고 관련 지표(metric) 카운트를 증가시키는 코드를 삽입함.",
+            "changed_files": [
+              "src/main/java/com/example/payment/DataPaymentService.java"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_exact_keyword_003",
+      "category": "exact_keyword",
+      "project_name": "data-portal",
+      "question": "report_status_cd SQLGrammarException DataReportQueryRepository",
+      "expected_incident_id": "f9df2095-fd02-44e7-8bdb-366bfe3e13f5",
+      "expected_incident_summary": "데이터 포털 리포트 조회 중 SQL 컬럼 오류가 발생하였다.",
+      "answer_basis": "Incident error_type=SQLGrammarException, module=report, class=DataReportQueryRepository | primary_error_message=column report_status_cd does not exist | raw_log 근거: 데이터 포털 리포트 조회 중 SQL 컬럼 오류가 발생하였다.; 데이터 포털 리포트 조회 시 컬럼 오류가 발생하였으며 SQLGrammarException 예외가 발생하였다. | raw_ticket 근거: data-portal-service#910003 / 데이터 포털 리포트 조회 시 SQL 쿼리의 컬럼명이 변경되었으나 쿼리가 갱신되지 않아 SQLGrammarException 오류가 발생하였다. / cause=마이그레이션 후 컬럼명이 report_state_cd로 바뀌었지만 쿼리가 갱신되지 않았습니다. | raw_pr 근거: data-portal-service#920003 / 데이터 포털 리포트 조회 시 발생한 SQL 컬럼명 오류를 수정하기 위해 쿼리와 매핑 DTO 내 컬럼명을 report_state_cd로 변경하였다. / resolution=마이그레이션으로 변경된 컬럼명 report_state_cd에 맞게 쿼리 컬럼명과 매핑 DTO를 수정하여 오류를 해결함",
+      "expected_no_result": false,
+      "expected_intent": "ROOT_CAUSE",
+      "difficulty": "easy",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "f9df2095-fd02-44e7-8bdb-366bfe3e13f5",
+            "normalized_summary": "데이터 포털 리포트 조회 중 SQL 컬럼 오류가 발생하였다.",
+            "error_type": "SQLGrammarException",
+            "error_message": "column report_status_cd does not exist",
+            "extracted_keywords": [
+              "DataReportQueryRepository",
+              "SQLGrammarException",
+              "column report_status_cd",
+              "findDaily",
+              "report"
+            ],
+            "domain_tags": [
+              "data_portal"
+            ]
+          },
+          {
+            "incident_id": "f9df2095-fd02-44e7-8bdb-366bfe3e13f5",
+            "normalized_summary": "데이터 포털 리포트 조회 시 컬럼 오류가 발생하였으며 SQLGrammarException 예외가 발생하였다.",
+            "error_type": "SQLGrammarException",
+            "error_message": "column report_status_cd does not exist",
+            "extracted_keywords": [
+              "DataReportQueryRepository",
+              "ERROR",
+              "SQLGrammarException",
+              "column report_status_cd does not exist",
+              "findDaily"
+            ],
+            "domain_tags": [
+              "data portal"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "f9df2095-fd02-44e7-8bdb-366bfe3e13f5",
+            "ticket_key": "data-portal-service#910003",
+            "title": "[hybrid-search-v1] 데이터 포털 리포트 조회 SQL 컬럼 오류 - SQLGrammarException",
+            "normalized_summary": "데이터 포털 리포트 조회 시 SQL 쿼리의 컬럼명이 변경되었으나 쿼리가 갱신되지 않아 SQLGrammarException 오류가 발생하였다.",
+            "suspected_cause": "마이그레이션 후 컬럼명이 report_state_cd로 바뀌었지만 쿼리가 갱신되지 않았습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "SQLGrammarException",
+              "data-portal",
+              "hybrid-search-v1",
+              "report_state_cd",
+              "report_status_cd",
+              "리포트 화면 500"
+            ],
+            "domain_tags": [
+              "data-portal"
+            ]
+          }
+        ],
+        "prs": [
+          {
+            "incident_id": "f9df2095-fd02-44e7-8bdb-366bfe3e13f5",
+            "pr_key": "data-portal-service#920003",
+            "title": "[hybrid-search-v1] fix: 데이터 포털 리포트 조회 SQL 컬럼 오류",
+            "status": "merged",
+            "normalized_summary": "데이터 포털 리포트 조회 시 발생한 SQL 컬럼명 오류를 수정하기 위해 쿼리와 매핑 DTO 내 컬럼명을 report_state_cd로 변경하였다.",
+            "suspected_fix_for": "SQL 쿼리에서 존재하지 않는 컬럼 report_status_cd 사용으로 인한 SQLGrammarException 오류",
+            "resolution_note": "마이그레이션으로 변경된 컬럼명 report_state_cd에 맞게 쿼리 컬럼명과 매핑 DTO를 수정하여 오류를 해결함",
+            "diff_summary": "DataReportQueryRepository.java 파일에서 SQL 쿼리 컬럼명을 report_status_cd에서 report_state_cd로 변경하고, 관련 매핑 DTO를 수정하였으며, 수정 건에 대한 메트릭을 추가함",
+            "changed_files": [
+              "src/main/java/com/example/report/DataReportQueryRepository.java"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_exact_keyword_004",
+      "category": "exact_keyword",
+      "project_name": "admin-portal",
+      "question": "REPORT_ADMIN AccessDeniedException AdminPermissionEvaluator",
+      "expected_incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+      "expected_incident_summary": "관리자 포털에서 보안 권한 검사 중 REPORT_ADMIN 역할이 필요하여 접근이 거부됨.",
+      "answer_basis": "Incident error_type=AccessDeniedException, module=security, class=AdminPermissionEvaluator | primary_error_message=role REPORT_ADMIN required | raw_log 근거: 관리자 포털에서 보안 권한 검사 중 REPORT_ADMIN 역할이 필요하여 접근이 거부됨.; 관리자 포털의 security 모듈 AdminPermissionEvaluator 클래스의 check 메서드에서 관리자 권한 검증 실패가 발생했다. | raw_ticket 근거: admin-portal-service#910020 / 관리자 포털에서 권한 검증 실패로 AccessDeniedException이 발생하였습니다. / cause=권한 role 매핑에서 신규 role이 누락되었습니다.",
+      "expected_no_result": false,
+      "expected_intent": "ROOT_CAUSE",
+      "difficulty": "easy",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+            "normalized_summary": "관리자 포털에서 보안 권한 검사 중 REPORT_ADMIN 역할이 필요하여 접근이 거부됨.",
+            "error_type": "AccessDeniedException",
+            "error_message": "role REPORT_ADMIN required",
+            "extracted_keywords": [
+              "AccessDeniedException",
+              "AdminPermissionEvaluator",
+              "REPORT_ADMIN",
+              "security"
+            ],
+            "domain_tags": [
+              "admin-portal"
+            ]
+          },
+          {
+            "incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+            "normalized_summary": "관리자 포털의 security 모듈 AdminPermissionEvaluator 클래스의 check 메서드에서 관리자 권한 검증 실패가 발생했다.",
+            "error_type": "AccessDeniedException",
+            "error_message": "role REPORT_ADMIN required",
+            "extracted_keywords": [
+              "AccessDeniedException",
+              "check",
+              "security",
+              "관리자 권한"
+            ],
+            "domain_tags": [
+              "admin_portal"
+            ]
+          },
+          {
+            "incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+            "normalized_summary": "관리자 포털 권한 검증 중 role REPORT_ADMIN 권한이 없어서 접근이 거부되었습니다.",
+            "error_type": "AccessDeniedException",
+            "error_message": "role REPORT_ADMIN required",
+            "extracted_keywords": [
+              "AccessDeniedException",
+              "admin_portal",
+              "role REPORT_ADMIN",
+              "권한 검증 실패"
+            ],
+            "domain_tags": [
+              "admin_portal"
+            ]
+          },
+          {
+            "incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+            "normalized_summary": "관리자 포털에서 AdminPermissionEvaluator 클래스의 check 메서드에서 권한 검증이 실패했다.",
+            "error_type": "AccessDeniedException",
+            "error_message": "role REPORT_ADMIN required",
+            "extracted_keywords": [
+              "AccessDeniedException",
+              "AdminPermissionEvaluator",
+              "check",
+              "role REPORT_ADMIN",
+              "권한 검증 실패"
+            ],
+            "domain_tags": [
+              "admin portal"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+            "ticket_key": "admin-portal-service#910020",
+            "title": "[hybrid-search-v1] 관리자 포털 권한 검증 실패 - AccessDeniedException",
+            "normalized_summary": "관리자 포털에서 권한 검증 실패로 AccessDeniedException이 발생하였습니다.",
+            "suspected_cause": "권한 role 매핑에서 신규 role이 누락되었습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "AccessDeniedException",
+              "REPORT_ADMIN",
+              "admin-portal",
+              "hybrid-search-v1",
+              "permission"
+            ],
+            "domain_tags": [
+              "auth"
+            ]
+          }
+        ],
+        "prs": []
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_exact_keyword_005",
+      "category": "exact_keyword",
+      "project_name": "admin-portal",
+      "question": "PKIX SSLHandshakeException AdminSecureHttpClient truststore",
+      "expected_incident_id": "b4a2517e-45da-4e5f-994c-c25309d6d7a0",
+      "expected_incident_summary": "관리자 포털에서 client 모듈의 AdminSecureHttpClient 클래스의 request 메서드에서 TLS 인증서 검증 실패와 SSLHandshakeException이 발생했다.",
+      "answer_basis": "Incident error_type=SSLHandshakeException, module=client, class=AdminSecureHttpClient | primary_error_message=PKIX path building failed | raw_log 근거: 관리자 포털에서 client 모듈의 AdminSecureHttpClient 클래스의 request 메서드에서 TLS 인증서 검증 실패와 SSLHandshakeException이 발생했다.; 관리자 포털 모듈의 AdminSecureHttpClient 클래스 request 메서드에서 TLS 인증서 검증 실패 오류가 발생하였다. | raw_ticket 근거: admin-portal-service#910023 / 관리자 포털에서 TLS 인증서 검증이 실패하여 SSLHandshakeException이 발생했습니다. / cause=신규 인증서 체인이 truststore에 반영되지 않았습니다.",
+      "expected_no_result": false,
+      "expected_intent": "ROOT_CAUSE",
+      "difficulty": "easy",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "b4a2517e-45da-4e5f-994c-c25309d6d7a0",
+            "normalized_summary": "관리자 포털에서 client 모듈의 AdminSecureHttpClient 클래스의 request 메서드에서 TLS 인증서 검증 실패와 SSLHandshakeException이 발생했다.",
+            "error_type": "SSLHandshakeException",
+            "error_message": "PKIX path building failed",
+            "extracted_keywords": [
+              "PKIX path building failed",
+              "SSLHandshakeException",
+              "TLS 인증서 검증"
+            ],
+            "domain_tags": [
+              "admin-portal"
+            ]
+          },
+          {
+            "incident_id": "b4a2517e-45da-4e5f-994c-c25309d6d7a0",
+            "normalized_summary": "관리자 포털 모듈의 AdminSecureHttpClient 클래스 request 메서드에서 TLS 인증서 검증 실패 오류가 발생하였다.",
+            "error_type": "SSLHandshakeException",
+            "error_message": "PKIX path building failed",
+            "extracted_keywords": [
+              "AdminSecureHttpClient",
+              "PKIX path building failed",
+              "SSLHandshakeException",
+              "TLS 인증서 검증 실패"
+            ],
+            "domain_tags": []
+          },
+          {
+            "incident_id": "b4a2517e-45da-4e5f-994c-c25309d6d7a0",
+            "normalized_summary": "관리자 포털에서 client 모듈의 AdminSecureHttpClient 클래스 request 메서드 실행 중 TLS 인증서 검증 실패 오류가 발생했다.",
+            "error_type": "SSLHandshakeException",
+            "error_message": "PKIX path building failed",
+            "extracted_keywords": [
+              "PKIX path building",
+              "SSLHandshakeException",
+              "TLS 인증서",
+              "검증 실패"
+            ],
+            "domain_tags": [
+              "admin-portal"
+            ]
+          },
+          {
+            "incident_id": "b4a2517e-45da-4e5f-994c-c25309d6d7a0",
+            "normalized_summary": "관리자 포털에서 client 모듈의 AdminSecureHttpClient 클래스 request 메서드에서 TLS 인증서 검증 실패가 발생하였다.",
+            "error_type": "SSLHandshakeException",
+            "error_message": "PKIX path building failed",
+            "extracted_keywords": [
+              "PKIX",
+              "SSLHandshakeException",
+              "TLS 인증서",
+              "인증서 체인 오류"
+            ],
+            "domain_tags": [
+              "admin portal"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "b4a2517e-45da-4e5f-994c-c25309d6d7a0",
+            "ticket_key": "admin-portal-service#910023",
+            "title": "[hybrid-search-v1] 관리자 포털 TLS 인증서 검증 실패 - SSLHandshakeException",
+            "normalized_summary": "관리자 포털에서 TLS 인증서 검증이 실패하여 SSLHandshakeException이 발생했습니다.",
+            "suspected_cause": "신규 인증서 체인이 truststore에 반영되지 않았습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "PKIX",
+              "SSLHandshakeException",
+              "TLS handshake",
+              "admin-portal",
+              "hybrid-search-v1",
+              "truststore"
+            ],
+            "domain_tags": []
+          }
+        ],
+        "prs": []
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_exact_keyword_006",
+      "category": "exact_keyword",
+      "project_name": "batch-platform",
+      "question": "KafkaSerializationException schema version v3 BatchKafkaEventPublisher",
+      "expected_incident_id": "8471ff53-d6e3-40d1-a7f7-9526d0698c0f",
+      "expected_incident_summary": "배치 플랫폼의 stream 모듈 BatchKafkaEventPublisher 클래스의 publish 메서드에서 Kafka 이벤트 직렬화 실패가 발생하였다.",
+      "answer_basis": "Incident error_type=KafkaSerializationException, module=stream, class=BatchKafkaEventPublisher | primary_error_message=cannot serialize schema version v3 | raw_log 근거: 배치 플랫폼의 stream 모듈 BatchKafkaEventPublisher 클래스의 publish 메서드에서 Kafka 이벤트 직렬화 실패가 발생하였다.; 배치 플랫폼에서 Kafka 이벤트 직렬화에 실패하였다. 스키마 버전 불일치가 원인이다.",
+      "expected_no_result": false,
+      "expected_intent": "ROOT_CAUSE",
+      "difficulty": "easy",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "8471ff53-d6e3-40d1-a7f7-9526d0698c0f",
+            "normalized_summary": "배치 플랫폼의 stream 모듈 BatchKafkaEventPublisher 클래스의 publish 메서드에서 Kafka 이벤트 직렬화 실패가 발생하였다.",
+            "error_type": "KafkaSerializationException",
+            "error_message": "cannot serialize schema version v3",
+            "extracted_keywords": [
+              "BatchKafkaEventPublisher",
+              "KafkaSerializationException",
+              "batch_platform",
+              "publish",
+              "stream",
+              "직렬화 실패"
+            ],
+            "domain_tags": [
+              "Kafka",
+              "batch platform"
+            ]
+          },
+          {
+            "incident_id": "8471ff53-d6e3-40d1-a7f7-9526d0698c0f",
+            "normalized_summary": "배치 플랫폼에서 Kafka 이벤트 직렬화에 실패하였다. 스키마 버전 불일치가 원인이다.",
+            "error_type": "KafkaSerializationException",
+            "error_message": "cannot serialize schema version v3",
+            "extracted_keywords": [
+              "Kafka",
+              "Serialization",
+              "batch platform",
+              "schema version v3"
+            ],
+            "domain_tags": [
+              "Kafka",
+              "batch platform"
+            ]
+          },
+          {
+            "incident_id": "8471ff53-d6e3-40d1-a7f7-9526d0698c0f",
+            "normalized_summary": "com.example.stream 모듈의 BatchKafkaEventPublisher 클래스 publish 메서드에서 KafkaSerializationException 예외가 발생했다.",
+            "error_type": "KafkaSerializationException",
+            "error_message": "cannot serialize schema version v3",
+            "extracted_keywords": [
+              "KafkaSerializationException",
+              "batch_platform-kafka-serialization",
+              "hybrid-search-v1",
+              "직렬화 실패"
+            ],
+            "domain_tags": [
+              "batch platform",
+              "kafka"
+            ]
+          }
+        ],
+        "tickets": [],
+        "prs": []
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_exact_keyword_007",
+      "category": "exact_keyword",
+      "project_name": "batch-platform",
+      "question": "Docker container exited code 137 BatchContainerSupervisor",
+      "expected_incident_id": "5a2d05f7-9c98-4790-996e-4da2d44e99f9",
+      "expected_incident_summary": "배치 플랫폼의 runtime 모듈 BatchContainerSupervisor 클래스의 watch 메서드에서 Docker 컨테이너가 코드 137로 종료되어 오류가 발생했다.",
+      "answer_basis": "Incident error_type=ContainerExitError, module=runtime, class=BatchContainerSupervisor | primary_error_message=Docker container exited with code 137 | raw_log 근거: 배치 플랫폼의 runtime 모듈 BatchContainerSupervisor 클래스의 watch 메서드에서 Docker 컨테이너가 코드 137로 종료되어 오류가 발생했다.; 배치 플랫폼 runtime 모듈의 BatchContainerSupervisor 클래스 watch 메서드에서 Docker 컨테이너가 코드 137로 종료되었다는 오류가 발생했다.",
+      "expected_no_result": false,
+      "expected_intent": "ROOT_CAUSE",
+      "difficulty": "easy",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "5a2d05f7-9c98-4790-996e-4da2d44e99f9",
+            "normalized_summary": "배치 플랫폼의 runtime 모듈 BatchContainerSupervisor 클래스의 watch 메서드에서 Docker 컨테이너가 코드 137로 종료되어 오류가 발생했다.",
+            "error_type": "ContainerExitError",
+            "error_message": "Docker container exited with code 137",
+            "extracted_keywords": [
+              "BatchContainerSupervisor",
+              "Docker",
+              "code 137",
+              "container",
+              "exit"
+            ],
+            "domain_tags": [
+              "batch platform"
+            ]
+          },
+          {
+            "incident_id": "5a2d05f7-9c98-4790-996e-4da2d44e99f9",
+            "normalized_summary": "배치 플랫폼 runtime 모듈의 BatchContainerSupervisor 클래스 watch 메서드에서 Docker 컨테이너가 코드 137로 종료되었다는 오류가 발생했다.",
+            "error_type": "ContainerExitError",
+            "error_message": "Docker container exited with code 137",
+            "extracted_keywords": [
+              "BatchContainerSupervisor",
+              "Docker",
+              "ERROR",
+              "code 137",
+              "container",
+              "exit",
+              "runtime",
+              "watch"
+            ],
+            "domain_tags": [
+              "batch platform",
+              "docker"
+            ]
+          }
+        ],
+        "tickets": [],
+        "prs": []
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_exact_keyword_008",
+      "category": "exact_keyword",
+      "project_name": "data-portal",
+      "question": "feature-flags.yml FileNotFoundException DataFeatureFlagLoader",
+      "expected_incident_id": "9fc155da-e5d2-4fc6-a724-7119e311c35a",
+      "expected_incident_summary": "데이터 포털에서 feature flag 설정 파일을 불러오는 중 설정 파일 누락 오류가 발생했다.",
+      "answer_basis": "Incident error_type=FileNotFoundException, module=config, class=DataFeatureFlagLoader | primary_error_message=/etc/incidentlens/feature-flags.yml | raw_log 근거: 데이터 포털에서 feature flag 설정 파일을 불러오는 중 설정 파일 누락 오류가 발생했다.; 데이터 포털 구성의 feature flag 설정 파일이 누락되어 로딩에 실패하였다. | raw_ticket 근거: data-portal-service#910005 / hybrid-search-v1에서 feature flag 설정 파일인 feature-flags.yml이 누락되어 발생한 FileNotFoundException 오류입니다. / cause=배포 이미지에 feature-flags.yml이 포함되지 않았습니다. | raw_pr 근거: data-portal-service#920005 / 데이터 포털의 feature flag 설정 파일 누락 문제를 해결하기 위해 컨테이너 이미지에 설정 파일을 포함하고 마운트 경로를 조정하는 코드를 수정했다. / resolution=컨테이너 이미지에 feature-flags.yml 설정 파일을 추가하고 설정 파일의 마운트 경로를 수정하여 FileNotFoundException 오류를 해결했다.",
+      "expected_no_result": false,
+      "expected_intent": "ROOT_CAUSE",
+      "difficulty": "easy",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "9fc155da-e5d2-4fc6-a724-7119e311c35a",
+            "normalized_summary": "데이터 포털에서 feature flag 설정 파일을 불러오는 중 설정 파일 누락 오류가 발생했다.",
+            "error_type": "FileNotFoundException",
+            "error_message": "/etc/incidentlens/feature-flags.yml",
+            "extracted_keywords": [
+              "FileNotFoundException",
+              "data-portal",
+              "feature flag",
+              "설정 파일"
+            ],
+            "domain_tags": [
+              "data-portal"
+            ]
+          },
+          {
+            "incident_id": "9fc155da-e5d2-4fc6-a724-7119e311c35a",
+            "normalized_summary": "데이터 포털 구성의 feature flag 설정 파일이 누락되어 로딩에 실패하였다.",
+            "error_type": "FileNotFoundException",
+            "error_message": "/etc/incidentlens/feature-flags.yml",
+            "extracted_keywords": [
+              "FileNotFoundException",
+              "data_portal",
+              "feature flag",
+              "설정 파일 누락"
+            ],
+            "domain_tags": [
+              "data portal"
+            ]
+          },
+          {
+            "incident_id": "9fc155da-e5d2-4fc6-a724-7119e311c35a",
+            "normalized_summary": "데이터 포털에서 feature flag 설정 파일이 누락되어 FileNotFoundException이 발생하였다.",
+            "error_type": "FileNotFoundException",
+            "error_message": "/etc/incidentlens/feature-flags.yml",
+            "extracted_keywords": [
+              "DataFeatureFlagLoader",
+              "FileNotFoundException",
+              "config",
+              "feature flag",
+              "load",
+              "설정 파일"
+            ],
+            "domain_tags": [
+              "data_portal"
+            ]
+          },
+          {
+            "incident_id": "9fc155da-e5d2-4fc6-a724-7119e311c35a",
+            "normalized_summary": "데이터 포털의 feature flag 설정 파일이 누락되어 feature flag 로딩에 실패했다.",
+            "error_type": "FileNotFoundException",
+            "error_message": "/etc/incidentlens/feature-flags.yml",
+            "extracted_keywords": [
+              "FileNotFoundException",
+              "feature flag",
+              "설정 파일 누락"
+            ],
+            "domain_tags": [
+              "data portal"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "9fc155da-e5d2-4fc6-a724-7119e311c35a",
+            "ticket_key": "data-portal-service#910005",
+            "title": "[hybrid-search-v1] 데이터 포털 feature flag 설정 파일 누락 - FileNotFoundException",
+            "normalized_summary": "hybrid-search-v1에서 feature flag 설정 파일인 feature-flags.yml이 누락되어 발생한 FileNotFoundException 오류입니다.",
+            "suspected_cause": "배포 이미지에 feature-flags.yml이 포함되지 않았습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "FileNotFoundException",
+              "data-portal",
+              "feature-flags.yml",
+              "hybrid-search-v1",
+              "설정 파일 없음"
+            ],
+            "domain_tags": []
+          }
+        ],
+        "prs": [
+          {
+            "incident_id": "9fc155da-e5d2-4fc6-a724-7119e311c35a",
+            "pr_key": "data-portal-service#920005",
+            "title": "[hybrid-search-v1] fix: 데이터 포털 feature flag 설정 파일 누락",
+            "status": "merged",
+            "normalized_summary": "데이터 포털의 feature flag 설정 파일 누락 문제를 해결하기 위해 컨테이너 이미지에 설정 파일을 포함하고 마운트 경로를 조정하는 코드를 수정했다.",
+            "suspected_fix_for": "데이터 포털에서 feature flag 설정 파일을 불러오는 중 '/etc/incidentlens/feature-flags.yml' 설정 파일 누락 오류를 해결함.",
+            "resolution_note": "컨테이너 이미지에 feature-flags.yml 설정 파일을 추가하고 설정 파일의 마운트 경로를 수정하여 FileNotFoundException 오류를 해결했다.",
+            "diff_summary": "DataFeatureFlagLoader.java 파일을 수정하여 기존에 설정 파일이 없음을 나타내던 예외 발생 코드를 제거하고, 컨테이너 이미지에 설정 파일 포함 및 마운트 경로 보정을 반영하는 코드와 해당 문제 해결을 나타내는 메트릭 증가 코드를 추가했다.",
+            "changed_files": [
+              "src/main/java/com/example/config/DataFeatureFlagLoader.java"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_semantic_paraphrase_001",
+      "category": "semantic_paraphrase",
+      "project_name": "data-portal",
+      "question": "로그인 직후 인증 토큰 클래스를 못 찾아서 실패한 원인이 뭐야?",
+      "expected_incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+      "expected_incident_summary": "데이터 포털에서 auth 모듈의 DataAuthService 클래스 login 메서드에서 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 오류가 발생했다.",
+      "answer_basis": "Incident error_type=ClassNotFoundException, module=auth, class=DataAuthService | primary_error_message=com.example.auth.JwtTokenProvider | raw_log 근거: 데이터 포털에서 auth 모듈의 DataAuthService 클래스 login 메서드에서 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 오류가 발생했다.; 데이터 포털 로그인 인증 클래스 로딩 중 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 예외가 발생했다. | raw_ticket 근거: data-portal-service#910000 / 데이터 포털 로그인 인증 클래스인 JwtTokenProvider를 로딩하지 못하여 ClassNotFoundException 오류가 발생하였습니다. / cause=JwtTokenProvider 라이브러리 또는 패키지 경로가 런타임 classpath와 맞지 않았습니다. | raw_pr 근거: data-portal-service#920000 / 데이터 포털 로그인 인증 과정에서 JwtTokenProvider 클래스를 찾을 수 없는 문제를 빌드 의존성과 import 경로 수정으로 해결했다. / resolution=빌드 의존성과 import 경로를 정리하여 JwtTokenProvider 클래스 로딩 실패 문제를 해결하였다.",
+      "expected_no_result": false,
+      "expected_intent": "ROOT_CAUSE",
+      "difficulty": "medium",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+            "normalized_summary": "데이터 포털에서 auth 모듈의 DataAuthService 클래스 login 메서드에서 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 오류가 발생했다.",
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "extracted_keywords": [
+              "ClassNotFoundException",
+              "DataAuthService",
+              "ERROR",
+              "JwtTokenProvider",
+              "auth",
+              "login"
+            ],
+            "domain_tags": [
+              "authentication",
+              "data portal"
+            ]
+          },
+          {
+            "incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+            "normalized_summary": "데이터 포털 로그인 인증 클래스 로딩 중 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 예외가 발생했다.",
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "extracted_keywords": [
+              "ClassNotFoundException",
+              "DataAuthService",
+              "ERROR",
+              "com.example.auth.JwtTokenProvider",
+              "login"
+            ],
+            "domain_tags": [
+              "authentication",
+              "data portal"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+            "ticket_key": "data-portal-service#910000",
+            "title": "[hybrid-search-v1] 데이터 포털 로그인 인증 클래스 로딩 실패 - ClassNotFoundException",
+            "normalized_summary": "데이터 포털 로그인 인증 클래스인 JwtTokenProvider를 로딩하지 못하여 ClassNotFoundException 오류가 발생하였습니다.",
+            "suspected_cause": "JwtTokenProvider 라이브러리 또는 패키지 경로가 런타임 classpath와 맞지 않았습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "ClassNotFoundException",
+              "JwtTokenProvider",
+              "data-portal",
+              "hybrid-search-v1",
+              "login"
+            ],
+            "domain_tags": [
+              "login"
+            ]
+          }
+        ],
+        "prs": [
+          {
+            "incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+            "pr_key": "data-portal-service#920000",
+            "title": "[hybrid-search-v1] fix: 데이터 포털 로그인 인증 클래스 로딩 실패",
+            "status": "merged",
+            "normalized_summary": "데이터 포털 로그인 인증 과정에서 JwtTokenProvider 클래스를 찾을 수 없는 문제를 빌드 의존성과 import 경로 수정으로 해결했다.",
+            "suspected_fix_for": "JwtTokenProvider 라이브러리 또는 패키지 경로가 런타임 classpath와 맞지 않아 발생한 ClassNotFoundException 문제를 해결하기 위함.",
+            "resolution_note": "빌드 의존성과 import 경로를 정리하여 JwtTokenProvider 클래스 로딩 실패 문제를 해결하였다.",
+            "diff_summary": "src/main/java/com/example/auth/DataAuthService.java 파일에서 JwtTokenProvider 클래스 로딩 실패를 일으키는 ClassNotFoundException 발생 코드를 제거하고, 빌드 의존성과 import 경로를 정리하는 주석 추가 및 메트릭 증가 코드를 삽입하였다.",
+            "changed_files": [
+              "src/main/java/com/example/auth/DataAuthService.java"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_semantic_paraphrase_002",
+      "category": "semantic_paraphrase",
+      "project_name": "data-portal",
+      "question": "결제 승인에서 결제수단 값이 비어 터진 장애는 어떻게 해결했어?",
+      "expected_incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+      "expected_incident_summary": "데이터 포털 결제 승인 중 NullPointerException이 발생하였다.",
+      "answer_basis": "Incident error_type=NullPointerException, module=payment, class=DataPaymentService | primary_error_message=paymentMethod is null | raw_log 근거: 데이터 포털 결제 승인 중 NullPointerException이 발생하였다.; 데이터 포털 결제 승인 중 NullPointerException이 발생하였다. | raw_ticket 근거: data-portal-service#910001 / 데이터 포털 결제 승인 중 paymentMethod가 null 참조되어 NullPointerException이 발생했습니다. / cause=결제 수단 검증 전에 paymentMethod를 참조했습니다. | raw_pr 근거: data-portal-service#920001 / 데이터 포털 결제 승인 과정에서 paymentMethod 널 참조 문제를 방지하도록 null 검사 및 기본값 검증 기능을 추가하였다. / resolution=paymentMethod에 대해 null guard와 기본값 검증을 추가하여 NullPointerException 발생을 방지함.",
+      "expected_no_result": false,
+      "expected_intent": "RESOLUTION",
+      "difficulty": "medium",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+            "normalized_summary": "데이터 포털 결제 승인 중 NullPointerException이 발생하였다.",
+            "error_type": "NullPointerException",
+            "error_message": "paymentMethod is null",
+            "extracted_keywords": [
+              "NullPointerException",
+              "approve",
+              "paymentMethod",
+              "결제"
+            ],
+            "domain_tags": [
+              "payment"
+            ]
+          },
+          {
+            "incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+            "normalized_summary": "데이터 포털 결제 승인 중 NullPointerException이 발생하였다.",
+            "error_type": "NullPointerException",
+            "error_message": "paymentMethod is null",
+            "extracted_keywords": [
+              "DataPaymentService",
+              "NullPointerException",
+              "approve",
+              "paymentMethod"
+            ],
+            "domain_tags": [
+              "payment"
+            ]
+          },
+          {
+            "incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+            "normalized_summary": "데이터 포털 결제 모듈의 DataPaymentService 클래스에서 approve 메서드 실행 중 NullPointerException이 발생하였다.",
+            "error_type": "NullPointerException",
+            "error_message": "paymentMethod is null",
+            "extracted_keywords": [
+              "DataPaymentService",
+              "NullPointerException",
+              "approve",
+              "payment",
+              "paymentMethod is null"
+            ],
+            "domain_tags": [
+              "payment"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+            "ticket_key": "data-portal-service#910001",
+            "title": "[hybrid-search-v1] 데이터 포털 결제 승인 중 널 참조 - NullPointerException",
+            "normalized_summary": "데이터 포털 결제 승인 중 paymentMethod가 null 참조되어 NullPointerException이 발생했습니다.",
+            "suspected_cause": "결제 수단 검증 전에 paymentMethod를 참조했습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "NullPointerException",
+              "PAY-4021",
+              "data-portal",
+              "hybrid-search-v1",
+              "paymentMethod"
+            ],
+            "domain_tags": [
+              "payment"
+            ]
+          }
+        ],
+        "prs": [
+          {
+            "incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+            "pr_key": "data-portal-service#920001",
+            "title": "[hybrid-search-v1] fix: 데이터 포털 결제 승인 중 널 참조",
+            "status": "merged",
+            "normalized_summary": "데이터 포털 결제 승인 과정에서 paymentMethod 널 참조 문제를 방지하도록 null 검사 및 기본값 검증 기능을 추가하였다.",
+            "suspected_fix_for": "결제 수단 검증 전에 paymentMethod를 참조하여 발생한 NullPointerException 문제를 해결함.",
+            "resolution_note": "paymentMethod에 대해 null guard와 기본값 검증을 추가하여 NullPointerException 발생을 방지함.",
+            "diff_summary": "src/main/java/com/example/payment/DataPaymentService.java 파일에서 기존에 있던 'paymentMethod is null'에 대한 NullPointerException 발생 코드를 수정하여 null guard와 결제 수단 기본값 검증 로직을 2줄 추가하고 관련 지표(metric) 카운트를 증가시키는 코드를 삽입함.",
+            "changed_files": [
+              "src/main/java/com/example/payment/DataPaymentService.java"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_semantic_paraphrase_003",
+      "category": "semantic_paraphrase",
+      "project_name": "data-portal",
+      "question": "리포트 화면에서 없는 상태 컬럼을 조회해서 500이 난 사례 찾아줘",
+      "expected_incident_id": "f9df2095-fd02-44e7-8bdb-366bfe3e13f5",
+      "expected_incident_summary": "데이터 포털 리포트 조회 중 SQL 컬럼 오류가 발생하였다.",
+      "answer_basis": "Incident error_type=SQLGrammarException, module=report, class=DataReportQueryRepository | primary_error_message=column report_status_cd does not exist | raw_log 근거: 데이터 포털 리포트 조회 중 SQL 컬럼 오류가 발생하였다.; 데이터 포털 리포트 조회 시 컬럼 오류가 발생하였으며 SQLGrammarException 예외가 발생하였다. | raw_ticket 근거: data-portal-service#910003 / 데이터 포털 리포트 조회 시 SQL 쿼리의 컬럼명이 변경되었으나 쿼리가 갱신되지 않아 SQLGrammarException 오류가 발생하였다. / cause=마이그레이션 후 컬럼명이 report_state_cd로 바뀌었지만 쿼리가 갱신되지 않았습니다. | raw_pr 근거: data-portal-service#920003 / 데이터 포털 리포트 조회 시 발생한 SQL 컬럼명 오류를 수정하기 위해 쿼리와 매핑 DTO 내 컬럼명을 report_state_cd로 변경하였다. / resolution=마이그레이션으로 변경된 컬럼명 report_state_cd에 맞게 쿼리 컬럼명과 매핑 DTO를 수정하여 오류를 해결함",
+      "expected_no_result": false,
+      "expected_intent": "SIMILAR_CASE",
+      "difficulty": "medium",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "f9df2095-fd02-44e7-8bdb-366bfe3e13f5",
+            "normalized_summary": "데이터 포털 리포트 조회 중 SQL 컬럼 오류가 발생하였다.",
+            "error_type": "SQLGrammarException",
+            "error_message": "column report_status_cd does not exist",
+            "extracted_keywords": [
+              "DataReportQueryRepository",
+              "SQLGrammarException",
+              "column report_status_cd",
+              "findDaily",
+              "report"
+            ],
+            "domain_tags": [
+              "data_portal"
+            ]
+          },
+          {
+            "incident_id": "f9df2095-fd02-44e7-8bdb-366bfe3e13f5",
+            "normalized_summary": "데이터 포털 리포트 조회 시 컬럼 오류가 발생하였으며 SQLGrammarException 예외가 발생하였다.",
+            "error_type": "SQLGrammarException",
+            "error_message": "column report_status_cd does not exist",
+            "extracted_keywords": [
+              "DataReportQueryRepository",
+              "ERROR",
+              "SQLGrammarException",
+              "column report_status_cd does not exist",
+              "findDaily"
+            ],
+            "domain_tags": [
+              "data portal"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "f9df2095-fd02-44e7-8bdb-366bfe3e13f5",
+            "ticket_key": "data-portal-service#910003",
+            "title": "[hybrid-search-v1] 데이터 포털 리포트 조회 SQL 컬럼 오류 - SQLGrammarException",
+            "normalized_summary": "데이터 포털 리포트 조회 시 SQL 쿼리의 컬럼명이 변경되었으나 쿼리가 갱신되지 않아 SQLGrammarException 오류가 발생하였다.",
+            "suspected_cause": "마이그레이션 후 컬럼명이 report_state_cd로 바뀌었지만 쿼리가 갱신되지 않았습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "SQLGrammarException",
+              "data-portal",
+              "hybrid-search-v1",
+              "report_state_cd",
+              "report_status_cd",
+              "리포트 화면 500"
+            ],
+            "domain_tags": [
+              "data-portal"
+            ]
+          }
+        ],
+        "prs": [
+          {
+            "incident_id": "f9df2095-fd02-44e7-8bdb-366bfe3e13f5",
+            "pr_key": "data-portal-service#920003",
+            "title": "[hybrid-search-v1] fix: 데이터 포털 리포트 조회 SQL 컬럼 오류",
+            "status": "merged",
+            "normalized_summary": "데이터 포털 리포트 조회 시 발생한 SQL 컬럼명 오류를 수정하기 위해 쿼리와 매핑 DTO 내 컬럼명을 report_state_cd로 변경하였다.",
+            "suspected_fix_for": "SQL 쿼리에서 존재하지 않는 컬럼 report_status_cd 사용으로 인한 SQLGrammarException 오류",
+            "resolution_note": "마이그레이션으로 변경된 컬럼명 report_state_cd에 맞게 쿼리 컬럼명과 매핑 DTO를 수정하여 오류를 해결함",
+            "diff_summary": "DataReportQueryRepository.java 파일에서 SQL 쿼리 컬럼명을 report_status_cd에서 report_state_cd로 변경하고, 관련 매핑 DTO를 수정하였으며, 수정 건에 대한 메트릭을 추가함",
+            "changed_files": [
+              "src/main/java/com/example/report/DataReportQueryRepository.java"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_semantic_paraphrase_004",
+      "category": "semantic_paraphrase",
+      "project_name": "admin-portal",
+      "question": "관리자 리포트 접근이 권한 role 때문에 막힌 장애 원인이 뭐야?",
+      "expected_incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+      "expected_incident_summary": "관리자 포털에서 보안 권한 검사 중 REPORT_ADMIN 역할이 필요하여 접근이 거부됨.",
+      "answer_basis": "Incident error_type=AccessDeniedException, module=security, class=AdminPermissionEvaluator | primary_error_message=role REPORT_ADMIN required | raw_log 근거: 관리자 포털에서 보안 권한 검사 중 REPORT_ADMIN 역할이 필요하여 접근이 거부됨.; 관리자 포털의 security 모듈 AdminPermissionEvaluator 클래스의 check 메서드에서 관리자 권한 검증 실패가 발생했다. | raw_ticket 근거: admin-portal-service#910020 / 관리자 포털에서 권한 검증 실패로 AccessDeniedException이 발생하였습니다. / cause=권한 role 매핑에서 신규 role이 누락되었습니다.",
+      "expected_no_result": false,
+      "expected_intent": "ROOT_CAUSE",
+      "difficulty": "medium",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+            "normalized_summary": "관리자 포털에서 보안 권한 검사 중 REPORT_ADMIN 역할이 필요하여 접근이 거부됨.",
+            "error_type": "AccessDeniedException",
+            "error_message": "role REPORT_ADMIN required",
+            "extracted_keywords": [
+              "AccessDeniedException",
+              "AdminPermissionEvaluator",
+              "REPORT_ADMIN",
+              "security"
+            ],
+            "domain_tags": [
+              "admin-portal"
+            ]
+          },
+          {
+            "incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+            "normalized_summary": "관리자 포털의 security 모듈 AdminPermissionEvaluator 클래스의 check 메서드에서 관리자 권한 검증 실패가 발생했다.",
+            "error_type": "AccessDeniedException",
+            "error_message": "role REPORT_ADMIN required",
+            "extracted_keywords": [
+              "AccessDeniedException",
+              "check",
+              "security",
+              "관리자 권한"
+            ],
+            "domain_tags": [
+              "admin_portal"
+            ]
+          },
+          {
+            "incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+            "normalized_summary": "관리자 포털 권한 검증 중 role REPORT_ADMIN 권한이 없어서 접근이 거부되었습니다.",
+            "error_type": "AccessDeniedException",
+            "error_message": "role REPORT_ADMIN required",
+            "extracted_keywords": [
+              "AccessDeniedException",
+              "admin_portal",
+              "role REPORT_ADMIN",
+              "권한 검증 실패"
+            ],
+            "domain_tags": [
+              "admin_portal"
+            ]
+          },
+          {
+            "incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+            "normalized_summary": "관리자 포털에서 AdminPermissionEvaluator 클래스의 check 메서드에서 권한 검증이 실패했다.",
+            "error_type": "AccessDeniedException",
+            "error_message": "role REPORT_ADMIN required",
+            "extracted_keywords": [
+              "AccessDeniedException",
+              "AdminPermissionEvaluator",
+              "check",
+              "role REPORT_ADMIN",
+              "권한 검증 실패"
+            ],
+            "domain_tags": [
+              "admin portal"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+            "ticket_key": "admin-portal-service#910020",
+            "title": "[hybrid-search-v1] 관리자 포털 권한 검증 실패 - AccessDeniedException",
+            "normalized_summary": "관리자 포털에서 권한 검증 실패로 AccessDeniedException이 발생하였습니다.",
+            "suspected_cause": "권한 role 매핑에서 신규 role이 누락되었습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "AccessDeniedException",
+              "REPORT_ADMIN",
+              "admin-portal",
+              "hybrid-search-v1",
+              "permission"
+            ],
+            "domain_tags": [
+              "auth"
+            ]
+          }
+        ],
+        "prs": []
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_semantic_paraphrase_005",
+      "category": "semantic_paraphrase",
+      "project_name": "admin-portal",
+      "question": "외부 HTTPS 호출에서 인증서 체인을 신뢰하지 못한 문제는 어떻게 처리했어?",
+      "expected_incident_id": "b4a2517e-45da-4e5f-994c-c25309d6d7a0",
+      "expected_incident_summary": "관리자 포털에서 client 모듈의 AdminSecureHttpClient 클래스의 request 메서드에서 TLS 인증서 검증 실패와 SSLHandshakeException이 발생했다.",
+      "answer_basis": "Incident error_type=SSLHandshakeException, module=client, class=AdminSecureHttpClient | primary_error_message=PKIX path building failed | raw_log 근거: 관리자 포털에서 client 모듈의 AdminSecureHttpClient 클래스의 request 메서드에서 TLS 인증서 검증 실패와 SSLHandshakeException이 발생했다.; 관리자 포털 모듈의 AdminSecureHttpClient 클래스 request 메서드에서 TLS 인증서 검증 실패 오류가 발생하였다. | raw_ticket 근거: admin-portal-service#910023 / 관리자 포털에서 TLS 인증서 검증이 실패하여 SSLHandshakeException이 발생했습니다. / cause=신규 인증서 체인이 truststore에 반영되지 않았습니다.",
+      "expected_no_result": false,
+      "expected_intent": "RESOLUTION",
+      "difficulty": "medium",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "b4a2517e-45da-4e5f-994c-c25309d6d7a0",
+            "normalized_summary": "관리자 포털에서 client 모듈의 AdminSecureHttpClient 클래스의 request 메서드에서 TLS 인증서 검증 실패와 SSLHandshakeException이 발생했다.",
+            "error_type": "SSLHandshakeException",
+            "error_message": "PKIX path building failed",
+            "extracted_keywords": [
+              "PKIX path building failed",
+              "SSLHandshakeException",
+              "TLS 인증서 검증"
+            ],
+            "domain_tags": [
+              "admin-portal"
+            ]
+          },
+          {
+            "incident_id": "b4a2517e-45da-4e5f-994c-c25309d6d7a0",
+            "normalized_summary": "관리자 포털 모듈의 AdminSecureHttpClient 클래스 request 메서드에서 TLS 인증서 검증 실패 오류가 발생하였다.",
+            "error_type": "SSLHandshakeException",
+            "error_message": "PKIX path building failed",
+            "extracted_keywords": [
+              "AdminSecureHttpClient",
+              "PKIX path building failed",
+              "SSLHandshakeException",
+              "TLS 인증서 검증 실패"
+            ],
+            "domain_tags": []
+          },
+          {
+            "incident_id": "b4a2517e-45da-4e5f-994c-c25309d6d7a0",
+            "normalized_summary": "관리자 포털에서 client 모듈의 AdminSecureHttpClient 클래스 request 메서드 실행 중 TLS 인증서 검증 실패 오류가 발생했다.",
+            "error_type": "SSLHandshakeException",
+            "error_message": "PKIX path building failed",
+            "extracted_keywords": [
+              "PKIX path building",
+              "SSLHandshakeException",
+              "TLS 인증서",
+              "검증 실패"
+            ],
+            "domain_tags": [
+              "admin-portal"
+            ]
+          },
+          {
+            "incident_id": "b4a2517e-45da-4e5f-994c-c25309d6d7a0",
+            "normalized_summary": "관리자 포털에서 client 모듈의 AdminSecureHttpClient 클래스 request 메서드에서 TLS 인증서 검증 실패가 발생하였다.",
+            "error_type": "SSLHandshakeException",
+            "error_message": "PKIX path building failed",
+            "extracted_keywords": [
+              "PKIX",
+              "SSLHandshakeException",
+              "TLS 인증서",
+              "인증서 체인 오류"
+            ],
+            "domain_tags": [
+              "admin portal"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "b4a2517e-45da-4e5f-994c-c25309d6d7a0",
+            "ticket_key": "admin-portal-service#910023",
+            "title": "[hybrid-search-v1] 관리자 포털 TLS 인증서 검증 실패 - SSLHandshakeException",
+            "normalized_summary": "관리자 포털에서 TLS 인증서 검증이 실패하여 SSLHandshakeException이 발생했습니다.",
+            "suspected_cause": "신규 인증서 체인이 truststore에 반영되지 않았습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "PKIX",
+              "SSLHandshakeException",
+              "TLS handshake",
+              "admin-portal",
+              "hybrid-search-v1",
+              "truststore"
+            ],
+            "domain_tags": []
+          }
+        ],
+        "prs": []
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_semantic_paraphrase_006",
+      "category": "semantic_paraphrase",
+      "project_name": "batch-platform",
+      "question": "배치 이벤트 발행 중 스키마 버전이 맞지 않아 직렬화가 실패한 사례",
+      "expected_incident_id": "8471ff53-d6e3-40d1-a7f7-9526d0698c0f",
+      "expected_incident_summary": "배치 플랫폼의 stream 모듈 BatchKafkaEventPublisher 클래스의 publish 메서드에서 Kafka 이벤트 직렬화 실패가 발생하였다.",
+      "answer_basis": "Incident error_type=KafkaSerializationException, module=stream, class=BatchKafkaEventPublisher | primary_error_message=cannot serialize schema version v3 | raw_log 근거: 배치 플랫폼의 stream 모듈 BatchKafkaEventPublisher 클래스의 publish 메서드에서 Kafka 이벤트 직렬화 실패가 발생하였다.; 배치 플랫폼에서 Kafka 이벤트 직렬화에 실패하였다. 스키마 버전 불일치가 원인이다.",
+      "expected_no_result": false,
+      "expected_intent": "SIMILAR_CASE",
+      "difficulty": "medium",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "8471ff53-d6e3-40d1-a7f7-9526d0698c0f",
+            "normalized_summary": "배치 플랫폼의 stream 모듈 BatchKafkaEventPublisher 클래스의 publish 메서드에서 Kafka 이벤트 직렬화 실패가 발생하였다.",
+            "error_type": "KafkaSerializationException",
+            "error_message": "cannot serialize schema version v3",
+            "extracted_keywords": [
+              "BatchKafkaEventPublisher",
+              "KafkaSerializationException",
+              "batch_platform",
+              "publish",
+              "stream",
+              "직렬화 실패"
+            ],
+            "domain_tags": [
+              "Kafka",
+              "batch platform"
+            ]
+          },
+          {
+            "incident_id": "8471ff53-d6e3-40d1-a7f7-9526d0698c0f",
+            "normalized_summary": "배치 플랫폼에서 Kafka 이벤트 직렬화에 실패하였다. 스키마 버전 불일치가 원인이다.",
+            "error_type": "KafkaSerializationException",
+            "error_message": "cannot serialize schema version v3",
+            "extracted_keywords": [
+              "Kafka",
+              "Serialization",
+              "batch platform",
+              "schema version v3"
+            ],
+            "domain_tags": [
+              "Kafka",
+              "batch platform"
+            ]
+          },
+          {
+            "incident_id": "8471ff53-d6e3-40d1-a7f7-9526d0698c0f",
+            "normalized_summary": "com.example.stream 모듈의 BatchKafkaEventPublisher 클래스 publish 메서드에서 KafkaSerializationException 예외가 발생했다.",
+            "error_type": "KafkaSerializationException",
+            "error_message": "cannot serialize schema version v3",
+            "extracted_keywords": [
+              "KafkaSerializationException",
+              "batch_platform-kafka-serialization",
+              "hybrid-search-v1",
+              "직렬화 실패"
+            ],
+            "domain_tags": [
+              "batch platform",
+              "kafka"
+            ]
+          }
+        ],
+        "tickets": [],
+        "prs": []
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_semantic_paraphrase_007",
+      "category": "semantic_paraphrase",
+      "project_name": "batch-platform",
+      "question": "배치 컨테이너가 메모리 제한 때문에 비정상 종료된 장애 요약해줘",
+      "expected_incident_id": "5a2d05f7-9c98-4790-996e-4da2d44e99f9",
+      "expected_incident_summary": "배치 플랫폼의 runtime 모듈 BatchContainerSupervisor 클래스의 watch 메서드에서 Docker 컨테이너가 코드 137로 종료되어 오류가 발생했다.",
+      "answer_basis": "Incident error_type=ContainerExitError, module=runtime, class=BatchContainerSupervisor | primary_error_message=Docker container exited with code 137 | raw_log 근거: 배치 플랫폼의 runtime 모듈 BatchContainerSupervisor 클래스의 watch 메서드에서 Docker 컨테이너가 코드 137로 종료되어 오류가 발생했다.; 배치 플랫폼 runtime 모듈의 BatchContainerSupervisor 클래스 watch 메서드에서 Docker 컨테이너가 코드 137로 종료되었다는 오류가 발생했다.",
+      "expected_no_result": false,
+      "expected_intent": "SUMMARY",
+      "difficulty": "medium",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "5a2d05f7-9c98-4790-996e-4da2d44e99f9",
+            "normalized_summary": "배치 플랫폼의 runtime 모듈 BatchContainerSupervisor 클래스의 watch 메서드에서 Docker 컨테이너가 코드 137로 종료되어 오류가 발생했다.",
+            "error_type": "ContainerExitError",
+            "error_message": "Docker container exited with code 137",
+            "extracted_keywords": [
+              "BatchContainerSupervisor",
+              "Docker",
+              "code 137",
+              "container",
+              "exit"
+            ],
+            "domain_tags": [
+              "batch platform"
+            ]
+          },
+          {
+            "incident_id": "5a2d05f7-9c98-4790-996e-4da2d44e99f9",
+            "normalized_summary": "배치 플랫폼 runtime 모듈의 BatchContainerSupervisor 클래스 watch 메서드에서 Docker 컨테이너가 코드 137로 종료되었다는 오류가 발생했다.",
+            "error_type": "ContainerExitError",
+            "error_message": "Docker container exited with code 137",
+            "extracted_keywords": [
+              "BatchContainerSupervisor",
+              "Docker",
+              "ERROR",
+              "code 137",
+              "container",
+              "exit",
+              "runtime",
+              "watch"
+            ],
+            "domain_tags": [
+              "batch platform",
+              "docker"
+            ]
+          }
+        ],
+        "tickets": [],
+        "prs": []
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_semantic_paraphrase_008",
+      "category": "semantic_paraphrase",
+      "project_name": "data-portal",
+      "question": "기능 토글 설정 파일이 배포 이미지에 없어 로딩 실패한 케이스",
+      "expected_incident_id": "9fc155da-e5d2-4fc6-a724-7119e311c35a",
+      "expected_incident_summary": "데이터 포털에서 feature flag 설정 파일을 불러오는 중 설정 파일 누락 오류가 발생했다.",
+      "answer_basis": "Incident error_type=FileNotFoundException, module=config, class=DataFeatureFlagLoader | primary_error_message=/etc/incidentlens/feature-flags.yml | raw_log 근거: 데이터 포털에서 feature flag 설정 파일을 불러오는 중 설정 파일 누락 오류가 발생했다.; 데이터 포털 구성의 feature flag 설정 파일이 누락되어 로딩에 실패하였다. | raw_ticket 근거: data-portal-service#910005 / hybrid-search-v1에서 feature flag 설정 파일인 feature-flags.yml이 누락되어 발생한 FileNotFoundException 오류입니다. / cause=배포 이미지에 feature-flags.yml이 포함되지 않았습니다. | raw_pr 근거: data-portal-service#920005 / 데이터 포털의 feature flag 설정 파일 누락 문제를 해결하기 위해 컨테이너 이미지에 설정 파일을 포함하고 마운트 경로를 조정하는 코드를 수정했다. / resolution=컨테이너 이미지에 feature-flags.yml 설정 파일을 추가하고 설정 파일의 마운트 경로를 수정하여 FileNotFoundException 오류를 해결했다.",
+      "expected_no_result": false,
+      "expected_intent": "SIMILAR_CASE",
+      "difficulty": "medium",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "9fc155da-e5d2-4fc6-a724-7119e311c35a",
+            "normalized_summary": "데이터 포털에서 feature flag 설정 파일을 불러오는 중 설정 파일 누락 오류가 발생했다.",
+            "error_type": "FileNotFoundException",
+            "error_message": "/etc/incidentlens/feature-flags.yml",
+            "extracted_keywords": [
+              "FileNotFoundException",
+              "data-portal",
+              "feature flag",
+              "설정 파일"
+            ],
+            "domain_tags": [
+              "data-portal"
+            ]
+          },
+          {
+            "incident_id": "9fc155da-e5d2-4fc6-a724-7119e311c35a",
+            "normalized_summary": "데이터 포털 구성의 feature flag 설정 파일이 누락되어 로딩에 실패하였다.",
+            "error_type": "FileNotFoundException",
+            "error_message": "/etc/incidentlens/feature-flags.yml",
+            "extracted_keywords": [
+              "FileNotFoundException",
+              "data_portal",
+              "feature flag",
+              "설정 파일 누락"
+            ],
+            "domain_tags": [
+              "data portal"
+            ]
+          },
+          {
+            "incident_id": "9fc155da-e5d2-4fc6-a724-7119e311c35a",
+            "normalized_summary": "데이터 포털에서 feature flag 설정 파일이 누락되어 FileNotFoundException이 발생하였다.",
+            "error_type": "FileNotFoundException",
+            "error_message": "/etc/incidentlens/feature-flags.yml",
+            "extracted_keywords": [
+              "DataFeatureFlagLoader",
+              "FileNotFoundException",
+              "config",
+              "feature flag",
+              "load",
+              "설정 파일"
+            ],
+            "domain_tags": [
+              "data_portal"
+            ]
+          },
+          {
+            "incident_id": "9fc155da-e5d2-4fc6-a724-7119e311c35a",
+            "normalized_summary": "데이터 포털의 feature flag 설정 파일이 누락되어 feature flag 로딩에 실패했다.",
+            "error_type": "FileNotFoundException",
+            "error_message": "/etc/incidentlens/feature-flags.yml",
+            "extracted_keywords": [
+              "FileNotFoundException",
+              "feature flag",
+              "설정 파일 누락"
+            ],
+            "domain_tags": [
+              "data portal"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "9fc155da-e5d2-4fc6-a724-7119e311c35a",
+            "ticket_key": "data-portal-service#910005",
+            "title": "[hybrid-search-v1] 데이터 포털 feature flag 설정 파일 누락 - FileNotFoundException",
+            "normalized_summary": "hybrid-search-v1에서 feature flag 설정 파일인 feature-flags.yml이 누락되어 발생한 FileNotFoundException 오류입니다.",
+            "suspected_cause": "배포 이미지에 feature-flags.yml이 포함되지 않았습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "FileNotFoundException",
+              "data-portal",
+              "feature-flags.yml",
+              "hybrid-search-v1",
+              "설정 파일 없음"
+            ],
+            "domain_tags": []
+          }
+        ],
+        "prs": [
+          {
+            "incident_id": "9fc155da-e5d2-4fc6-a724-7119e311c35a",
+            "pr_key": "data-portal-service#920005",
+            "title": "[hybrid-search-v1] fix: 데이터 포털 feature flag 설정 파일 누락",
+            "status": "merged",
+            "normalized_summary": "데이터 포털의 feature flag 설정 파일 누락 문제를 해결하기 위해 컨테이너 이미지에 설정 파일을 포함하고 마운트 경로를 조정하는 코드를 수정했다.",
+            "suspected_fix_for": "데이터 포털에서 feature flag 설정 파일을 불러오는 중 '/etc/incidentlens/feature-flags.yml' 설정 파일 누락 오류를 해결함.",
+            "resolution_note": "컨테이너 이미지에 feature-flags.yml 설정 파일을 추가하고 설정 파일의 마운트 경로를 수정하여 FileNotFoundException 오류를 해결했다.",
+            "diff_summary": "DataFeatureFlagLoader.java 파일을 수정하여 기존에 설정 파일이 없음을 나타내던 예외 발생 코드를 제거하고, 컨테이너 이미지에 설정 파일 포함 및 마운트 경로 보정을 반영하는 코드와 해당 문제 해결을 나타내는 메트릭 증가 코드를 추가했다.",
+            "changed_files": [
+              "src/main/java/com/example/config/DataFeatureFlagLoader.java"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_semantic_paraphrase_009",
+      "category": "semantic_paraphrase",
+      "project_name": "data-portal",
+      "question": "캐시 서버 연결 수가 꽉 차서 Redis 조회가 실패한 장애 해결 내용",
+      "expected_incident_id": "e875bef9-8e22-46b7-9249-00631cd1cab5",
+      "expected_incident_summary": "데이터 포털 Redis 연결 풀에서 최대 클라이언트 수 초과로 인해 캐시 서버 접속에 실패했다.",
+      "answer_basis": "Incident error_type=RedisConnectionException, module=cache, class=DataRedisCacheClient | primary_error_message=ERR max number of clients reached | raw_log 근거: 데이터 포털 Redis 연결 풀에서 최대 클라이언트 수 초과로 인해 캐시 서버 접속에 실패했다.; 데이터 포털에서 Redis 연결 풀 고갈로 인해 RedisConnectionException이 발생하였다. | raw_ticket 근거: data-portal-service#910002 / 데이터 포털의 hybrid-search-v1에서 Redis 연결 풀 고갈로 인해 캐시 서버 접속에 실패하였다. / cause=커넥션 반환 누락으로 Redis client pool이 고갈되었습니다. | raw_pr 근거: data-portal-service#920002 / 데이터 포털 Redis 연결 풀 고갈 문제를 해결하기 위해 커넥션 반환을 try-finally로 처리하고 pool의 maxTotal 설정을 조정하였다. / resolution=try-finally 문으로 커넥션 반환 누락 문제를 해결하고, pool의 maxTotal 설정을 조정하여 연결 풀 고갈 현상을 방지하였다.",
+      "expected_no_result": false,
+      "expected_intent": "RESOLUTION",
+      "difficulty": "medium",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "e875bef9-8e22-46b7-9249-00631cd1cab5",
+            "normalized_summary": "데이터 포털 Redis 연결 풀에서 최대 클라이언트 수 초과로 인해 캐시 서버 접속에 실패했다.",
+            "error_type": "RedisConnectionException",
+            "error_message": "ERR max number of clients reached",
+            "extracted_keywords": [
+              "RedisConnectionException",
+              "cache server",
+              "connection pool",
+              "max clients reached"
+            ],
+            "domain_tags": [
+              "cache",
+              "redis"
+            ]
+          },
+          {
+            "incident_id": "e875bef9-8e22-46b7-9249-00631cd1cab5",
+            "normalized_summary": "데이터 포털에서 Redis 연결 풀 고갈로 인해 RedisConnectionException이 발생하였다.",
+            "error_type": "RedisConnectionException",
+            "error_message": "ERR max number of clients reached",
+            "extracted_keywords": [
+              "Redis",
+              "RedisConnectionException",
+              "connection pool",
+              "max clients"
+            ],
+            "domain_tags": [
+              "cache"
+            ]
+          },
+          {
+            "incident_id": "e875bef9-8e22-46b7-9249-00631cd1cab5",
+            "normalized_summary": "데이터 포털 Redis 연결 풀 고갈; 캐시 서버 접속 실패 오류가 com.example.cache.DataRedisCacheClient 클래스의 get 메서드에서 발생했습니다.",
+            "error_type": "RedisConnectionException",
+            "error_message": "ERR max number of clients reached",
+            "extracted_keywords": [
+              "Redis",
+              "RedisConnectionException",
+              "데이터 포털",
+              "연결 풀 고갈",
+              "접속 실패",
+              "캐시 서버"
+            ],
+            "domain_tags": [
+              "cache",
+              "redis"
+            ]
+          },
+          {
+            "incident_id": "e875bef9-8e22-46b7-9249-00631cd1cab5",
+            "normalized_summary": "데이터 포털에서 Redis 클라이언트 풀 고갈 오류가 com.example.cache.DataRedisCacheClient.get 메서드에서 발생했습니다.",
+            "error_type": "RedisConnectionException",
+            "error_message": "ERR max number of clients reached",
+            "extracted_keywords": [
+              "DataRedisCacheClient",
+              "Redis client pool exhausted",
+              "RedisConnectionException",
+              "get"
+            ],
+            "domain_tags": [
+              "redis"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "e875bef9-8e22-46b7-9249-00631cd1cab5",
+            "ticket_key": "data-portal-service#910002",
+            "title": "[hybrid-search-v1] 데이터 포털 Redis 연결 풀 고갈 - RedisConnectionException",
+            "normalized_summary": "데이터 포털의 hybrid-search-v1에서 Redis 연결 풀 고갈로 인해 캐시 서버 접속에 실패하였다.",
+            "suspected_cause": "커넥션 반환 누락으로 Redis client pool이 고갈되었습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "RedisConnectionException",
+              "cache",
+              "data-portal",
+              "hybrid-search-v1",
+              "maxTotal"
+            ],
+            "domain_tags": []
+          }
+        ],
+        "prs": [
+          {
+            "incident_id": "e875bef9-8e22-46b7-9249-00631cd1cab5",
+            "pr_key": "data-portal-service#920002",
+            "title": "[hybrid-search-v1] fix: 데이터 포털 Redis 연결 풀 고갈",
+            "status": "merged",
+            "normalized_summary": "데이터 포털 Redis 연결 풀 고갈 문제를 해결하기 위해 커넥션 반환을 try-finally로 처리하고 pool의 maxTotal 설정을 조정하였다.",
+            "suspected_fix_for": "커넥션 반환 누락으로 인한 Redis client pool 고갈 문제",
+            "resolution_note": "try-finally 문으로 커넥션 반환 누락 문제를 해결하고, pool의 maxTotal 설정을 조정하여 연결 풀 고갈 현상을 방지하였다.",
+            "diff_summary": "src/main/java/com/example/cache/DataRedisCacheClient.java 파일에서 RedisConnectionException 발생 부분을 수정하며, try-finally 반환 처리와 pool maxTotal 설정 조정을 적용하고 metrics 증가 코드를 추가하였다.",
+            "changed_files": [
+              "src/main/java/com/example/cache/DataRedisCacheClient.java"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_semantic_paraphrase_010",
+      "category": "semantic_paraphrase",
+      "project_name": "data-portal",
+      "question": "파트너 프로필 API가 3초 안에 응답하지 않아 지연된 장애 있었어?",
+      "expected_incident_id": "5a0f8e66-0008-48df-a035-0333b42a5a60",
+      "expected_incident_summary": "데이터 포털 외부 파트너 API 클라이언트에서 partner profile API 호출이 3000ms 후에 타임아웃되었습니다.",
+      "answer_basis": "Incident error_type=TimeoutException, module=integration, class=DataPartnerApiClient | primary_error_message=partner profile API timed out after 3000ms | raw_log 근거: 데이터 포털 외부 파트너 API 클라이언트에서 partner profile API 호출이 3000ms 후에 타임아웃되었습니다.; integration 모듈의 DataPartnerApiClient 클래스 fetchProfile 메서드에서 partner profile API가 3000ms 후에 타임아웃되었습니다. | raw_ticket 근거: data-portal-service#910004 / 데이터 포털의 hybrid-search-v1에서 외부 파트너 API 호출이 3000ms 후에 타임아웃되어 TimeoutException이 발생하였다. / cause=파트너 API 지연 시 재시도 없이 동기 호출이 누적되었다. | raw_pr 근거: data-portal-service#920004 / 데이터 포털 외부 파트너 API 호출 시 발생하는 타임아웃 문제를 해결하기 위해 timeout 값을 분리하고 circuit breaker fallback 기능을 추가했습니다. / resolution=timeout 값을 분리하고 circuit breaker fallback을 추가하여 파트너 API 호출 지연 시 재시도를 수행하고 동기 호출 누적 문제를 완화함",
+      "expected_no_result": false,
+      "expected_intent": "SIMILAR_CASE",
+      "difficulty": "medium",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "5a0f8e66-0008-48df-a035-0333b42a5a60",
+            "normalized_summary": "데이터 포털 외부 파트너 API 클라이언트에서 partner profile API 호출이 3000ms 후에 타임아웃되었습니다.",
+            "error_type": "TimeoutException",
+            "error_message": "partner profile API timed out after 3000ms",
+            "extracted_keywords": [
+              "TimeoutException",
+              "external API",
+              "partner profile API",
+              "timeout"
+            ],
+            "domain_tags": [
+              "data portal"
+            ]
+          },
+          {
+            "incident_id": "5a0f8e66-0008-48df-a035-0333b42a5a60",
+            "normalized_summary": "integration 모듈의 DataPartnerApiClient 클래스 fetchProfile 메서드에서 partner profile API가 3000ms 후에 타임아웃되었습니다.",
+            "error_type": "TimeoutException",
+            "error_message": "partner profile API timed out after 3000ms",
+            "extracted_keywords": [
+              "API",
+              "TimeoutException",
+              "integration",
+              "partner profile",
+              "timeout"
+            ],
+            "domain_tags": [
+              "data portal"
+            ]
+          },
+          {
+            "incident_id": "5a0f8e66-0008-48df-a035-0333b42a5a60",
+            "normalized_summary": "데이터 포털 외부 파트너 API 연동 중 TimeoutException이 발생하였다.",
+            "error_type": "TimeoutException",
+            "error_message": "partner profile API timed out after 3000ms",
+            "extracted_keywords": [
+              "DataPartnerApiClient",
+              "TimeoutException",
+              "fetchProfile",
+              "integration",
+              "partner profile API",
+              "timeout"
+            ],
+            "domain_tags": [
+              "data_portal"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "5a0f8e66-0008-48df-a035-0333b42a5a60",
+            "ticket_key": "data-portal-service#910004",
+            "title": "[hybrid-search-v1] 데이터 포털 외부 파트너 API 타임아웃 - TimeoutException",
+            "normalized_summary": "데이터 포털의 hybrid-search-v1에서 외부 파트너 API 호출이 3000ms 후에 타임아웃되어 TimeoutException이 발생하였다.",
+            "suspected_cause": "파트너 API 지연 시 재시도 없이 동기 호출이 누적되었다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "3000ms",
+              "TimeoutException",
+              "data-portal",
+              "hybrid-search-v1",
+              "partner profile API"
+            ],
+            "domain_tags": []
+          }
+        ],
+        "prs": [
+          {
+            "incident_id": "5a0f8e66-0008-48df-a035-0333b42a5a60",
+            "pr_key": "data-portal-service#920004",
+            "title": "[hybrid-search-v1] fix: 데이터 포털 외부 파트너 API 타임아웃",
+            "status": "merged",
+            "normalized_summary": "데이터 포털 외부 파트너 API 호출 시 발생하는 타임아웃 문제를 해결하기 위해 timeout 값을 분리하고 circuit breaker fallback 기능을 추가했습니다.",
+            "suspected_fix_for": "데이터 포털 외부 파트너 API 호출 시 3000ms 후 타임아웃으로 인해 동기 호출이 누적되는 문제",
+            "resolution_note": "timeout 값을 분리하고 circuit breaker fallback을 추가하여 파트너 API 호출 지연 시 재시도를 수행하고 동기 호출 누적 문제를 완화함",
+            "diff_summary": "src/main/java/com/example/integration/DataPartnerApiClient.java 파일에서 TimeoutException 발생 코드를 수정하여 timeout 값을 분리하고 circuit breaker fallback 로직을 추가했으며, 관련 메트릭 증가 코드(metrics.increment)를 포함함",
+            "changed_files": [
+              "src/main/java/com/example/integration/DataPartnerApiClient.java"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_same_error_different_cause_001",
+      "category": "same_error_different_cause",
+      "project_name": "data-portal",
+      "question": "data-portal 로그인에서 JwtTokenProvider classpath 문제로 난 클래스 로딩 실패",
+      "expected_incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+      "expected_incident_summary": "데이터 포털에서 auth 모듈의 DataAuthService 클래스 login 메서드에서 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 오류가 발생했다.",
+      "answer_basis": "Incident error_type=ClassNotFoundException, module=auth, class=DataAuthService | primary_error_message=com.example.auth.JwtTokenProvider | raw_log 근거: 데이터 포털에서 auth 모듈의 DataAuthService 클래스 login 메서드에서 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 오류가 발생했다.; 데이터 포털 로그인 인증 클래스 로딩 중 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 예외가 발생했다. | raw_ticket 근거: data-portal-service#910000 / 데이터 포털 로그인 인증 클래스인 JwtTokenProvider를 로딩하지 못하여 ClassNotFoundException 오류가 발생하였습니다. / cause=JwtTokenProvider 라이브러리 또는 패키지 경로가 런타임 classpath와 맞지 않았습니다. | raw_pr 근거: data-portal-service#920000 / 데이터 포털 로그인 인증 과정에서 JwtTokenProvider 클래스를 찾을 수 없는 문제를 빌드 의존성과 import 경로 수정으로 해결했다. / resolution=빌드 의존성과 import 경로를 정리하여 JwtTokenProvider 클래스 로딩 실패 문제를 해결하였다.",
+      "expected_no_result": false,
+      "expected_intent": "ROOT_CAUSE",
+      "difficulty": "hard",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+            "normalized_summary": "데이터 포털에서 auth 모듈의 DataAuthService 클래스 login 메서드에서 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 오류가 발생했다.",
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "extracted_keywords": [
+              "ClassNotFoundException",
+              "DataAuthService",
+              "ERROR",
+              "JwtTokenProvider",
+              "auth",
+              "login"
+            ],
+            "domain_tags": [
+              "authentication",
+              "data portal"
+            ]
+          },
+          {
+            "incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+            "normalized_summary": "데이터 포털 로그인 인증 클래스 로딩 중 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 예외가 발생했다.",
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "extracted_keywords": [
+              "ClassNotFoundException",
+              "DataAuthService",
+              "ERROR",
+              "com.example.auth.JwtTokenProvider",
+              "login"
+            ],
+            "domain_tags": [
+              "authentication",
+              "data portal"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+            "ticket_key": "data-portal-service#910000",
+            "title": "[hybrid-search-v1] 데이터 포털 로그인 인증 클래스 로딩 실패 - ClassNotFoundException",
+            "normalized_summary": "데이터 포털 로그인 인증 클래스인 JwtTokenProvider를 로딩하지 못하여 ClassNotFoundException 오류가 발생하였습니다.",
+            "suspected_cause": "JwtTokenProvider 라이브러리 또는 패키지 경로가 런타임 classpath와 맞지 않았습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "ClassNotFoundException",
+              "JwtTokenProvider",
+              "data-portal",
+              "hybrid-search-v1",
+              "login"
+            ],
+            "domain_tags": [
+              "login"
+            ]
+          }
+        ],
+        "prs": [
+          {
+            "incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+            "pr_key": "data-portal-service#920000",
+            "title": "[hybrid-search-v1] fix: 데이터 포털 로그인 인증 클래스 로딩 실패",
+            "status": "merged",
+            "normalized_summary": "데이터 포털 로그인 인증 과정에서 JwtTokenProvider 클래스를 찾을 수 없는 문제를 빌드 의존성과 import 경로 수정으로 해결했다.",
+            "suspected_fix_for": "JwtTokenProvider 라이브러리 또는 패키지 경로가 런타임 classpath와 맞지 않아 발생한 ClassNotFoundException 문제를 해결하기 위함.",
+            "resolution_note": "빌드 의존성과 import 경로를 정리하여 JwtTokenProvider 클래스 로딩 실패 문제를 해결하였다.",
+            "diff_summary": "src/main/java/com/example/auth/DataAuthService.java 파일에서 JwtTokenProvider 클래스 로딩 실패를 일으키는 ClassNotFoundException 발생 코드를 제거하고, 빌드 의존성과 import 경로를 정리하는 주석 추가 및 메트릭 증가 코드를 삽입하였다.",
+            "changed_files": [
+              "src/main/java/com/example/auth/DataAuthService.java"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_same_error_different_cause_002",
+      "category": "same_error_different_cause",
+      "project_name": "admin-portal",
+      "question": "admin-portal 로그인 인증에서 JwtTokenProvider 패키지 경로가 맞지 않았던 장애",
+      "expected_incident_id": "736726b8-99d3-4a5f-a465-7229d060b304",
+      "expected_incident_summary": "관리자 포털 auth 모듈의 AdminAuthService 클래스 login 메서드에서 com.example.auth.JwtTokenProvider 클래스를 찾지 못하여 ClassNotFoundException이 발생하였다.",
+      "answer_basis": "Incident error_type=ClassNotFoundException, module=auth, class=AdminAuthService | primary_error_message=com.example.auth.JwtTokenProvider | raw_log 근거: 관리자 포털 auth 모듈의 AdminAuthService 클래스 login 메서드에서 com.example.auth.JwtTokenProvider 클래스를 찾지 못하여 ClassNotFoundException이 발생하였다.; 관리자 포털 인증 관련 AdminAuthService 클래스의 login 메서드에서 ClassNotFoundException이 발생하였다. | raw_ticket 근거: admin-portal-service#910012 / 관리자 포털에서 JwtTokenProvider 클래스를 로딩하지 못해 로그인 인증에 실패하였다. / cause=JwtTokenProvider 라이브러리 또는 패키지 경로가 런타임 classpath와 맞지 않았습니다. | raw_pr 근거: admin-portal-service#920012 / 관리자 포털 로그인 인증 과정에서 발생한 JwtTokenProvider 클래스 로딩 실패 문제를 빌드 의존성과 import 경로 정리를 통해 해결하였다. / resolution=빌드 의존성과 import 경로를 정리하여 JwtTokenProvider 클래스를 정상적으로 로딩할 수 있도록 수정하였다.",
+      "expected_no_result": false,
+      "expected_intent": "ROOT_CAUSE",
+      "difficulty": "hard",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "736726b8-99d3-4a5f-a465-7229d060b304",
+            "normalized_summary": "관리자 포털 auth 모듈의 AdminAuthService 클래스 login 메서드에서 com.example.auth.JwtTokenProvider 클래스를 찾지 못하여 ClassNotFoundException이 발생하였다.",
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "extracted_keywords": [
+              "AdminAuthService",
+              "ClassNotFoundException",
+              "JwtTokenProvider",
+              "auth",
+              "error",
+              "login"
+            ],
+            "domain_tags": [
+              "admin_portal"
+            ]
+          },
+          {
+            "incident_id": "736726b8-99d3-4a5f-a465-7229d060b304",
+            "normalized_summary": "관리자 포털 인증 관련 AdminAuthService 클래스의 login 메서드에서 ClassNotFoundException이 발생하였다.",
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "extracted_keywords": [
+              "AdminAuthService",
+              "ClassNotFoundException",
+              "com.example.auth.JwtTokenProvider",
+              "login",
+              "관리자 포털 인증"
+            ],
+            "domain_tags": [
+              "admin_portal"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "736726b8-99d3-4a5f-a465-7229d060b304",
+            "ticket_key": "admin-portal-service#910012",
+            "title": "[hybrid-search-v1] 관리자 포털 로그인 인증 클래스 로딩 실패 - ClassNotFoundException",
+            "normalized_summary": "관리자 포털에서 JwtTokenProvider 클래스를 로딩하지 못해 로그인 인증에 실패하였다.",
+            "suspected_cause": "JwtTokenProvider 라이브러리 또는 패키지 경로가 런타임 classpath와 맞지 않았습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "ClassNotFoundException",
+              "JwtTokenProvider",
+              "admin-portal",
+              "hybrid-search-v1",
+              "login"
+            ],
+            "domain_tags": [
+              "login"
+            ]
+          }
+        ],
+        "prs": [
+          {
+            "incident_id": "736726b8-99d3-4a5f-a465-7229d060b304",
+            "pr_key": "admin-portal-service#920012",
+            "title": "[hybrid-search-v1] fix: 관리자 포털 로그인 인증 클래스 로딩 실패",
+            "status": "merged",
+            "normalized_summary": "관리자 포털 로그인 인증 과정에서 발생한 JwtTokenProvider 클래스 로딩 실패 문제를 빌드 의존성과 import 경로 정리를 통해 해결하였다.",
+            "suspected_fix_for": "JwtTokenProvider 라이브러리 또는 패키지 경로가 런타임 classpath와 맞지 않아 발생한 ClassNotFoundException 문제를 해결함.",
+            "resolution_note": "빌드 의존성과 import 경로를 정리하여 JwtTokenProvider 클래스를 정상적으로 로딩할 수 있도록 수정하였다.",
+            "diff_summary": "src/main/java/com/example/auth/AdminAuthService.java 파일에서 ClassNotFoundException을 발생시키는 코드를 주석 처리하고, 관련 빌드 의존성과 import 경로를 정리하는 코드를 추가하여 문제를 해결하였다.",
+            "changed_files": [
+              "src/main/java/com/example/auth/AdminAuthService.java"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_same_error_different_cause_003",
+      "category": "same_error_different_cause",
+      "project_name": "data-portal",
+      "question": "데이터 포털 결제 승인 전에 paymentMethod를 참조해서 난 null 문제",
+      "expected_incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+      "expected_incident_summary": "데이터 포털 결제 승인 중 NullPointerException이 발생하였다.",
+      "answer_basis": "Incident error_type=NullPointerException, module=payment, class=DataPaymentService | primary_error_message=paymentMethod is null | raw_log 근거: 데이터 포털 결제 승인 중 NullPointerException이 발생하였다.; 데이터 포털 결제 승인 중 NullPointerException이 발생하였다. | raw_ticket 근거: data-portal-service#910001 / 데이터 포털 결제 승인 중 paymentMethod가 null 참조되어 NullPointerException이 발생했습니다. / cause=결제 수단 검증 전에 paymentMethod를 참조했습니다. | raw_pr 근거: data-portal-service#920001 / 데이터 포털 결제 승인 과정에서 paymentMethod 널 참조 문제를 방지하도록 null 검사 및 기본값 검증 기능을 추가하였다. / resolution=paymentMethod에 대해 null guard와 기본값 검증을 추가하여 NullPointerException 발생을 방지함.",
+      "expected_no_result": false,
+      "expected_intent": "ROOT_CAUSE",
+      "difficulty": "hard",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+            "normalized_summary": "데이터 포털 결제 승인 중 NullPointerException이 발생하였다.",
+            "error_type": "NullPointerException",
+            "error_message": "paymentMethod is null",
+            "extracted_keywords": [
+              "NullPointerException",
+              "approve",
+              "paymentMethod",
+              "결제"
+            ],
+            "domain_tags": [
+              "payment"
+            ]
+          },
+          {
+            "incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+            "normalized_summary": "데이터 포털 결제 승인 중 NullPointerException이 발생하였다.",
+            "error_type": "NullPointerException",
+            "error_message": "paymentMethod is null",
+            "extracted_keywords": [
+              "DataPaymentService",
+              "NullPointerException",
+              "approve",
+              "paymentMethod"
+            ],
+            "domain_tags": [
+              "payment"
+            ]
+          },
+          {
+            "incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+            "normalized_summary": "데이터 포털 결제 모듈의 DataPaymentService 클래스에서 approve 메서드 실행 중 NullPointerException이 발생하였다.",
+            "error_type": "NullPointerException",
+            "error_message": "paymentMethod is null",
+            "extracted_keywords": [
+              "DataPaymentService",
+              "NullPointerException",
+              "approve",
+              "payment",
+              "paymentMethod is null"
+            ],
+            "domain_tags": [
+              "payment"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+            "ticket_key": "data-portal-service#910001",
+            "title": "[hybrid-search-v1] 데이터 포털 결제 승인 중 널 참조 - NullPointerException",
+            "normalized_summary": "데이터 포털 결제 승인 중 paymentMethod가 null 참조되어 NullPointerException이 발생했습니다.",
+            "suspected_cause": "결제 수단 검증 전에 paymentMethod를 참조했습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "NullPointerException",
+              "PAY-4021",
+              "data-portal",
+              "hybrid-search-v1",
+              "paymentMethod"
+            ],
+            "domain_tags": [
+              "payment"
+            ]
+          }
+        ],
+        "prs": [
+          {
+            "incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+            "pr_key": "data-portal-service#920001",
+            "title": "[hybrid-search-v1] fix: 데이터 포털 결제 승인 중 널 참조",
+            "status": "merged",
+            "normalized_summary": "데이터 포털 결제 승인 과정에서 paymentMethod 널 참조 문제를 방지하도록 null 검사 및 기본값 검증 기능을 추가하였다.",
+            "suspected_fix_for": "결제 수단 검증 전에 paymentMethod를 참조하여 발생한 NullPointerException 문제를 해결함.",
+            "resolution_note": "paymentMethod에 대해 null guard와 기본값 검증을 추가하여 NullPointerException 발생을 방지함.",
+            "diff_summary": "src/main/java/com/example/payment/DataPaymentService.java 파일에서 기존에 있던 'paymentMethod is null'에 대한 NullPointerException 발생 코드를 수정하여 null guard와 결제 수단 기본값 검증 로직을 2줄 추가하고 관련 지표(metric) 카운트를 증가시키는 코드를 삽입함.",
+            "changed_files": [
+              "src/main/java/com/example/payment/DataPaymentService.java"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_same_error_different_cause_004",
+      "category": "same_error_different_cause",
+      "project_name": "admin-portal",
+      "question": "관리자 포털 결제 승인 흐름에서 결제수단 검증 전에 터진 null 장애",
+      "expected_incident_id": "a53dee09-c6d8-491e-91dc-cf08c2e8cb68",
+      "expected_incident_summary": "관리자 포털의 결제 모듈 AdminPaymentService에서 approve 메서드 수행 중 NullPointerException이 발생했다.",
+      "answer_basis": "Incident error_type=NullPointerException, module=payment, class=AdminPaymentService | primary_error_message=paymentMethod is null | raw_log 근거: 관리자 포털의 결제 모듈 AdminPaymentService에서 approve 메서드 수행 중 NullPointerException이 발생했다.; 관리자 포털 결제 승인 중 NullPointerException 오류가 발생했다. | raw_ticket 근거: admin-portal-service#910013 / 관리자 포털에서 결제 승인 중 paymentMethod가 null인 상태로 참조되어 NullPointerException이 발생하였다. / cause=결제 수단 검증 전에 paymentMethod를 참조했습니다. | raw_pr 근거: admin-portal-service#920013 / 관리자 포털의 AdminPaymentService에서 결제 승인 중 발생한 NullPointerException 문제를 paymentMethod 참조 전에 null 검사를 추가하여 수정했습니다. / resolution=paymentMethod 참조 전에 null guard와 결제 수단 기본값 검증을 추가하여 NullPointerException 발생을 방지함",
+      "expected_no_result": false,
+      "expected_intent": "SIMILAR_CASE",
+      "difficulty": "hard",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "a53dee09-c6d8-491e-91dc-cf08c2e8cb68",
+            "normalized_summary": "관리자 포털의 결제 모듈 AdminPaymentService에서 approve 메서드 수행 중 NullPointerException이 발생했다.",
+            "error_type": "NullPointerException",
+            "error_message": "paymentMethod is null",
+            "extracted_keywords": [
+              "AdminPaymentService",
+              "NullPointerException",
+              "approve",
+              "paymentMethod"
+            ],
+            "domain_tags": [
+              "결제"
+            ]
+          },
+          {
+            "incident_id": "a53dee09-c6d8-491e-91dc-cf08c2e8cb68",
+            "normalized_summary": "관리자 포털 결제 승인 중 NullPointerException 오류가 발생했다.",
+            "error_type": "NullPointerException",
+            "error_message": "paymentMethod is null",
+            "extracted_keywords": [
+              "NullPointerException",
+              "paymentMethod",
+              "결제 승인",
+              "관리자 포털"
+            ],
+            "domain_tags": [
+              "admin-portal",
+              "payment"
+            ]
+          },
+          {
+            "incident_id": "a53dee09-c6d8-491e-91dc-cf08c2e8cb68",
+            "normalized_summary": "관리자 포털 결제 승인 중 NullPointerException이 발생했다.",
+            "error_type": "NullPointerException",
+            "error_message": "paymentMethod is null",
+            "extracted_keywords": [
+              "NullPointerException",
+              "paymentMethod",
+              "결제 승인",
+              "관리자 포털"
+            ],
+            "domain_tags": [
+              "payment"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "a53dee09-c6d8-491e-91dc-cf08c2e8cb68",
+            "ticket_key": "admin-portal-service#910013",
+            "title": "[hybrid-search-v1] 관리자 포털 결제 승인 중 널 참조 - NullPointerException",
+            "normalized_summary": "관리자 포털에서 결제 승인 중 paymentMethod가 null인 상태로 참조되어 NullPointerException이 발생하였다.",
+            "suspected_cause": "결제 수단 검증 전에 paymentMethod를 참조했습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "NullPointerException",
+              "PAY-4021",
+              "admin-portal",
+              "hybrid-search-v1",
+              "paymentMethod"
+            ],
+            "domain_tags": [
+              "payment"
+            ]
+          }
+        ],
+        "prs": [
+          {
+            "incident_id": "a53dee09-c6d8-491e-91dc-cf08c2e8cb68",
+            "pr_key": "admin-portal-service#920013",
+            "title": "[hybrid-search-v1] fix: 관리자 포털 결제 승인 중 널 참조",
+            "status": "merged",
+            "normalized_summary": "관리자 포털의 AdminPaymentService에서 결제 승인 중 발생한 NullPointerException 문제를 paymentMethod 참조 전에 null 검사를 추가하여 수정했습니다.",
+            "suspected_fix_for": "AdminPaymentService의 approve 메서드 수행 중 paymentMethod가 null인 상태에서 참조되어 발생한 NullPointerException 문제를 해결함",
+            "resolution_note": "paymentMethod 참조 전에 null guard와 결제 수단 기본값 검증을 추가하여 NullPointerException 발생을 방지함",
+            "diff_summary": "src/main/java/com/example/payment/AdminPaymentService.java 파일에서 NullPointerException 발생 부분에 대해 null 검사를 추가하고 관련 메트릭을 증가시키는 코드가 삽입됨(+2/-1)",
+            "changed_files": [
+              "src/main/java/com/example/payment/AdminPaymentService.java"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_same_error_different_cause_005",
+      "category": "same_error_different_cause",
+      "project_name": "admin-portal",
+      "question": "관리자 리포트 권한 role 매핑 누락으로 접근 거부된 장애",
+      "expected_incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+      "expected_incident_summary": "관리자 포털에서 보안 권한 검사 중 REPORT_ADMIN 역할이 필요하여 접근이 거부됨.",
+      "answer_basis": "Incident error_type=AccessDeniedException, module=security, class=AdminPermissionEvaluator | primary_error_message=role REPORT_ADMIN required | raw_log 근거: 관리자 포털에서 보안 권한 검사 중 REPORT_ADMIN 역할이 필요하여 접근이 거부됨.; 관리자 포털의 security 모듈 AdminPermissionEvaluator 클래스의 check 메서드에서 관리자 권한 검증 실패가 발생했다. | raw_ticket 근거: admin-portal-service#910020 / 관리자 포털에서 권한 검증 실패로 AccessDeniedException이 발생하였습니다. / cause=권한 role 매핑에서 신규 role이 누락되었습니다.",
+      "expected_no_result": false,
+      "expected_intent": "ROOT_CAUSE",
+      "difficulty": "hard",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+            "normalized_summary": "관리자 포털에서 보안 권한 검사 중 REPORT_ADMIN 역할이 필요하여 접근이 거부됨.",
+            "error_type": "AccessDeniedException",
+            "error_message": "role REPORT_ADMIN required",
+            "extracted_keywords": [
+              "AccessDeniedException",
+              "AdminPermissionEvaluator",
+              "REPORT_ADMIN",
+              "security"
+            ],
+            "domain_tags": [
+              "admin-portal"
+            ]
+          },
+          {
+            "incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+            "normalized_summary": "관리자 포털의 security 모듈 AdminPermissionEvaluator 클래스의 check 메서드에서 관리자 권한 검증 실패가 발생했다.",
+            "error_type": "AccessDeniedException",
+            "error_message": "role REPORT_ADMIN required",
+            "extracted_keywords": [
+              "AccessDeniedException",
+              "check",
+              "security",
+              "관리자 권한"
+            ],
+            "domain_tags": [
+              "admin_portal"
+            ]
+          },
+          {
+            "incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+            "normalized_summary": "관리자 포털 권한 검증 중 role REPORT_ADMIN 권한이 없어서 접근이 거부되었습니다.",
+            "error_type": "AccessDeniedException",
+            "error_message": "role REPORT_ADMIN required",
+            "extracted_keywords": [
+              "AccessDeniedException",
+              "admin_portal",
+              "role REPORT_ADMIN",
+              "권한 검증 실패"
+            ],
+            "domain_tags": [
+              "admin_portal"
+            ]
+          },
+          {
+            "incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+            "normalized_summary": "관리자 포털에서 AdminPermissionEvaluator 클래스의 check 메서드에서 권한 검증이 실패했다.",
+            "error_type": "AccessDeniedException",
+            "error_message": "role REPORT_ADMIN required",
+            "extracted_keywords": [
+              "AccessDeniedException",
+              "AdminPermissionEvaluator",
+              "check",
+              "role REPORT_ADMIN",
+              "권한 검증 실패"
+            ],
+            "domain_tags": [
+              "admin portal"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+            "ticket_key": "admin-portal-service#910020",
+            "title": "[hybrid-search-v1] 관리자 포털 권한 검증 실패 - AccessDeniedException",
+            "normalized_summary": "관리자 포털에서 권한 검증 실패로 AccessDeniedException이 발생하였습니다.",
+            "suspected_cause": "권한 role 매핑에서 신규 role이 누락되었습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "AccessDeniedException",
+              "REPORT_ADMIN",
+              "admin-portal",
+              "hybrid-search-v1",
+              "permission"
+            ],
+            "domain_tags": [
+              "auth"
+            ]
+          }
+        ],
+        "prs": []
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_same_error_different_cause_006",
+      "category": "same_error_different_cause",
+      "project_name": "batch-platform",
+      "question": "배치 권한 검사에서 REPORT_ADMIN role 때문에 막힌 케이스",
+      "expected_incident_id": "1c1e0052-cffd-4f93-9900-2e3799163bdc",
+      "expected_incident_summary": "배치 플랫폼에서 com.example.security 모듈의 BatchPermissionEvaluator 클래스 check 메서드 실행 중 권한이 없어 AccessDeniedException이 발생했다.",
+      "answer_basis": "Incident error_type=AccessDeniedException, module=security, class=BatchPermissionEvaluator | primary_error_message=role REPORT_ADMIN required | raw_log 근거: 배치 플랫폼에서 com.example.security 모듈의 BatchPermissionEvaluator 클래스 check 메서드 실행 중 권한이 없어 AccessDeniedException이 발생했다.; 배치 플랫폼에서 security 모듈의 BatchPermissionEvaluator 클래스 check 메서드 실행 중 오류가 발생했다.",
+      "expected_no_result": false,
+      "expected_intent": "SIMILAR_CASE",
+      "difficulty": "hard",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "1c1e0052-cffd-4f93-9900-2e3799163bdc",
+            "normalized_summary": "배치 플랫폼에서 com.example.security 모듈의 BatchPermissionEvaluator 클래스 check 메서드 실행 중 권한이 없어 AccessDeniedException이 발생했다.",
+            "error_type": "AccessDeniedException",
+            "error_message": "role REPORT_ADMIN required",
+            "extracted_keywords": [
+              "AccessDeniedException",
+              "BatchPermissionEvaluator",
+              "role REPORT_ADMIN",
+              "security",
+              "권한 검증"
+            ],
+            "domain_tags": [
+              "batch platform",
+              "security"
+            ]
+          },
+          {
+            "incident_id": "1c1e0052-cffd-4f93-9900-2e3799163bdc",
+            "normalized_summary": "배치 플랫폼에서 security 모듈의 BatchPermissionEvaluator 클래스 check 메서드 실행 중 오류가 발생했다.",
+            "error_type": "AccessDeniedException",
+            "error_message": "role REPORT_ADMIN required",
+            "extracted_keywords": [
+              "AccessDeniedException",
+              "REPORT_ADMIN",
+              "batch platform",
+              "permission",
+              "security"
+            ],
+            "domain_tags": [
+              "batch platform"
+            ]
+          },
+          {
+            "incident_id": "1c1e0052-cffd-4f93-9900-2e3799163bdc",
+            "normalized_summary": "배치 플랫폼 권한 검증 중 BatchPermissionEvaluator.check 메서드에서 REPORT_ADMIN 역할 권한이 없어 접근이 거부되었다.",
+            "error_type": "AccessDeniedException",
+            "error_message": "role REPORT_ADMIN required",
+            "extracted_keywords": [
+              "AccessDeniedException",
+              "REPORT_ADMIN",
+              "batch platform",
+              "security",
+              "권한 검증 실패"
+            ],
+            "domain_tags": [
+              "batch platform",
+              "security"
+            ]
+          },
+          {
+            "incident_id": "1c1e0052-cffd-4f93-9900-2e3799163bdc",
+            "normalized_summary": "배치 플랫폼에서 security 모듈의 BatchPermissionEvaluator 클래스 check 메서드에서 관리자 권한이 필요한 권한 검증 실패가 발생했다.",
+            "error_type": "AccessDeniedException",
+            "error_message": "role REPORT_ADMIN required",
+            "extracted_keywords": [
+              "AccessDeniedException",
+              "REPORT_ADMIN",
+              "관리자 권한",
+              "권한 검증 실패",
+              "배치 플랫폼"
+            ],
+            "domain_tags": [
+              "batch platform"
+            ]
+          }
+        ],
+        "tickets": [],
+        "prs": []
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_same_error_different_cause_007",
+      "category": "same_error_different_cause",
+      "project_name": "data-portal",
+      "question": "데이터 포털 webhook EventStatus enum 역직렬화 실패 장애",
+      "expected_incident_id": "c8c9f3b9-8e80-4f65-ad9b-2bdfdc722871",
+      "expected_incident_summary": "com.example.api의 DataWebhookController 클래스 receive 메소드에서 JSON 매핑 중 'EventStatus' 타입 값을 역직렬화하지 못해 오류가 발생하였다.",
+      "answer_basis": "Incident error_type=JsonMappingException, module=api, class=DataWebhookController | primary_error_message=Cannot deserialize value of type EventStatus | raw_log 근거: com.example.api의 DataWebhookController 클래스 receive 메소드에서 JSON 매핑 중 'EventStatus' 타입 값을 역직렬화하지 못해 오류가 발생하였다.; 데이터 포털 api 모듈의 DataWebhookController 클래스의 receive 메서드에서 JSON 매핑 과정 중 EventStatus 타입의 값을 역직렬화할 수 없어 오류가 발생하였다. | raw_ticket 근거: data-portal-service#910009 / 데이터 포털에서 hybrid-search-v1 웹훅의 JSON 매핑 실패로 인해 JsonMappingException 에러가 발생했다. / cause=외부 webhook status enum 값이 새로 추가되었지만 서버 enum이 갱신되지 않았습니다. | raw_pr 근거: data-portal-service#920009 / 외부 webhook의 새로운 status enum 값에 대응하기 위해 UNKNOWN fallback 및 신규 status 값을 추가하여 JSON 매핑 오류를 해결하였다. / resolution=UNKNOWN enum fallback을 추가하고 신규 status 값을 서버 enum에 반영하여 JSON 매핑 실패 문제를 수정하였다.",
+      "expected_no_result": false,
+      "expected_intent": "ROOT_CAUSE",
+      "difficulty": "hard",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "c8c9f3b9-8e80-4f65-ad9b-2bdfdc722871",
+            "normalized_summary": "com.example.api의 DataWebhookController 클래스 receive 메소드에서 JSON 매핑 중 'EventStatus' 타입 값을 역직렬화하지 못해 오류가 발생하였다.",
+            "error_type": "JsonMappingException",
+            "error_message": "Cannot deserialize value of type EventStatus",
+            "extracted_keywords": [
+              "DataWebhookController",
+              "EventStatus",
+              "JSON 매핑 실패",
+              "JsonMappingException",
+              "api",
+              "receive"
+            ],
+            "domain_tags": [
+              "data_portal"
+            ]
+          },
+          {
+            "incident_id": "c8c9f3b9-8e80-4f65-ad9b-2bdfdc722871",
+            "normalized_summary": "데이터 포털 api 모듈의 DataWebhookController 클래스의 receive 메서드에서 JSON 매핑 과정 중 EventStatus 타입의 값을 역직렬화할 수 없어 오류가 발생하였다.",
+            "error_type": "JsonMappingException",
+            "error_message": "Cannot deserialize value of type EventStatus",
+            "extracted_keywords": [
+              "DataWebhookController",
+              "ERROR",
+              "EventStatus",
+              "JsonMappingException",
+              "deserialize",
+              "receive"
+            ],
+            "domain_tags": [
+              "data portal"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "c8c9f3b9-8e80-4f65-ad9b-2bdfdc722871",
+            "ticket_key": "data-portal-service#910009",
+            "title": "[hybrid-search-v1] 데이터 포털 Webhook JSON 매핑 실패 - JsonMappingException",
+            "normalized_summary": "데이터 포털에서 hybrid-search-v1 웹훅의 JSON 매핑 실패로 인해 JsonMappingException 에러가 발생했다.",
+            "suspected_cause": "외부 webhook status enum 값이 새로 추가되었지만 서버 enum이 갱신되지 않았습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "EventStatus",
+              "JsonMappingException",
+              "data-portal",
+              "hybrid-search-v1",
+              "webhook"
+            ],
+            "domain_tags": []
+          }
+        ],
+        "prs": [
+          {
+            "incident_id": "c8c9f3b9-8e80-4f65-ad9b-2bdfdc722871",
+            "pr_key": "data-portal-service#920009",
+            "title": "[hybrid-search-v1] fix: 데이터 포털 Webhook JSON 매핑 실패",
+            "status": "merged",
+            "normalized_summary": "외부 webhook의 새로운 status enum 값에 대응하기 위해 UNKNOWN fallback 및 신규 status 값을 추가하여 JSON 매핑 오류를 해결하였다.",
+            "suspected_fix_for": "외부 webhook status enum 값이 갱신되지 않아 JSON 역직렬화 중 'EventStatus' 타입에서 발생한 JsonMappingException 오류",
+            "resolution_note": "UNKNOWN enum fallback을 추가하고 신규 status 값을 서버 enum에 반영하여 JSON 매핑 실패 문제를 수정하였다.",
+            "diff_summary": "src/main/java/com/example/api/DataWebhookController.java 파일에서 기존 JsonMappingException 발생 부분을 UNKNOWN enum fallback 처리 및 신규 status 값 추가로 수정하고 metrics.increment 호출을 추가하였다.",
+            "changed_files": [
+              "src/main/java/com/example/api/DataWebhookController.java"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_same_error_different_cause_008",
+      "category": "same_error_different_cause",
+      "project_name": "admin-portal",
+      "question": "관리자 webhook에서 새 status enum 값 때문에 JSON 매핑 실패한 사례",
+      "expected_incident_id": "b6067af3-5910-489f-a9aa-b7bc184d9d3c",
+      "expected_incident_summary": "관리자 포털 API 모듈의 AdminWebhookController에서 JSON 매핑 중 오류가 발생했다.",
+      "answer_basis": "Incident error_type=JsonMappingException, module=api, class=AdminWebhookController | primary_error_message=Cannot deserialize value of type EventStatus | raw_log 근거: 관리자 포털 API 모듈의 AdminWebhookController에서 JSON 매핑 중 오류가 발생했다.; 관리자 포털 Webhook JSON 매핑 중 EventStatus 타입의 값 역직렬화에 실패했다. | raw_ticket 근거: admin-portal-service#910021 / 관리자 포털에서 webhook JSON 매핑 실패가 발생했습니다. / cause=외부 webhook status enum 값이 새로 추가되었지만 서버 enum이 갱신되지 않았습니다.",
+      "expected_no_result": false,
+      "expected_intent": "SIMILAR_CASE",
+      "difficulty": "hard",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "b6067af3-5910-489f-a9aa-b7bc184d9d3c",
+            "normalized_summary": "관리자 포털 API 모듈의 AdminWebhookController에서 JSON 매핑 중 오류가 발생했다.",
+            "error_type": "JsonMappingException",
+            "error_message": "Cannot deserialize value of type EventStatus",
+            "extracted_keywords": [
+              "EventStatus",
+              "JSON 매핑",
+              "JsonMappingException",
+              "admin_portal",
+              "웹훅"
+            ],
+            "domain_tags": [
+              "admin portal"
+            ]
+          },
+          {
+            "incident_id": "b6067af3-5910-489f-a9aa-b7bc184d9d3c",
+            "normalized_summary": "관리자 포털 Webhook JSON 매핑 중 EventStatus 타입의 값 역직렬화에 실패했다.",
+            "error_type": "JsonMappingException",
+            "error_message": "Cannot deserialize value of type EventStatus",
+            "extracted_keywords": [
+              "EventStatus",
+              "JSON 매핑 실패",
+              "JsonMappingException",
+              "Webhook",
+              "관리자 포털"
+            ],
+            "domain_tags": []
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "b6067af3-5910-489f-a9aa-b7bc184d9d3c",
+            "ticket_key": "admin-portal-service#910021",
+            "title": "[hybrid-search-v1] 관리자 포털 Webhook JSON 매핑 실패 - JsonMappingException",
+            "normalized_summary": "관리자 포털에서 webhook JSON 매핑 실패가 발생했습니다.",
+            "suspected_cause": "외부 webhook status enum 값이 새로 추가되었지만 서버 enum이 갱신되지 않았습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "EventStatus",
+              "JsonMappingException",
+              "admin-portal",
+              "hybrid-search-v1",
+              "webhook"
+            ],
+            "domain_tags": []
+          }
+        ],
+        "prs": []
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_same_error_different_cause_009",
+      "category": "same_error_different_cause",
+      "project_name": "data-portal",
+      "question": "주문 confirm 중 중복 요청이 같은 row를 동시에 갱신한 optimistic lock 장애",
+      "expected_incident_id": "57734115-d683-47f1-a263-f0efac29626f",
+      "expected_incident_summary": "데이터 포털에서 order 모듈의 DataOrderCommandService 클래스 confirm 메서드 실행 중 낙관적 락 충돌이 발생했다.",
+      "answer_basis": "Incident error_type=OptimisticLockException, module=order, class=DataOrderCommandService | primary_error_message=row was updated or deleted by another transaction | raw_log 근거: 데이터 포털에서 order 모듈의 DataOrderCommandService 클래스 confirm 메서드 실행 중 낙관적 락 충돌이 발생했다.; 데이터 포털에서 com.example.order 모듈의 DataOrderCommandService 클래스 confirm 메서드 실행 중 OptimisticLockException이 발생했다. | raw_ticket 근거: data-portal-service#910010 / 데이터 포털에서 hybrid-search-v1 실행 중 동시성 충돌로 OptimisticLockException 오류가 발생하였다. / cause=중복 confirm 요청이 같은 주문 row를 동시에 갱신했습니다. | raw_pr 근거: data-portal-service#920010 / 이 PR은 데이터 포털의 주문 확정 과정에서 발생하는 낙관적 락 충돌 문제를 idempotency 키와 재시도 정책 도입으로 해결했다. / resolution=idempotency 키와 재시도 정책을 추가하여 중복 요청 시 발생하는 낙관적 락 충돌을 방지했다.",
+      "expected_no_result": false,
+      "expected_intent": "ROOT_CAUSE",
+      "difficulty": "hard",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "57734115-d683-47f1-a263-f0efac29626f",
+            "normalized_summary": "데이터 포털에서 order 모듈의 DataOrderCommandService 클래스 confirm 메서드 실행 중 낙관적 락 충돌이 발생했다.",
+            "error_type": "OptimisticLockException",
+            "error_message": "row was updated or deleted by another transaction",
+            "extracted_keywords": [
+              "OptimisticLockException",
+              "row updated or deleted",
+              "낙관적 락 충돌"
+            ],
+            "domain_tags": [
+              "data portal"
+            ]
+          },
+          {
+            "incident_id": "57734115-d683-47f1-a263-f0efac29626f",
+            "normalized_summary": "데이터 포털에서 com.example.order 모듈의 DataOrderCommandService 클래스 confirm 메서드 실행 중 OptimisticLockException이 발생했다.",
+            "error_type": "OptimisticLockException",
+            "error_message": "row was updated or deleted by another transaction",
+            "extracted_keywords": [
+              "OptimisticLockException",
+              "데이터 포털",
+              "동시 처리",
+              "주문 확정 실패",
+              "중복 요청"
+            ],
+            "domain_tags": [
+              "order",
+              "데이터 포털"
+            ]
+          },
+          {
+            "incident_id": "57734115-d683-47f1-a263-f0efac29626f",
+            "normalized_summary": "order 모듈의 DataOrderCommandService 클래스 confirm 메서드에서 optimistic lock 충돌로 오류가 발생하였다.",
+            "error_type": "OptimisticLockException",
+            "error_message": "row was updated or deleted by another transaction",
+            "extracted_keywords": [
+              "OptimisticLockException",
+              "optimistic lock",
+              "충돌"
+            ],
+            "domain_tags": [
+              "data portal"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "57734115-d683-47f1-a263-f0efac29626f",
+            "ticket_key": "data-portal-service#910010",
+            "title": "[hybrid-search-v1] 데이터 포털 동시 처리 중 optimistic lock 충돌 - OptimisticLockException",
+            "normalized_summary": "데이터 포털에서 hybrid-search-v1 실행 중 동시성 충돌로 OptimisticLockException 오류가 발생하였다.",
+            "suspected_cause": "중복 confirm 요청이 같은 주문 row를 동시에 갱신했습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "OptimisticLockException",
+              "data-portal",
+              "hybrid-search-v1",
+              "idempotency",
+              "optimistic lock 충돌",
+              "order"
+            ],
+            "domain_tags": []
+          }
+        ],
+        "prs": [
+          {
+            "incident_id": "57734115-d683-47f1-a263-f0efac29626f",
+            "pr_key": "data-portal-service#920010",
+            "title": "[hybrid-search-v1] fix: 데이터 포털 동시 처리 중 optimistic lock 충돌",
+            "status": "merged",
+            "normalized_summary": "이 PR은 데이터 포털의 주문 확정 과정에서 발생하는 낙관적 락 충돌 문제를 idempotency 키와 재시도 정책 도입으로 해결했다.",
+            "suspected_fix_for": "중복 confirm 요청으로 인한 같은 주문 row의 동시 갱신에 따른 낙관적 락 충돌 문제",
+            "resolution_note": "idempotency 키와 재시도 정책을 추가하여 중복 요청 시 발생하는 낙관적 락 충돌을 방지했다.",
+            "diff_summary": "DataOrderCommandService.java 파일에서 낙관적 락 충돌 처리 코드를 수정하여, 기존에는 예외를 던지던 부분에 idempotency 키와 재시도 정책을 적용하고 관련 메트릭을 증가시키는 코드가 추가되었다.",
+            "changed_files": [
+              "src/main/java/com/example/order/DataOrderCommandService.java"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_same_error_different_cause_010",
+      "category": "same_error_different_cause",
+      "project_name": "batch-platform",
+      "question": "배치 주문 confirm 중 같은 row 동시 갱신으로 충돌난 케이스",
+      "expected_incident_id": "bf0576df-1986-48b2-89e2-1877f45342a0",
+      "expected_incident_summary": "BatchOrderCommandService 클래스의 confirm 메서드에서 optimistic lock 충돌로 인해 오류가 발생하였다.",
+      "answer_basis": "Incident error_type=OptimisticLockException, module=order, class=BatchOrderCommandService | primary_error_message=row was updated or deleted by another transaction | raw_log 근거: BatchOrderCommandService 클래스의 confirm 메서드에서 optimistic lock 충돌로 인해 오류가 발생하였다.; 배치 플랫폼에서 주문 확정 중 낙관적 잠금 충돌이 발생하였다.",
+      "expected_no_result": false,
+      "expected_intent": "SIMILAR_CASE",
+      "difficulty": "hard",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "bf0576df-1986-48b2-89e2-1877f45342a0",
+            "normalized_summary": "BatchOrderCommandService 클래스의 confirm 메서드에서 optimistic lock 충돌로 인해 오류가 발생하였다.",
+            "error_type": "OptimisticLockException",
+            "error_message": "row was updated or deleted by another transaction",
+            "extracted_keywords": [
+              "OptimisticLockException",
+              "batch_platform",
+              "concurrency conflict",
+              "optimistic lock"
+            ],
+            "domain_tags": [
+              "batch platform"
+            ]
+          },
+          {
+            "incident_id": "bf0576df-1986-48b2-89e2-1877f45342a0",
+            "normalized_summary": "배치 플랫폼에서 주문 확정 중 낙관적 잠금 충돌이 발생하였다.",
+            "error_type": "OptimisticLockException",
+            "error_message": "row was updated or deleted by another transaction",
+            "extracted_keywords": [
+              "batch platform",
+              "conflict",
+              "optimistic lock",
+              "order confirmation"
+            ],
+            "domain_tags": [
+              "batch platform",
+              "order management"
+            ]
+          },
+          {
+            "incident_id": "bf0576df-1986-48b2-89e2-1877f45342a0",
+            "normalized_summary": "order 모듈의 BatchOrderCommandService 클래스 confirm 메서드에서 optimistic lock 충돌로 인해 오류가 발생했다.",
+            "error_type": "OptimisticLockException",
+            "error_message": "row was updated or deleted by another transaction",
+            "extracted_keywords": [
+              "batch_platform",
+              "optimistic lock",
+              "row update conflict",
+              "충돌"
+            ],
+            "domain_tags": [
+              "batch_platform"
+            ]
+          }
+        ],
+        "tickets": [],
+        "prs": []
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_cross_project_conflict_001",
+      "category": "cross_project_conflict",
+      "project_name": "data-portal",
+      "question": "data-portal 로그인 클래스 로딩 실패 사례",
+      "expected_incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+      "expected_incident_summary": "데이터 포털에서 auth 모듈의 DataAuthService 클래스 login 메서드에서 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 오류가 발생했다.",
+      "answer_basis": "Incident error_type=ClassNotFoundException, module=auth, class=DataAuthService | primary_error_message=com.example.auth.JwtTokenProvider | raw_log 근거: 데이터 포털에서 auth 모듈의 DataAuthService 클래스 login 메서드에서 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 오류가 발생했다.; 데이터 포털 로그인 인증 클래스 로딩 중 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 예외가 발생했다. | raw_ticket 근거: data-portal-service#910000 / 데이터 포털 로그인 인증 클래스인 JwtTokenProvider를 로딩하지 못하여 ClassNotFoundException 오류가 발생하였습니다. / cause=JwtTokenProvider 라이브러리 또는 패키지 경로가 런타임 classpath와 맞지 않았습니다. | raw_pr 근거: data-portal-service#920000 / 데이터 포털 로그인 인증 과정에서 JwtTokenProvider 클래스를 찾을 수 없는 문제를 빌드 의존성과 import 경로 수정으로 해결했다. / resolution=빌드 의존성과 import 경로를 정리하여 JwtTokenProvider 클래스 로딩 실패 문제를 해결하였다.",
+      "expected_no_result": false,
+      "expected_intent": "SIMILAR_CASE",
+      "difficulty": "hard",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+            "normalized_summary": "데이터 포털에서 auth 모듈의 DataAuthService 클래스 login 메서드에서 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 오류가 발생했다.",
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "extracted_keywords": [
+              "ClassNotFoundException",
+              "DataAuthService",
+              "ERROR",
+              "JwtTokenProvider",
+              "auth",
+              "login"
+            ],
+            "domain_tags": [
+              "authentication",
+              "data portal"
+            ]
+          },
+          {
+            "incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+            "normalized_summary": "데이터 포털 로그인 인증 클래스 로딩 중 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 예외가 발생했다.",
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "extracted_keywords": [
+              "ClassNotFoundException",
+              "DataAuthService",
+              "ERROR",
+              "com.example.auth.JwtTokenProvider",
+              "login"
+            ],
+            "domain_tags": [
+              "authentication",
+              "data portal"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+            "ticket_key": "data-portal-service#910000",
+            "title": "[hybrid-search-v1] 데이터 포털 로그인 인증 클래스 로딩 실패 - ClassNotFoundException",
+            "normalized_summary": "데이터 포털 로그인 인증 클래스인 JwtTokenProvider를 로딩하지 못하여 ClassNotFoundException 오류가 발생하였습니다.",
+            "suspected_cause": "JwtTokenProvider 라이브러리 또는 패키지 경로가 런타임 classpath와 맞지 않았습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "ClassNotFoundException",
+              "JwtTokenProvider",
+              "data-portal",
+              "hybrid-search-v1",
+              "login"
+            ],
+            "domain_tags": [
+              "login"
+            ]
+          }
+        ],
+        "prs": [
+          {
+            "incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+            "pr_key": "data-portal-service#920000",
+            "title": "[hybrid-search-v1] fix: 데이터 포털 로그인 인증 클래스 로딩 실패",
+            "status": "merged",
+            "normalized_summary": "데이터 포털 로그인 인증 과정에서 JwtTokenProvider 클래스를 찾을 수 없는 문제를 빌드 의존성과 import 경로 수정으로 해결했다.",
+            "suspected_fix_for": "JwtTokenProvider 라이브러리 또는 패키지 경로가 런타임 classpath와 맞지 않아 발생한 ClassNotFoundException 문제를 해결하기 위함.",
+            "resolution_note": "빌드 의존성과 import 경로를 정리하여 JwtTokenProvider 클래스 로딩 실패 문제를 해결하였다.",
+            "diff_summary": "src/main/java/com/example/auth/DataAuthService.java 파일에서 JwtTokenProvider 클래스 로딩 실패를 일으키는 ClassNotFoundException 발생 코드를 제거하고, 빌드 의존성과 import 경로를 정리하는 주석 추가 및 메트릭 증가 코드를 삽입하였다.",
+            "changed_files": [
+              "src/main/java/com/example/auth/DataAuthService.java"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_cross_project_conflict_002",
+      "category": "cross_project_conflict",
+      "project_name": "admin-portal",
+      "question": "admin-portal 로그인 클래스 로딩 실패 사례",
+      "expected_incident_id": "736726b8-99d3-4a5f-a465-7229d060b304",
+      "expected_incident_summary": "관리자 포털 auth 모듈의 AdminAuthService 클래스 login 메서드에서 com.example.auth.JwtTokenProvider 클래스를 찾지 못하여 ClassNotFoundException이 발생하였다.",
+      "answer_basis": "Incident error_type=ClassNotFoundException, module=auth, class=AdminAuthService | primary_error_message=com.example.auth.JwtTokenProvider | raw_log 근거: 관리자 포털 auth 모듈의 AdminAuthService 클래스 login 메서드에서 com.example.auth.JwtTokenProvider 클래스를 찾지 못하여 ClassNotFoundException이 발생하였다.; 관리자 포털 인증 관련 AdminAuthService 클래스의 login 메서드에서 ClassNotFoundException이 발생하였다. | raw_ticket 근거: admin-portal-service#910012 / 관리자 포털에서 JwtTokenProvider 클래스를 로딩하지 못해 로그인 인증에 실패하였다. / cause=JwtTokenProvider 라이브러리 또는 패키지 경로가 런타임 classpath와 맞지 않았습니다. | raw_pr 근거: admin-portal-service#920012 / 관리자 포털 로그인 인증 과정에서 발생한 JwtTokenProvider 클래스 로딩 실패 문제를 빌드 의존성과 import 경로 정리를 통해 해결하였다. / resolution=빌드 의존성과 import 경로를 정리하여 JwtTokenProvider 클래스를 정상적으로 로딩할 수 있도록 수정하였다.",
+      "expected_no_result": false,
+      "expected_intent": "SIMILAR_CASE",
+      "difficulty": "hard",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "736726b8-99d3-4a5f-a465-7229d060b304",
+            "normalized_summary": "관리자 포털 auth 모듈의 AdminAuthService 클래스 login 메서드에서 com.example.auth.JwtTokenProvider 클래스를 찾지 못하여 ClassNotFoundException이 발생하였다.",
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "extracted_keywords": [
+              "AdminAuthService",
+              "ClassNotFoundException",
+              "JwtTokenProvider",
+              "auth",
+              "error",
+              "login"
+            ],
+            "domain_tags": [
+              "admin_portal"
+            ]
+          },
+          {
+            "incident_id": "736726b8-99d3-4a5f-a465-7229d060b304",
+            "normalized_summary": "관리자 포털 인증 관련 AdminAuthService 클래스의 login 메서드에서 ClassNotFoundException이 발생하였다.",
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "extracted_keywords": [
+              "AdminAuthService",
+              "ClassNotFoundException",
+              "com.example.auth.JwtTokenProvider",
+              "login",
+              "관리자 포털 인증"
+            ],
+            "domain_tags": [
+              "admin_portal"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "736726b8-99d3-4a5f-a465-7229d060b304",
+            "ticket_key": "admin-portal-service#910012",
+            "title": "[hybrid-search-v1] 관리자 포털 로그인 인증 클래스 로딩 실패 - ClassNotFoundException",
+            "normalized_summary": "관리자 포털에서 JwtTokenProvider 클래스를 로딩하지 못해 로그인 인증에 실패하였다.",
+            "suspected_cause": "JwtTokenProvider 라이브러리 또는 패키지 경로가 런타임 classpath와 맞지 않았습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "ClassNotFoundException",
+              "JwtTokenProvider",
+              "admin-portal",
+              "hybrid-search-v1",
+              "login"
+            ],
+            "domain_tags": [
+              "login"
+            ]
+          }
+        ],
+        "prs": [
+          {
+            "incident_id": "736726b8-99d3-4a5f-a465-7229d060b304",
+            "pr_key": "admin-portal-service#920012",
+            "title": "[hybrid-search-v1] fix: 관리자 포털 로그인 인증 클래스 로딩 실패",
+            "status": "merged",
+            "normalized_summary": "관리자 포털 로그인 인증 과정에서 발생한 JwtTokenProvider 클래스 로딩 실패 문제를 빌드 의존성과 import 경로 정리를 통해 해결하였다.",
+            "suspected_fix_for": "JwtTokenProvider 라이브러리 또는 패키지 경로가 런타임 classpath와 맞지 않아 발생한 ClassNotFoundException 문제를 해결함.",
+            "resolution_note": "빌드 의존성과 import 경로를 정리하여 JwtTokenProvider 클래스를 정상적으로 로딩할 수 있도록 수정하였다.",
+            "diff_summary": "src/main/java/com/example/auth/AdminAuthService.java 파일에서 ClassNotFoundException을 발생시키는 코드를 주석 처리하고, 관련 빌드 의존성과 import 경로를 정리하는 코드를 추가하여 문제를 해결하였다.",
+            "changed_files": [
+              "src/main/java/com/example/auth/AdminAuthService.java"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_cross_project_conflict_003",
+      "category": "cross_project_conflict",
+      "project_name": "batch-platform",
+      "question": "batch-platform Redis 접속 수 초과 캐시 장애",
+      "expected_incident_id": "e18b903f-0f74-493f-a7d8-380db9b38dea",
+      "expected_incident_summary": "배치 플랫폼에서 Redis 연결 풀 고갈 오류가 발생하여 캐시 서버 접속에 실패하였다.",
+      "answer_basis": "Incident error_type=RedisConnectionException, module=cache, class=BatchRedisCacheClient | primary_error_message=ERR max number of clients reached | raw_log 근거: 배치 플랫폼에서 Redis 연결 풀 고갈 오류가 발생하여 캐시 서버 접속에 실패하였다.; batch-platform 프로젝트에서 cache 모듈의 BatchRedisCacheClient 클래스의 get 메서드 실행 중 RedisConnectionException 오류가 발생했다.",
+      "expected_no_result": false,
+      "expected_intent": "SIMILAR_CASE",
+      "difficulty": "hard",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "e18b903f-0f74-493f-a7d8-380db9b38dea",
+            "normalized_summary": "배치 플랫폼에서 Redis 연결 풀 고갈 오류가 발생하여 캐시 서버 접속에 실패하였다.",
+            "error_type": "RedisConnectionException",
+            "error_message": "ERR max number of clients reached",
+            "extracted_keywords": [
+              "RedisConnectionException",
+              "batch platform",
+              "cache",
+              "max clients reached"
+            ],
+            "domain_tags": [
+              "batch platform",
+              "cache"
+            ]
+          },
+          {
+            "incident_id": "e18b903f-0f74-493f-a7d8-380db9b38dea",
+            "normalized_summary": "batch-platform 프로젝트에서 cache 모듈의 BatchRedisCacheClient 클래스의 get 메서드 실행 중 RedisConnectionException 오류가 발생했다.",
+            "error_type": "RedisConnectionException",
+            "error_message": "ERR max number of clients reached",
+            "extracted_keywords": [
+              "BatchRedisCacheClient",
+              "Redis client pool exhausted",
+              "RedisConnectionException",
+              "batch-platform",
+              "cache",
+              "get"
+            ],
+            "domain_tags": [
+              "batch-platform"
+            ]
+          },
+          {
+            "incident_id": "e18b903f-0f74-493f-a7d8-380db9b38dea",
+            "normalized_summary": "com.example.cache 패키지의 BatchRedisCacheClient 클래스 get 메서드에서 Redis 연결 풀 고갈로 인해 ERR max number of clients reached 오류가 발생하였다.",
+            "error_type": "RedisConnectionException",
+            "error_message": "ERR max number of clients reached",
+            "extracted_keywords": [
+              "BatchRedisCacheClient",
+              "ERR max number of clients reached",
+              "Redis 연결 풀 고갈",
+              "RedisConnectionException",
+              "cache"
+            ],
+            "domain_tags": [
+              "cache"
+            ]
+          },
+          {
+            "incident_id": "e18b903f-0f74-493f-a7d8-380db9b38dea",
+            "normalized_summary": "배치 플랫폼에서 Redis 연결 풀 고갈 오류가 BatchRedisCacheClient.get 메서드에서 발생했다.",
+            "error_type": "RedisConnectionException",
+            "error_message": "ERR max number of clients reached",
+            "extracted_keywords": [
+              "BatchRedisCacheClient",
+              "Redis",
+              "RedisConnectionException",
+              "get",
+              "연결 풀 고갈"
+            ],
+            "domain_tags": [
+              "batch platform",
+              "redis"
+            ]
+          }
+        ],
+        "tickets": [],
+        "prs": []
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_cross_project_conflict_004",
+      "category": "cross_project_conflict",
+      "project_name": "admin-portal",
+      "question": "admin-portal Redis 연결 풀 고갈로 캐시 조회가 실패한 사례",
+      "expected_incident_id": "158f36da-0c07-4448-b5de-e636f57c3c3a",
+      "expected_incident_summary": "관리자 포털에서 Redis 연결 풀 고갈로 인해 캐시 서버 접속에 실패하였다.",
+      "answer_basis": "Incident error_type=RedisConnectionException, module=cache, class=AdminRedisCacheClient | primary_error_message=ERR max number of clients reached | raw_log 근거: 관리자 포털에서 Redis 연결 풀 고갈로 인해 캐시 서버 접속에 실패하였다.; 관리자 포털에서 Redis 연결 풀 고갈이 발생하여 RedisConnectionException 예외가 발생하였다. | raw_ticket 근거: admin-portal-service#910014 / 관리자 포털에서 Redis 연결 풀 고갈로 인해 캐시 서버 접속에 실패했습니다. / cause=커넥션 반환 누락으로 Redis client pool이 고갈되었습니다. | raw_pr 근거: admin-portal-service#920014 / 관리자 포털 Redis 연결 풀 고갈 문제를 커넥션 반환 누락 수정과 pool maxTotal 설정 조정으로 해결하였다. / resolution=try-finally 블록을 이용하여 Redis 커넥션 반환 누락 문제를 해결하고, pool의 maxTotal 설정을 조정하여 연결 풀 고갈 문제를 완화하였다.",
+      "expected_no_result": false,
+      "expected_intent": "SIMILAR_CASE",
+      "difficulty": "hard",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "158f36da-0c07-4448-b5de-e636f57c3c3a",
+            "normalized_summary": "관리자 포털에서 Redis 연결 풀 고갈로 인해 캐시 서버 접속에 실패하였다.",
+            "error_type": "RedisConnectionException",
+            "error_message": "ERR max number of clients reached",
+            "extracted_keywords": [
+              "Redis",
+              "RedisConnectionException",
+              "연결 풀 고갈",
+              "캐시 서버"
+            ],
+            "domain_tags": [
+              "admin_portal",
+              "cache"
+            ]
+          },
+          {
+            "incident_id": "158f36da-0c07-4448-b5de-e636f57c3c3a",
+            "normalized_summary": "관리자 포털에서 Redis 연결 풀 고갈이 발생하여 RedisConnectionException 예외가 발생하였다.",
+            "error_type": "RedisConnectionException",
+            "error_message": "ERR max number of clients reached",
+            "extracted_keywords": [
+              "Redis",
+              "RedisConnectionException",
+              "connection pool",
+              "error"
+            ],
+            "domain_tags": [
+              "admin_portal"
+            ]
+          },
+          {
+            "incident_id": "158f36da-0c07-4448-b5de-e636f57c3c3a",
+            "normalized_summary": "관리자 포털에서 Redis 연결 풀 고갈로 인해 AdminRedisCacheClient의 get 메서드에서 오류가 발생하였다.",
+            "error_type": "RedisConnectionException",
+            "error_message": "ERR max number of clients reached",
+            "extracted_keywords": [
+              "AdminRedisCacheClient",
+              "ERROR",
+              "Redis 연결 풀 고갈",
+              "RedisConnectionException",
+              "cache",
+              "get"
+            ],
+            "domain_tags": [
+              "cache"
+            ]
+          },
+          {
+            "incident_id": "158f36da-0c07-4448-b5de-e636f57c3c3a",
+            "normalized_summary": "관리자 포털의 cache 모듈 AdminRedisCacheClient 클래스에서 Redis client pool 고갈 오류가 발생하였다.",
+            "error_type": "RedisConnectionException",
+            "error_message": "ERR max number of clients reached",
+            "extracted_keywords": [
+              "AdminRedisCacheClient",
+              "Redis client pool exhausted",
+              "RedisConnectionException",
+              "cache module",
+              "pool exhausted"
+            ],
+            "domain_tags": [
+              "admin portal",
+              "redis"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "158f36da-0c07-4448-b5de-e636f57c3c3a",
+            "ticket_key": "admin-portal-service#910014",
+            "title": "[hybrid-search-v1] 관리자 포털 Redis 연결 풀 고갈 - RedisConnectionException",
+            "normalized_summary": "관리자 포털에서 Redis 연결 풀 고갈로 인해 캐시 서버 접속에 실패했습니다.",
+            "suspected_cause": "커넥션 반환 누락으로 Redis client pool이 고갈되었습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "RedisConnectionException",
+              "admin-portal",
+              "cache",
+              "hybrid-search-v1",
+              "maxTotal"
+            ],
+            "domain_tags": []
+          }
+        ],
+        "prs": [
+          {
+            "incident_id": "158f36da-0c07-4448-b5de-e636f57c3c3a",
+            "pr_key": "admin-portal-service#920014",
+            "title": "[hybrid-search-v1] fix: 관리자 포털 Redis 연결 풀 고갈",
+            "status": "merged",
+            "normalized_summary": "관리자 포털 Redis 연결 풀 고갈 문제를 커넥션 반환 누락 수정과 pool maxTotal 설정 조정으로 해결하였다.",
+            "suspected_fix_for": "커넥션 반환 누락으로 인해 Redis client pool이 고갈되어 캐시 서버 접속에 실패하는 문제",
+            "resolution_note": "try-finally 블록을 이용하여 Redis 커넥션 반환 누락 문제를 해결하고, pool의 maxTotal 설정을 조정하여 연결 풀 고갈 문제를 완화하였다.",
+            "diff_summary": "AdminRedisCacheClient.java 파일에서 RedisConnectionException 예외 발생 코드를 수정하고, 커넥션 반환을 보장하기 위해 try-finally 처리 및 pool maxTotal 설정을 조정하는 코드를 추가하였다.",
+            "changed_files": [
+              "src/main/java/com/example/cache/AdminRedisCacheClient.java"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_cross_project_conflict_005",
+      "category": "cross_project_conflict",
+      "project_name": "data-portal",
+      "question": "data-portal 파트너 프로필 조회 3000ms timeout 장애",
+      "expected_incident_id": "5a0f8e66-0008-48df-a035-0333b42a5a60",
+      "expected_incident_summary": "데이터 포털 외부 파트너 API 클라이언트에서 partner profile API 호출이 3000ms 후에 타임아웃되었습니다.",
+      "answer_basis": "Incident error_type=TimeoutException, module=integration, class=DataPartnerApiClient | primary_error_message=partner profile API timed out after 3000ms | raw_log 근거: 데이터 포털 외부 파트너 API 클라이언트에서 partner profile API 호출이 3000ms 후에 타임아웃되었습니다.; integration 모듈의 DataPartnerApiClient 클래스 fetchProfile 메서드에서 partner profile API가 3000ms 후에 타임아웃되었습니다. | raw_ticket 근거: data-portal-service#910004 / 데이터 포털의 hybrid-search-v1에서 외부 파트너 API 호출이 3000ms 후에 타임아웃되어 TimeoutException이 발생하였다. / cause=파트너 API 지연 시 재시도 없이 동기 호출이 누적되었다. | raw_pr 근거: data-portal-service#920004 / 데이터 포털 외부 파트너 API 호출 시 발생하는 타임아웃 문제를 해결하기 위해 timeout 값을 분리하고 circuit breaker fallback 기능을 추가했습니다. / resolution=timeout 값을 분리하고 circuit breaker fallback을 추가하여 파트너 API 호출 지연 시 재시도를 수행하고 동기 호출 누적 문제를 완화함",
+      "expected_no_result": false,
+      "expected_intent": "SIMILAR_CASE",
+      "difficulty": "hard",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "5a0f8e66-0008-48df-a035-0333b42a5a60",
+            "normalized_summary": "데이터 포털 외부 파트너 API 클라이언트에서 partner profile API 호출이 3000ms 후에 타임아웃되었습니다.",
+            "error_type": "TimeoutException",
+            "error_message": "partner profile API timed out after 3000ms",
+            "extracted_keywords": [
+              "TimeoutException",
+              "external API",
+              "partner profile API",
+              "timeout"
+            ],
+            "domain_tags": [
+              "data portal"
+            ]
+          },
+          {
+            "incident_id": "5a0f8e66-0008-48df-a035-0333b42a5a60",
+            "normalized_summary": "integration 모듈의 DataPartnerApiClient 클래스 fetchProfile 메서드에서 partner profile API가 3000ms 후에 타임아웃되었습니다.",
+            "error_type": "TimeoutException",
+            "error_message": "partner profile API timed out after 3000ms",
+            "extracted_keywords": [
+              "API",
+              "TimeoutException",
+              "integration",
+              "partner profile",
+              "timeout"
+            ],
+            "domain_tags": [
+              "data portal"
+            ]
+          },
+          {
+            "incident_id": "5a0f8e66-0008-48df-a035-0333b42a5a60",
+            "normalized_summary": "데이터 포털 외부 파트너 API 연동 중 TimeoutException이 발생하였다.",
+            "error_type": "TimeoutException",
+            "error_message": "partner profile API timed out after 3000ms",
+            "extracted_keywords": [
+              "DataPartnerApiClient",
+              "TimeoutException",
+              "fetchProfile",
+              "integration",
+              "partner profile API",
+              "timeout"
+            ],
+            "domain_tags": [
+              "data_portal"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "5a0f8e66-0008-48df-a035-0333b42a5a60",
+            "ticket_key": "data-portal-service#910004",
+            "title": "[hybrid-search-v1] 데이터 포털 외부 파트너 API 타임아웃 - TimeoutException",
+            "normalized_summary": "데이터 포털의 hybrid-search-v1에서 외부 파트너 API 호출이 3000ms 후에 타임아웃되어 TimeoutException이 발생하였다.",
+            "suspected_cause": "파트너 API 지연 시 재시도 없이 동기 호출이 누적되었다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "3000ms",
+              "TimeoutException",
+              "data-portal",
+              "hybrid-search-v1",
+              "partner profile API"
+            ],
+            "domain_tags": []
+          }
+        ],
+        "prs": [
+          {
+            "incident_id": "5a0f8e66-0008-48df-a035-0333b42a5a60",
+            "pr_key": "data-portal-service#920004",
+            "title": "[hybrid-search-v1] fix: 데이터 포털 외부 파트너 API 타임아웃",
+            "status": "merged",
+            "normalized_summary": "데이터 포털 외부 파트너 API 호출 시 발생하는 타임아웃 문제를 해결하기 위해 timeout 값을 분리하고 circuit breaker fallback 기능을 추가했습니다.",
+            "suspected_fix_for": "데이터 포털 외부 파트너 API 호출 시 3000ms 후 타임아웃으로 인해 동기 호출이 누적되는 문제",
+            "resolution_note": "timeout 값을 분리하고 circuit breaker fallback을 추가하여 파트너 API 호출 지연 시 재시도를 수행하고 동기 호출 누적 문제를 완화함",
+            "diff_summary": "src/main/java/com/example/integration/DataPartnerApiClient.java 파일에서 TimeoutException 발생 코드를 수정하여 timeout 값을 분리하고 circuit breaker fallback 로직을 추가했으며, 관련 메트릭 증가 코드(metrics.increment)를 포함함",
+            "changed_files": [
+              "src/main/java/com/example/integration/DataPartnerApiClient.java"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_cross_project_conflict_006",
+      "category": "cross_project_conflict",
+      "project_name": "batch-platform",
+      "question": "batch-platform 파트너 프로필 API 응답 지연 timeout 장애",
+      "expected_incident_id": "323fce49-8578-4bb0-9620-93b7f163b7a1",
+      "expected_incident_summary": "배치 플랫폼의 통합 모듈 BatchPartnerApiClient 클래스의 fetchProfile 메서드에서 타임아웃 오류가 발생하였다.",
+      "answer_basis": "Incident error_type=TimeoutException, module=integration, class=BatchPartnerApiClient | primary_error_message=partner profile API timed out after 3000ms | raw_log 근거: 배치 플랫폼의 통합 모듈 BatchPartnerApiClient 클래스의 fetchProfile 메서드에서 타임아웃 오류가 발생하였다.; 배치 플랫폼 외부 파트너 API에서 타임아웃이 발생하여 partner profile API가 3000ms 후에 시간 초과되었습니다.",
+      "expected_no_result": false,
+      "expected_intent": "SIMILAR_CASE",
+      "difficulty": "hard",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "323fce49-8578-4bb0-9620-93b7f163b7a1",
+            "normalized_summary": "배치 플랫폼의 통합 모듈 BatchPartnerApiClient 클래스의 fetchProfile 메서드에서 타임아웃 오류가 발생하였다.",
+            "error_type": "TimeoutException",
+            "error_message": "partner profile API timed out after 3000ms",
+            "extracted_keywords": [
+              "API timeout",
+              "BatchPartnerApiClient",
+              "TimeoutException",
+              "fetchProfile",
+              "integration",
+              "partner API",
+              "timeout"
+            ],
+            "domain_tags": [
+              "batch-platform"
+            ]
+          },
+          {
+            "incident_id": "323fce49-8578-4bb0-9620-93b7f163b7a1",
+            "normalized_summary": "배치 플랫폼 외부 파트너 API에서 타임아웃이 발생하여 partner profile API가 3000ms 후에 시간 초과되었습니다.",
+            "error_type": "TimeoutException",
+            "error_message": "partner profile API timed out after 3000ms",
+            "extracted_keywords": [
+              "TimeoutException",
+              "batch platform",
+              "integration",
+              "partner API",
+              "profile",
+              "timeout"
+            ],
+            "domain_tags": [
+              "batch platform",
+              "partner API"
+            ]
+          },
+          {
+            "incident_id": "323fce49-8578-4bb0-9620-93b7f163b7a1",
+            "normalized_summary": "batch-platform 프로젝트의 integration 모듈 BatchPartnerApiClient 클래스 fetchProfile 메서드에서 TimeoutException이 발생했다.",
+            "error_type": "TimeoutException",
+            "error_message": "partner profile API timed out after 3000ms",
+            "extracted_keywords": [
+              "BatchPartnerApiClient",
+              "TimeoutException",
+              "fetchProfile",
+              "integration",
+              "partner API",
+              "timeout"
+            ],
+            "domain_tags": []
+          }
+        ],
+        "tickets": [],
+        "prs": []
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_ambiguous_query_001",
+      "category": "ambiguous_query",
+      "project_name": "data-portal",
+      "question": "data-portal 로그인 장애 원인 알려줘",
+      "expected_incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+      "expected_incident_summary": "데이터 포털에서 auth 모듈의 DataAuthService 클래스 login 메서드에서 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 오류가 발생했다.",
+      "answer_basis": "Incident error_type=ClassNotFoundException, module=auth, class=DataAuthService | primary_error_message=com.example.auth.JwtTokenProvider | raw_log 근거: 데이터 포털에서 auth 모듈의 DataAuthService 클래스 login 메서드에서 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 오류가 발생했다.; 데이터 포털 로그인 인증 클래스 로딩 중 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 예외가 발생했다. | raw_ticket 근거: data-portal-service#910000 / 데이터 포털 로그인 인증 클래스인 JwtTokenProvider를 로딩하지 못하여 ClassNotFoundException 오류가 발생하였습니다. / cause=JwtTokenProvider 라이브러리 또는 패키지 경로가 런타임 classpath와 맞지 않았습니다. | raw_pr 근거: data-portal-service#920000 / 데이터 포털 로그인 인증 과정에서 JwtTokenProvider 클래스를 찾을 수 없는 문제를 빌드 의존성과 import 경로 수정으로 해결했다. / resolution=빌드 의존성과 import 경로를 정리하여 JwtTokenProvider 클래스 로딩 실패 문제를 해결하였다.",
+      "expected_no_result": false,
+      "expected_intent": "ROOT_CAUSE",
+      "difficulty": "medium",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+            "normalized_summary": "데이터 포털에서 auth 모듈의 DataAuthService 클래스 login 메서드에서 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 오류가 발생했다.",
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "extracted_keywords": [
+              "ClassNotFoundException",
+              "DataAuthService",
+              "ERROR",
+              "JwtTokenProvider",
+              "auth",
+              "login"
+            ],
+            "domain_tags": [
+              "authentication",
+              "data portal"
+            ]
+          },
+          {
+            "incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+            "normalized_summary": "데이터 포털 로그인 인증 클래스 로딩 중 com.example.auth.JwtTokenProvider 클래스를 찾을 수 없어 예외가 발생했다.",
+            "error_type": "ClassNotFoundException",
+            "error_message": "com.example.auth.JwtTokenProvider",
+            "extracted_keywords": [
+              "ClassNotFoundException",
+              "DataAuthService",
+              "ERROR",
+              "com.example.auth.JwtTokenProvider",
+              "login"
+            ],
+            "domain_tags": [
+              "authentication",
+              "data portal"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+            "ticket_key": "data-portal-service#910000",
+            "title": "[hybrid-search-v1] 데이터 포털 로그인 인증 클래스 로딩 실패 - ClassNotFoundException",
+            "normalized_summary": "데이터 포털 로그인 인증 클래스인 JwtTokenProvider를 로딩하지 못하여 ClassNotFoundException 오류가 발생하였습니다.",
+            "suspected_cause": "JwtTokenProvider 라이브러리 또는 패키지 경로가 런타임 classpath와 맞지 않았습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "ClassNotFoundException",
+              "JwtTokenProvider",
+              "data-portal",
+              "hybrid-search-v1",
+              "login"
+            ],
+            "domain_tags": [
+              "login"
+            ]
+          }
+        ],
+        "prs": [
+          {
+            "incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+            "pr_key": "data-portal-service#920000",
+            "title": "[hybrid-search-v1] fix: 데이터 포털 로그인 인증 클래스 로딩 실패",
+            "status": "merged",
+            "normalized_summary": "데이터 포털 로그인 인증 과정에서 JwtTokenProvider 클래스를 찾을 수 없는 문제를 빌드 의존성과 import 경로 수정으로 해결했다.",
+            "suspected_fix_for": "JwtTokenProvider 라이브러리 또는 패키지 경로가 런타임 classpath와 맞지 않아 발생한 ClassNotFoundException 문제를 해결하기 위함.",
+            "resolution_note": "빌드 의존성과 import 경로를 정리하여 JwtTokenProvider 클래스 로딩 실패 문제를 해결하였다.",
+            "diff_summary": "src/main/java/com/example/auth/DataAuthService.java 파일에서 JwtTokenProvider 클래스 로딩 실패를 일으키는 ClassNotFoundException 발생 코드를 제거하고, 빌드 의존성과 import 경로를 정리하는 주석 추가 및 메트릭 증가 코드를 삽입하였다.",
+            "changed_files": [
+              "src/main/java/com/example/auth/DataAuthService.java"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_ambiguous_query_002",
+      "category": "ambiguous_query",
+      "project_name": "data-portal",
+      "question": "data-portal 결제 장애 해결 내용 요약해줘",
+      "expected_incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+      "expected_incident_summary": "데이터 포털 결제 승인 중 NullPointerException이 발생하였다.",
+      "answer_basis": "Incident error_type=NullPointerException, module=payment, class=DataPaymentService | primary_error_message=paymentMethod is null | raw_log 근거: 데이터 포털 결제 승인 중 NullPointerException이 발생하였다.; 데이터 포털 결제 승인 중 NullPointerException이 발생하였다. | raw_ticket 근거: data-portal-service#910001 / 데이터 포털 결제 승인 중 paymentMethod가 null 참조되어 NullPointerException이 발생했습니다. / cause=결제 수단 검증 전에 paymentMethod를 참조했습니다. | raw_pr 근거: data-portal-service#920001 / 데이터 포털 결제 승인 과정에서 paymentMethod 널 참조 문제를 방지하도록 null 검사 및 기본값 검증 기능을 추가하였다. / resolution=paymentMethod에 대해 null guard와 기본값 검증을 추가하여 NullPointerException 발생을 방지함.",
+      "expected_no_result": false,
+      "expected_intent": "SUMMARY",
+      "difficulty": "medium",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+            "normalized_summary": "데이터 포털 결제 승인 중 NullPointerException이 발생하였다.",
+            "error_type": "NullPointerException",
+            "error_message": "paymentMethod is null",
+            "extracted_keywords": [
+              "NullPointerException",
+              "approve",
+              "paymentMethod",
+              "결제"
+            ],
+            "domain_tags": [
+              "payment"
+            ]
+          },
+          {
+            "incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+            "normalized_summary": "데이터 포털 결제 승인 중 NullPointerException이 발생하였다.",
+            "error_type": "NullPointerException",
+            "error_message": "paymentMethod is null",
+            "extracted_keywords": [
+              "DataPaymentService",
+              "NullPointerException",
+              "approve",
+              "paymentMethod"
+            ],
+            "domain_tags": [
+              "payment"
+            ]
+          },
+          {
+            "incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+            "normalized_summary": "데이터 포털 결제 모듈의 DataPaymentService 클래스에서 approve 메서드 실행 중 NullPointerException이 발생하였다.",
+            "error_type": "NullPointerException",
+            "error_message": "paymentMethod is null",
+            "extracted_keywords": [
+              "DataPaymentService",
+              "NullPointerException",
+              "approve",
+              "payment",
+              "paymentMethod is null"
+            ],
+            "domain_tags": [
+              "payment"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+            "ticket_key": "data-portal-service#910001",
+            "title": "[hybrid-search-v1] 데이터 포털 결제 승인 중 널 참조 - NullPointerException",
+            "normalized_summary": "데이터 포털 결제 승인 중 paymentMethod가 null 참조되어 NullPointerException이 발생했습니다.",
+            "suspected_cause": "결제 수단 검증 전에 paymentMethod를 참조했습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "NullPointerException",
+              "PAY-4021",
+              "data-portal",
+              "hybrid-search-v1",
+              "paymentMethod"
+            ],
+            "domain_tags": [
+              "payment"
+            ]
+          }
+        ],
+        "prs": [
+          {
+            "incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+            "pr_key": "data-portal-service#920001",
+            "title": "[hybrid-search-v1] fix: 데이터 포털 결제 승인 중 널 참조",
+            "status": "merged",
+            "normalized_summary": "데이터 포털 결제 승인 과정에서 paymentMethod 널 참조 문제를 방지하도록 null 검사 및 기본값 검증 기능을 추가하였다.",
+            "suspected_fix_for": "결제 수단 검증 전에 paymentMethod를 참조하여 발생한 NullPointerException 문제를 해결함.",
+            "resolution_note": "paymentMethod에 대해 null guard와 기본값 검증을 추가하여 NullPointerException 발생을 방지함.",
+            "diff_summary": "src/main/java/com/example/payment/DataPaymentService.java 파일에서 기존에 있던 'paymentMethod is null'에 대한 NullPointerException 발생 코드를 수정하여 null guard와 결제 수단 기본값 검증 로직을 2줄 추가하고 관련 지표(metric) 카운트를 증가시키는 코드를 삽입함.",
+            "changed_files": [
+              "src/main/java/com/example/payment/DataPaymentService.java"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_ambiguous_query_003",
+      "category": "ambiguous_query",
+      "project_name": "admin-portal",
+      "question": "admin-portal 권한 문제로 막힌 장애 찾아줘",
+      "expected_incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+      "expected_incident_summary": "관리자 포털에서 보안 권한 검사 중 REPORT_ADMIN 역할이 필요하여 접근이 거부됨.",
+      "answer_basis": "Incident error_type=AccessDeniedException, module=security, class=AdminPermissionEvaluator | primary_error_message=role REPORT_ADMIN required | raw_log 근거: 관리자 포털에서 보안 권한 검사 중 REPORT_ADMIN 역할이 필요하여 접근이 거부됨.; 관리자 포털의 security 모듈 AdminPermissionEvaluator 클래스의 check 메서드에서 관리자 권한 검증 실패가 발생했다. | raw_ticket 근거: admin-portal-service#910020 / 관리자 포털에서 권한 검증 실패로 AccessDeniedException이 발생하였습니다. / cause=권한 role 매핑에서 신규 role이 누락되었습니다.",
+      "expected_no_result": false,
+      "expected_intent": "SIMILAR_CASE",
+      "difficulty": "medium",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+            "normalized_summary": "관리자 포털에서 보안 권한 검사 중 REPORT_ADMIN 역할이 필요하여 접근이 거부됨.",
+            "error_type": "AccessDeniedException",
+            "error_message": "role REPORT_ADMIN required",
+            "extracted_keywords": [
+              "AccessDeniedException",
+              "AdminPermissionEvaluator",
+              "REPORT_ADMIN",
+              "security"
+            ],
+            "domain_tags": [
+              "admin-portal"
+            ]
+          },
+          {
+            "incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+            "normalized_summary": "관리자 포털의 security 모듈 AdminPermissionEvaluator 클래스의 check 메서드에서 관리자 권한 검증 실패가 발생했다.",
+            "error_type": "AccessDeniedException",
+            "error_message": "role REPORT_ADMIN required",
+            "extracted_keywords": [
+              "AccessDeniedException",
+              "check",
+              "security",
+              "관리자 권한"
+            ],
+            "domain_tags": [
+              "admin_portal"
+            ]
+          },
+          {
+            "incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+            "normalized_summary": "관리자 포털 권한 검증 중 role REPORT_ADMIN 권한이 없어서 접근이 거부되었습니다.",
+            "error_type": "AccessDeniedException",
+            "error_message": "role REPORT_ADMIN required",
+            "extracted_keywords": [
+              "AccessDeniedException",
+              "admin_portal",
+              "role REPORT_ADMIN",
+              "권한 검증 실패"
+            ],
+            "domain_tags": [
+              "admin_portal"
+            ]
+          },
+          {
+            "incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+            "normalized_summary": "관리자 포털에서 AdminPermissionEvaluator 클래스의 check 메서드에서 권한 검증이 실패했다.",
+            "error_type": "AccessDeniedException",
+            "error_message": "role REPORT_ADMIN required",
+            "extracted_keywords": [
+              "AccessDeniedException",
+              "AdminPermissionEvaluator",
+              "check",
+              "role REPORT_ADMIN",
+              "권한 검증 실패"
+            ],
+            "domain_tags": [
+              "admin portal"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+            "ticket_key": "admin-portal-service#910020",
+            "title": "[hybrid-search-v1] 관리자 포털 권한 검증 실패 - AccessDeniedException",
+            "normalized_summary": "관리자 포털에서 권한 검증 실패로 AccessDeniedException이 발생하였습니다.",
+            "suspected_cause": "권한 role 매핑에서 신규 role이 누락되었습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "AccessDeniedException",
+              "REPORT_ADMIN",
+              "admin-portal",
+              "hybrid-search-v1",
+              "permission"
+            ],
+            "domain_tags": [
+              "auth"
+            ]
+          }
+        ],
+        "prs": []
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_ambiguous_query_004",
+      "category": "ambiguous_query",
+      "project_name": "batch-platform",
+      "question": "batch-platform 이벤트 발행 실패 사례",
+      "expected_incident_id": "8471ff53-d6e3-40d1-a7f7-9526d0698c0f",
+      "expected_incident_summary": "배치 플랫폼의 stream 모듈 BatchKafkaEventPublisher 클래스의 publish 메서드에서 Kafka 이벤트 직렬화 실패가 발생하였다.",
+      "answer_basis": "Incident error_type=KafkaSerializationException, module=stream, class=BatchKafkaEventPublisher | primary_error_message=cannot serialize schema version v3 | raw_log 근거: 배치 플랫폼의 stream 모듈 BatchKafkaEventPublisher 클래스의 publish 메서드에서 Kafka 이벤트 직렬화 실패가 발생하였다.; 배치 플랫폼에서 Kafka 이벤트 직렬화에 실패하였다. 스키마 버전 불일치가 원인이다.",
+      "expected_no_result": false,
+      "expected_intent": "SIMILAR_CASE",
+      "difficulty": "medium",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "8471ff53-d6e3-40d1-a7f7-9526d0698c0f",
+            "normalized_summary": "배치 플랫폼의 stream 모듈 BatchKafkaEventPublisher 클래스의 publish 메서드에서 Kafka 이벤트 직렬화 실패가 발생하였다.",
+            "error_type": "KafkaSerializationException",
+            "error_message": "cannot serialize schema version v3",
+            "extracted_keywords": [
+              "BatchKafkaEventPublisher",
+              "KafkaSerializationException",
+              "batch_platform",
+              "publish",
+              "stream",
+              "직렬화 실패"
+            ],
+            "domain_tags": [
+              "Kafka",
+              "batch platform"
+            ]
+          },
+          {
+            "incident_id": "8471ff53-d6e3-40d1-a7f7-9526d0698c0f",
+            "normalized_summary": "배치 플랫폼에서 Kafka 이벤트 직렬화에 실패하였다. 스키마 버전 불일치가 원인이다.",
+            "error_type": "KafkaSerializationException",
+            "error_message": "cannot serialize schema version v3",
+            "extracted_keywords": [
+              "Kafka",
+              "Serialization",
+              "batch platform",
+              "schema version v3"
+            ],
+            "domain_tags": [
+              "Kafka",
+              "batch platform"
+            ]
+          },
+          {
+            "incident_id": "8471ff53-d6e3-40d1-a7f7-9526d0698c0f",
+            "normalized_summary": "com.example.stream 모듈의 BatchKafkaEventPublisher 클래스 publish 메서드에서 KafkaSerializationException 예외가 발생했다.",
+            "error_type": "KafkaSerializationException",
+            "error_message": "cannot serialize schema version v3",
+            "extracted_keywords": [
+              "KafkaSerializationException",
+              "batch_platform-kafka-serialization",
+              "hybrid-search-v1",
+              "직렬화 실패"
+            ],
+            "domain_tags": [
+              "batch platform",
+              "kafka"
+            ]
+          }
+        ],
+        "tickets": [],
+        "prs": []
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_ambiguous_query_005",
+      "category": "ambiguous_query",
+      "project_name": "data-portal",
+      "question": "data-portal 캐시 쪽 장애 원인이 뭐였어?",
+      "expected_incident_id": "e875bef9-8e22-46b7-9249-00631cd1cab5",
+      "expected_incident_summary": "데이터 포털 Redis 연결 풀에서 최대 클라이언트 수 초과로 인해 캐시 서버 접속에 실패했다.",
+      "answer_basis": "Incident error_type=RedisConnectionException, module=cache, class=DataRedisCacheClient | primary_error_message=ERR max number of clients reached | raw_log 근거: 데이터 포털 Redis 연결 풀에서 최대 클라이언트 수 초과로 인해 캐시 서버 접속에 실패했다.; 데이터 포털에서 Redis 연결 풀 고갈로 인해 RedisConnectionException이 발생하였다. | raw_ticket 근거: data-portal-service#910002 / 데이터 포털의 hybrid-search-v1에서 Redis 연결 풀 고갈로 인해 캐시 서버 접속에 실패하였다. / cause=커넥션 반환 누락으로 Redis client pool이 고갈되었습니다. | raw_pr 근거: data-portal-service#920002 / 데이터 포털 Redis 연결 풀 고갈 문제를 해결하기 위해 커넥션 반환을 try-finally로 처리하고 pool의 maxTotal 설정을 조정하였다. / resolution=try-finally 문으로 커넥션 반환 누락 문제를 해결하고, pool의 maxTotal 설정을 조정하여 연결 풀 고갈 현상을 방지하였다.",
+      "expected_no_result": false,
+      "expected_intent": "ROOT_CAUSE",
+      "difficulty": "medium",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "e875bef9-8e22-46b7-9249-00631cd1cab5",
+            "normalized_summary": "데이터 포털 Redis 연결 풀에서 최대 클라이언트 수 초과로 인해 캐시 서버 접속에 실패했다.",
+            "error_type": "RedisConnectionException",
+            "error_message": "ERR max number of clients reached",
+            "extracted_keywords": [
+              "RedisConnectionException",
+              "cache server",
+              "connection pool",
+              "max clients reached"
+            ],
+            "domain_tags": [
+              "cache",
+              "redis"
+            ]
+          },
+          {
+            "incident_id": "e875bef9-8e22-46b7-9249-00631cd1cab5",
+            "normalized_summary": "데이터 포털에서 Redis 연결 풀 고갈로 인해 RedisConnectionException이 발생하였다.",
+            "error_type": "RedisConnectionException",
+            "error_message": "ERR max number of clients reached",
+            "extracted_keywords": [
+              "Redis",
+              "RedisConnectionException",
+              "connection pool",
+              "max clients"
+            ],
+            "domain_tags": [
+              "cache"
+            ]
+          },
+          {
+            "incident_id": "e875bef9-8e22-46b7-9249-00631cd1cab5",
+            "normalized_summary": "데이터 포털 Redis 연결 풀 고갈; 캐시 서버 접속 실패 오류가 com.example.cache.DataRedisCacheClient 클래스의 get 메서드에서 발생했습니다.",
+            "error_type": "RedisConnectionException",
+            "error_message": "ERR max number of clients reached",
+            "extracted_keywords": [
+              "Redis",
+              "RedisConnectionException",
+              "데이터 포털",
+              "연결 풀 고갈",
+              "접속 실패",
+              "캐시 서버"
+            ],
+            "domain_tags": [
+              "cache",
+              "redis"
+            ]
+          },
+          {
+            "incident_id": "e875bef9-8e22-46b7-9249-00631cd1cab5",
+            "normalized_summary": "데이터 포털에서 Redis 클라이언트 풀 고갈 오류가 com.example.cache.DataRedisCacheClient.get 메서드에서 발생했습니다.",
+            "error_type": "RedisConnectionException",
+            "error_message": "ERR max number of clients reached",
+            "extracted_keywords": [
+              "DataRedisCacheClient",
+              "Redis client pool exhausted",
+              "RedisConnectionException",
+              "get"
+            ],
+            "domain_tags": [
+              "redis"
+            ]
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "e875bef9-8e22-46b7-9249-00631cd1cab5",
+            "ticket_key": "data-portal-service#910002",
+            "title": "[hybrid-search-v1] 데이터 포털 Redis 연결 풀 고갈 - RedisConnectionException",
+            "normalized_summary": "데이터 포털의 hybrid-search-v1에서 Redis 연결 풀 고갈로 인해 캐시 서버 접속에 실패하였다.",
+            "suspected_cause": "커넥션 반환 누락으로 Redis client pool이 고갈되었습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "RedisConnectionException",
+              "cache",
+              "data-portal",
+              "hybrid-search-v1",
+              "maxTotal"
+            ],
+            "domain_tags": []
+          }
+        ],
+        "prs": [
+          {
+            "incident_id": "e875bef9-8e22-46b7-9249-00631cd1cab5",
+            "pr_key": "data-portal-service#920002",
+            "title": "[hybrid-search-v1] fix: 데이터 포털 Redis 연결 풀 고갈",
+            "status": "merged",
+            "normalized_summary": "데이터 포털 Redis 연결 풀 고갈 문제를 해결하기 위해 커넥션 반환을 try-finally로 처리하고 pool의 maxTotal 설정을 조정하였다.",
+            "suspected_fix_for": "커넥션 반환 누락으로 인한 Redis client pool 고갈 문제",
+            "resolution_note": "try-finally 문으로 커넥션 반환 누락 문제를 해결하고, pool의 maxTotal 설정을 조정하여 연결 풀 고갈 현상을 방지하였다.",
+            "diff_summary": "src/main/java/com/example/cache/DataRedisCacheClient.java 파일에서 RedisConnectionException 발생 부분을 수정하며, try-finally 반환 처리와 pool maxTotal 설정 조정을 적용하고 metrics 증가 코드를 추가하였다.",
+            "changed_files": [
+              "src/main/java/com/example/cache/DataRedisCacheClient.java"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_ambiguous_query_006",
+      "category": "ambiguous_query",
+      "project_name": "admin-portal",
+      "question": "admin-portal 외부 연동 호출 실패한 장애 설명해줘",
+      "expected_incident_id": "781423f4-b19f-4bc1-a116-ae1dd87938f3",
+      "expected_incident_summary": "관리자 포털의 외부 파트너 API 호출 시 AdminPartnerApiClient 클래스의 fetchProfile 메서드에서 타임아웃이 발생했다.",
+      "answer_basis": "Incident error_type=TimeoutException, module=integration, class=AdminPartnerApiClient | primary_error_message=partner profile API timed out after 3000ms | raw_log 근거: 관리자 포털의 외부 파트너 API 호출 시 AdminPartnerApiClient 클래스의 fetchProfile 메서드에서 타임아웃이 발생했다.; 관리자 포털 통합 모듈의 AdminPartnerApiClient 클래스 fetchProfile 메서드에서 TimeoutException이 발생하였다. | raw_ticket 근거: admin-portal-service#910016 / 관리자 포털에서 외부 파트너 API 호출 시 TimeoutException이 발생하여 응답 지연 장애가 발생했습니다. / cause=파트너 API 지연 시 재시도 없이 동기 호출이 누적되었습니다. | raw_pr 근거: admin-portal-service#920016 / 이 PR은 관리자 포털의 외부 파트너 API 호출 시 발생하는 타임아웃 문제를 해결하기 위해 타임아웃 값을 분리하고 써킷 브레이커 폴백을 추가하는 변경을 적용했습니다. / resolution=파트너 API 지연 시 재시도 없이 동기 호출이 누적되는 문제를 해결하기 위해 타임아웃 값을 분리하고, circuit breaker fallback 메커니즘을 추가하여 타임아웃에 대응했습니다.",
+      "expected_no_result": false,
+      "expected_intent": "SUMMARY",
+      "difficulty": "medium",
+      "evidence": {
+        "logs": [
+          {
+            "incident_id": "781423f4-b19f-4bc1-a116-ae1dd87938f3",
+            "normalized_summary": "관리자 포털의 외부 파트너 API 호출 시 AdminPartnerApiClient 클래스의 fetchProfile 메서드에서 타임아웃이 발생했다.",
+            "error_type": "TimeoutException",
+            "error_message": "partner profile API timed out after 3000ms",
+            "extracted_keywords": [
+              "API timeout",
+              "AdminPartnerApiClient",
+              "TimeoutException",
+              "fetchProfile",
+              "partner profile"
+            ],
+            "domain_tags": [
+              "admin portal",
+              "external API"
+            ]
+          },
+          {
+            "incident_id": "781423f4-b19f-4bc1-a116-ae1dd87938f3",
+            "normalized_summary": "관리자 포털 통합 모듈의 AdminPartnerApiClient 클래스 fetchProfile 메서드에서 TimeoutException이 발생하였다.",
+            "error_type": "TimeoutException",
+            "error_message": "partner profile API timed out after 3000ms",
+            "extracted_keywords": [
+              "3000ms",
+              "TimeoutException",
+              "partner profile API",
+              "timed out"
+            ],
+            "domain_tags": [
+              "admin portal"
+            ]
+          },
+          {
+            "incident_id": "781423f4-b19f-4bc1-a116-ae1dd87938f3",
+            "normalized_summary": "관리자 포털 통합 모듈 AdminPartnerApiClient 클래스의 fetchProfile 메서드에서 TimeoutException이 발생하였다.",
+            "error_type": "TimeoutException",
+            "error_message": "partner profile API timed out after 3000ms",
+            "extracted_keywords": [
+              "TimeoutException",
+              "fetchProfile",
+              "partner profile API",
+              "timeout"
+            ],
+            "domain_tags": []
+          }
+        ],
+        "tickets": [
+          {
+            "incident_id": "781423f4-b19f-4bc1-a116-ae1dd87938f3",
+            "ticket_key": "admin-portal-service#910016",
+            "title": "[hybrid-search-v1] 관리자 포털 외부 파트너 API 타임아웃 - TimeoutException",
+            "normalized_summary": "관리자 포털에서 외부 파트너 API 호출 시 TimeoutException이 발생하여 응답 지연 장애가 발생했습니다.",
+            "suspected_cause": "파트너 API 지연 시 재시도 없이 동기 호출이 누적되었습니다.",
+            "resolution_note": null,
+            "extracted_keywords": [
+              "3000ms",
+              "TimeoutException",
+              "admin-portal",
+              "hybrid-search-v1",
+              "partner profile API"
+            ],
+            "domain_tags": []
+          }
+        ],
+        "prs": [
+          {
+            "incident_id": "781423f4-b19f-4bc1-a116-ae1dd87938f3",
+            "pr_key": "admin-portal-service#920016",
+            "title": "[hybrid-search-v1] fix: 관리자 포털 외부 파트너 API 타임아웃",
+            "status": "merged",
+            "normalized_summary": "이 PR은 관리자 포털의 외부 파트너 API 호출 시 발생하는 타임아웃 문제를 해결하기 위해 타임아웃 값을 분리하고 써킷 브레이커 폴백을 추가하는 변경을 적용했습니다.",
+            "suspected_fix_for": "관리자 포털에서 외부 파트너 API 호출 시 AdminPartnerApiClient 클래스의 fetchProfile 메서드에서 발생한 3000ms 타임아웃 문제",
+            "resolution_note": "파트너 API 지연 시 재시도 없이 동기 호출이 누적되는 문제를 해결하기 위해 타임아웃 값을 분리하고, circuit breaker fallback 메커니즘을 추가하여 타임아웃에 대응했습니다.",
+            "diff_summary": "AdminPartnerApiClient.java 파일에서 기존의 하드코딩된 3000ms 타임아웃 예외 부분을 제거하고, 타임아웃 값을 분리하며 circuit breaker fallback 기능을 추가하는 패치를 적용했습니다. 또한 메트릭 증가 코드를 추가하여 문제 해결 상태를 기록하도록 했습니다.",
+            "changed_files": [
+              "src/main/java/com/example/integration/AdminPartnerApiClient.java"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_key": "enriched_seed_v1_no_relevant_result_001",
+      "category": "no_relevant_result",
+      "project_name": "data-portal",
+      "question": "이미지 업로드 썸네일 생성 실패 장애 원인",
+      "expected_incident_id": null,
+      "expected_incident_summary": null,
+      "answer_basis": "현재 seed 36건의 raw log/ticket/PR 어느 근거와도 직접 일치하지 않는 질문이다.",
+      "expected_no_result": true,
+      "expected_intent": "ROOT_CAUSE",
+      "difficulty": "medium",
+      "evidence": null
+    },
+    {
+      "case_key": "enriched_seed_v1_no_relevant_result_002",
+      "category": "no_relevant_result",
+      "project_name": "data-portal",
+      "question": "메일 발송 SMTP 인증 실패 해결 방법",
+      "expected_incident_id": null,
+      "expected_incident_summary": null,
+      "answer_basis": "현재 seed 36건의 raw log/ticket/PR 어느 근거와도 직접 일치하지 않는 질문이다.",
+      "expected_no_result": true,
+      "expected_intent": "RESOLUTION",
+      "difficulty": "medium",
+      "evidence": null
+    },
+    {
+      "case_key": "enriched_seed_v1_no_relevant_result_003",
+      "category": "no_relevant_result",
+      "project_name": "admin-portal",
+      "question": "관리자 화면 CSS 깨짐과 정적 리소스 캐시 문제",
+      "expected_incident_id": null,
+      "expected_incident_summary": null,
+      "answer_basis": "현재 seed 36건의 raw log/ticket/PR 어느 근거와도 직접 일치하지 않는 질문이다.",
+      "expected_no_result": true,
+      "expected_intent": "SUMMARY",
+      "difficulty": "easy",
+      "evidence": null
+    },
+    {
+      "case_key": "enriched_seed_v1_no_relevant_result_004",
+      "category": "no_relevant_result",
+      "project_name": "batch-platform",
+      "question": "S3 백업 파일 압축 해제 실패 사례",
+      "expected_incident_id": null,
+      "expected_incident_summary": null,
+      "answer_basis": "현재 seed 36건의 raw log/ticket/PR 어느 근거와도 직접 일치하지 않는 질문이다.",
+      "expected_no_result": true,
+      "expected_intent": "SIMILAR_CASE",
+      "difficulty": "medium",
+      "evidence": null
+    },
+    {
+      "case_key": "enriched_seed_v1_no_relevant_result_005",
+      "category": "no_relevant_result",
+      "project_name": "batch-platform",
+      "question": "Elasticsearch 색인 shard allocation 실패",
+      "expected_incident_id": null,
+      "expected_incident_summary": null,
+      "answer_basis": "현재 seed 36건의 raw log/ticket/PR 어느 근거와도 직접 일치하지 않는 질문이다.",
+      "expected_no_result": true,
+      "expected_intent": "ROOT_CAUSE",
+      "difficulty": "medium",
+      "evidence": null
+    },
+    {
+      "case_key": "enriched_seed_v1_no_relevant_result_006",
+      "category": "no_relevant_result",
+      "project_name": "data-portal",
+      "question": "사용자 프로필 이미지 크롭 기능 오류",
+      "expected_incident_id": null,
+      "expected_incident_summary": null,
+      "answer_basis": "현재 seed 36건의 raw log/ticket/PR 어느 근거와도 직접 일치하지 않는 질문이다.",
+      "expected_no_result": true,
+      "expected_intent": "SUMMARY",
+      "difficulty": "easy",
+      "evidence": null
+    }
+  ]
+}

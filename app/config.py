@@ -35,6 +35,8 @@ class Settings(BaseSettings):
 
     openai_api_key: str | None = None
     llm_model_name: str = "gpt-4.1-mini"
+    agent_trace_debug: bool = False
+    conversation_history_limit: int = 5
 
     @field_validator("openai_api_key", mode="before")
     @classmethod

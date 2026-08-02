@@ -1,3 +1,3 @@
-from app.agents.incident_agent import IncidentAnswerAgent
+from app.agents.incident_agent import ConversationHistoryMessage, IncidentAnswerAgent
 
-__all__ = ["IncidentAnswerAgent"]
+__all__ = ["ConversationHistoryMessage", "IncidentAnswerAgent"]

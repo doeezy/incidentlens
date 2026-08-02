@@ -1,0 +1,99 @@
+{
+  "validation": {
+    "case_count": 46,
+    "distribution": {
+      "exact_keyword": 8,
+      "semantic_paraphrase": 10,
+      "same_error_different_cause": 10,
+      "cross_project_conflict": 6,
+      "ambiguous_query": 6,
+      "no_relevant_result": 6
+    },
+    "duplicate_case_key": false,
+    "duplicate_question": false,
+    "answerable_expected_ids_exist": true,
+    "no_result_expected_id_null": true
+  },
+  "run": {
+    "id": "6ad06c86-9c69-42b2-ba28-34d89ed951a7",
+    "run_name": "enriched_seed_baseline_v1",
+    "retrieval_version": "hybrid-rrf-confidence:v2",
+    "embedding_model": "text-embedding-3-small",
+    "query_analyzer_version": "incident-agent-query-analyzer:v1",
+    "parameters": {
+      "rrf_k": 60,
+      "top_k": 3,
+      "run_name": "enriched_seed_baseline_v1",
+      "candidate_limit": 20,
+      "confidence_telemetry": {
+        "llm_calls": 138,
+        "rejected_by": {
+          "llm_low_confidence": 77
+        },
+        "llm_failures": 0,
+        "passed_candidates": 61,
+        "pre_llm_rejections": 0,
+        "evaluated_candidates": 138,
+        "avg_llm_calls_per_case": 3.0,
+        "llm_low_confidence_rejections": 77
+      }
+    },
+    "total_cases": 46,
+    "completed_cases": 46,
+    "mean_latency_ms": 6220.158863205301
+  },
+  "case_counts": {
+    "answerable": 40,
+    "no_result": 6
+  },
+  "metrics": {
+    "retrieval_top1_accuracy": 0.825,
+    "retrieval_top3_accuracy": 0.975,
+    "retrieval_mrr": 0.8966666666666667,
+    "final_top1_accuracy": 0.825,
+    "final_top3_accuracy": 0.975,
+    "final_mrr": 0.8958333333333334,
+    "no_result_accuracy": 1.0,
+    "abstain_ratio": 0.15217391304347827,
+    "mean_latency_ms": 6220.158863205301
+  },
+  "candidate_count": 1583,
+  "confidence": {
+    "evaluated_candidates": 138,
+    "llm_calls": 138,
+    "avg_llm_calls_per_case": 3.0,
+    "llm_failures": 0,
+    "passed_candidates": 61,
+    "rejected_candidates": 77,
+    "rejected_by": {
+      "llm_low_confidence": 77
+    },
+    "pre_llm_rejections": 0,
+    "llm_low_confidence_rejections": 77
+  },
+  "failure_counts": {
+    "QUERY_REWRITE_ISSUE": 1
+  },
+  "failures": [
+    {
+      "case_key": "enriched_seed_v1_semantic_paraphrase_007",
+      "category": "semantic_paraphrase",
+      "project_name": "batch-platform",
+      "original_query": "배치 컨테이너가 메모리 제한 때문에 비정상 종료된 장애 요약해줘",
+      "rewritten_query": "배치 컨테이너 메모리 제한 비정상 종료 장애 요약",
+      "expected_incident_id": "5a2d05f7-9c98-4790-996e-4da2d44e99f9",
+      "expected_no_result": false,
+      "vector_rank": 3,
+      "vector_score": 0.2754061896385702,
+      "bm25_rank": 8,
+      "bm25_score": 1.7035671,
+      "rrf_rank": 5,
+      "rrf_score": 0.03057889822595705,
+      "original_query_rrf_rank": 1,
+      "confidence": null,
+      "abstained": true,
+      "error_message": null,
+      "failure_type": "QUERY_REWRITE_ISSUE"
+    }
+  ]
+}

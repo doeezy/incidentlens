@@ -1,0 +1,732 @@
+{
+  "seed_version": "hybrid-search-v1",
+  "counts": {
+    "incidents": 36,
+    "raw_logs": 108,
+    "tickets": 25,
+    "prs": 20
+  },
+  "scenarios": {
+    "data_portal-jwt-class-not-found": {
+      "project_name": "data-portal",
+      "description": "데이터 포털 로그인 인증 클래스 로딩 실패",
+      "error_type": "ClassNotFoundException",
+      "error_message": "com.example.auth.JwtTokenProvider",
+      "expected_incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61",
+      "expected_status": "resolved",
+      "exact_terms": [
+        "JwtTokenProvider",
+        "ClassNotFoundException",
+        "login",
+        "hybrid-search-v1",
+        "data-portal"
+      ],
+      "alternative_phrases": [
+        "인증 토큰 provider를 못 찾음",
+        "로그인 직후 클래스 로딩 실패"
+      ]
+    },
+    "data_portal-payment-null-pointer": {
+      "project_name": "data-portal",
+      "description": "데이터 포털 결제 승인 중 널 참조",
+      "error_type": "NullPointerException",
+      "error_message": "paymentMethod is null",
+      "expected_incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301",
+      "expected_status": "resolved",
+      "exact_terms": [
+        "paymentMethod",
+        "NullPointerException",
+        "PAY-4021",
+        "hybrid-search-v1",
+        "data-portal"
+      ],
+      "alternative_phrases": [
+        "결제 승인 NPE",
+        "결제수단 없이 승인 요청"
+      ]
+    },
+    "data_portal-redis-pool-exhausted": {
+      "project_name": "data-portal",
+      "description": "데이터 포털 Redis 연결 풀 고갈",
+      "error_type": "RedisConnectionException",
+      "error_message": "ERR max number of clients reached",
+      "expected_incident_id": "e875bef9-8e22-46b7-9249-00631cd1cab5",
+      "expected_status": "resolved",
+      "exact_terms": [
+        "RedisConnectionException",
+        "maxTotal",
+        "cache",
+        "hybrid-search-v1",
+        "data-portal"
+      ],
+      "alternative_phrases": [
+        "캐시 서버 접속 실패",
+        "Redis client pool exhausted"
+      ]
+    },
+    "data_portal-sql-bad-column": {
+      "project_name": "data-portal",
+      "description": "데이터 포털 리포트 조회 SQL 컬럼 오류",
+      "error_type": "SQLGrammarException",
+      "error_message": "column report_status_cd does not exist",
+      "expected_incident_id": "f9df2095-fd02-44e7-8bdb-366bfe3e13f5",
+      "expected_status": "resolved",
+      "exact_terms": [
+        "report_status_cd",
+        "SQLGrammarException",
+        "report_state_cd",
+        "hybrid-search-v1",
+        "data-portal"
+      ],
+      "alternative_phrases": [
+        "리포트 화면 500",
+        "없는 컬럼 조회"
+      ]
+    },
+    "data_portal-partner-timeout": {
+      "project_name": "data-portal",
+      "description": "데이터 포털 외부 파트너 API 타임아웃",
+      "error_type": "TimeoutException",
+      "error_message": "partner profile API timed out after 3000ms",
+      "expected_incident_id": "5a0f8e66-0008-48df-a035-0333b42a5a60",
+      "expected_status": "resolved",
+      "exact_terms": [
+        "TimeoutException",
+        "partner-profile",
+        "3000ms",
+        "hybrid-search-v1",
+        "data-portal"
+      ],
+      "alternative_phrases": [
+        "외부 API 응답 지연",
+        "파트너 프로필 조회 지연"
+      ]
+    },
+    "data_portal-config-file-missing": {
+      "project_name": "data-portal",
+      "description": "데이터 포털 feature flag 설정 파일 누락",
+      "error_type": "FileNotFoundException",
+      "error_message": "/etc/incidentlens/feature-flags.yml",
+      "expected_incident_id": "9fc155da-e5d2-4fc6-a724-7119e311c35a",
+      "expected_status": "resolved",
+      "exact_terms": [
+        "feature-flags.yml",
+        "FileNotFoundException",
+        "/etc/incidentlens",
+        "hybrid-search-v1",
+        "data-portal"
+      ],
+      "alternative_phrases": [
+        "설정 파일 없음",
+        "feature flag 로딩 실패"
+      ]
+    },
+    "data_portal-docker-container-exit": {
+      "project_name": "data-portal",
+      "description": "데이터 포털 Docker 컨테이너 비정상 종료",
+      "error_type": "ContainerExitError",
+      "error_message": "Docker container exited with code 137",
+      "expected_incident_id": "46705cf7-d1f8-4105-937f-4b1f016c8176",
+      "expected_status": "resolved",
+      "exact_terms": [
+        "Docker",
+        "ContainerExitError",
+        "code 137",
+        "hybrid-search-v1",
+        "data-portal"
+      ],
+      "alternative_phrases": [
+        "컨테이너가 갑자기 종료",
+        "OOMKilled"
+      ]
+    },
+    "data_portal-kafka-serialization": {
+      "project_name": "data-portal",
+      "description": "데이터 포털 Kafka 이벤트 직렬화 실패",
+      "error_type": "KafkaSerializationException",
+      "error_message": "cannot serialize schema version v3",
+      "expected_incident_id": "3a3be985-add6-434f-83c4-6af0916988c0",
+      "expected_status": "resolved",
+      "exact_terms": [
+        "KafkaSerializationException",
+        "schema registry",
+        "v3",
+        "hybrid-search-v1",
+        "data-portal"
+      ],
+      "alternative_phrases": [
+        "이벤트 발행 실패",
+        "스키마 버전 불일치"
+      ]
+    },
+    "data_portal-access-denied": {
+      "project_name": "data-portal",
+      "description": "데이터 포털 권한 검증 실패",
+      "error_type": "AccessDeniedException",
+      "error_message": "role REPORT_ADMIN required",
+      "expected_incident_id": "b82532ad-9ab3-4682-a3e9-6a23d2bf987a",
+      "expected_status": "resolved",
+      "exact_terms": [
+        "AccessDeniedException",
+        "REPORT_ADMIN",
+        "permission",
+        "hybrid-search-v1",
+        "data-portal"
+      ],
+      "alternative_phrases": [
+        "권한 없음",
+        "관리자 권한인데 차단"
+      ]
+    },
+    "data_portal-json-mapping": {
+      "project_name": "data-portal",
+      "description": "데이터 포털 Webhook JSON 매핑 실패",
+      "error_type": "JsonMappingException",
+      "error_message": "Cannot deserialize value of type EventStatus",
+      "expected_incident_id": "c8c9f3b9-8e80-4f65-ad9b-2bdfdc722871",
+      "expected_status": "resolved",
+      "exact_terms": [
+        "JsonMappingException",
+        "EventStatus",
+        "webhook",
+        "hybrid-search-v1",
+        "data-portal"
+      ],
+      "alternative_phrases": [
+        "웹훅 파싱 실패",
+        "enum 역직렬화 오류"
+      ]
+    },
+    "data_portal-optimistic-lock": {
+      "project_name": "data-portal",
+      "description": "데이터 포털 동시 처리 중 optimistic lock 충돌",
+      "error_type": "OptimisticLockException",
+      "error_message": "row was updated or deleted by another transaction",
+      "expected_incident_id": "57734115-d683-47f1-a263-f0efac29626f",
+      "expected_status": "resolved",
+      "exact_terms": [
+        "OptimisticLockException",
+        "idempotency",
+        "order",
+        "hybrid-search-v1",
+        "data-portal"
+      ],
+      "alternative_phrases": [
+        "동시성 충돌",
+        "중복 요청으로 주문 확정 실패"
+      ]
+    },
+    "data_portal-ssl-handshake": {
+      "project_name": "data-portal",
+      "description": "데이터 포털 TLS 인증서 검증 실패",
+      "error_type": "SSLHandshakeException",
+      "error_message": "PKIX path building failed",
+      "expected_incident_id": "8723fab5-d7da-4f3c-ad09-b43765afb9c5",
+      "expected_status": "resolved",
+      "exact_terms": [
+        "SSLHandshakeException",
+        "PKIX",
+        "truststore",
+        "hybrid-search-v1",
+        "data-portal"
+      ],
+      "alternative_phrases": [
+        "TLS handshake 실패",
+        "인증서 체인 오류"
+      ]
+    },
+    "admin_portal-jwt-class-not-found": {
+      "project_name": "admin-portal",
+      "description": "관리자 포털 로그인 인증 클래스 로딩 실패",
+      "error_type": "ClassNotFoundException",
+      "error_message": "com.example.auth.JwtTokenProvider",
+      "expected_incident_id": "736726b8-99d3-4a5f-a465-7229d060b304",
+      "expected_status": "resolved",
+      "exact_terms": [
+        "JwtTokenProvider",
+        "ClassNotFoundException",
+        "login",
+        "hybrid-search-v1",
+        "admin-portal"
+      ],
+      "alternative_phrases": [
+        "인증 토큰 provider를 못 찾음",
+        "로그인 직후 클래스 로딩 실패"
+      ]
+    },
+    "admin_portal-payment-null-pointer": {
+      "project_name": "admin-portal",
+      "description": "관리자 포털 결제 승인 중 널 참조",
+      "error_type": "NullPointerException",
+      "error_message": "paymentMethod is null",
+      "expected_incident_id": "a53dee09-c6d8-491e-91dc-cf08c2e8cb68",
+      "expected_status": "resolved",
+      "exact_terms": [
+        "paymentMethod",
+        "NullPointerException",
+        "PAY-4021",
+        "hybrid-search-v1",
+        "admin-portal"
+      ],
+      "alternative_phrases": [
+        "결제 승인 NPE",
+        "결제수단 없이 승인 요청"
+      ]
+    },
+    "admin_portal-redis-pool-exhausted": {
+      "project_name": "admin-portal",
+      "description": "관리자 포털 Redis 연결 풀 고갈",
+      "error_type": "RedisConnectionException",
+      "error_message": "ERR max number of clients reached",
+      "expected_incident_id": "158f36da-0c07-4448-b5de-e636f57c3c3a",
+      "expected_status": "resolved",
+      "exact_terms": [
+        "RedisConnectionException",
+        "maxTotal",
+        "cache",
+        "hybrid-search-v1",
+        "admin-portal"
+      ],
+      "alternative_phrases": [
+        "캐시 서버 접속 실패",
+        "Redis client pool exhausted"
+      ]
+    },
+    "admin_portal-sql-bad-column": {
+      "project_name": "admin-portal",
+      "description": "관리자 포털 리포트 조회 SQL 컬럼 오류",
+      "error_type": "SQLGrammarException",
+      "error_message": "column report_status_cd does not exist",
+      "expected_incident_id": "43b7ef5f-695e-43ce-9254-c1a95cd16529",
+      "expected_status": "resolved",
+      "exact_terms": [
+        "report_status_cd",
+        "SQLGrammarException",
+        "report_state_cd",
+        "hybrid-search-v1",
+        "admin-portal"
+      ],
+      "alternative_phrases": [
+        "리포트 화면 500",
+        "없는 컬럼 조회"
+      ]
+    },
+    "admin_portal-partner-timeout": {
+      "project_name": "admin-portal",
+      "description": "관리자 포털 외부 파트너 API 타임아웃",
+      "error_type": "TimeoutException",
+      "error_message": "partner profile API timed out after 3000ms",
+      "expected_incident_id": "781423f4-b19f-4bc1-a116-ae1dd87938f3",
+      "expected_status": "resolved",
+      "exact_terms": [
+        "TimeoutException",
+        "partner-profile",
+        "3000ms",
+        "hybrid-search-v1",
+        "admin-portal"
+      ],
+      "alternative_phrases": [
+        "외부 API 응답 지연",
+        "파트너 프로필 조회 지연"
+      ]
+    },
+    "admin_portal-config-file-missing": {
+      "project_name": "admin-portal",
+      "description": "관리자 포털 feature flag 설정 파일 누락",
+      "error_type": "FileNotFoundException",
+      "error_message": "/etc/incidentlens/feature-flags.yml",
+      "expected_incident_id": "63a5b6b5-3051-41c0-ab98-43f03127c6cc",
+      "expected_status": "resolved",
+      "exact_terms": [
+        "feature-flags.yml",
+        "FileNotFoundException",
+        "/etc/incidentlens",
+        "hybrid-search-v1",
+        "admin-portal"
+      ],
+      "alternative_phrases": [
+        "설정 파일 없음",
+        "feature flag 로딩 실패"
+      ]
+    },
+    "admin_portal-docker-container-exit": {
+      "project_name": "admin-portal",
+      "description": "관리자 포털 Docker 컨테이너 비정상 종료",
+      "error_type": "ContainerExitError",
+      "error_message": "Docker container exited with code 137",
+      "expected_incident_id": "29f65d03-e255-41a7-ae5c-8381cefed8b1",
+      "expected_status": "resolved",
+      "exact_terms": [
+        "Docker",
+        "ContainerExitError",
+        "code 137",
+        "hybrid-search-v1",
+        "admin-portal"
+      ],
+      "alternative_phrases": [
+        "컨테이너가 갑자기 종료",
+        "OOMKilled"
+      ]
+    },
+    "admin_portal-kafka-serialization": {
+      "project_name": "admin-portal",
+      "description": "관리자 포털 Kafka 이벤트 직렬화 실패",
+      "error_type": "KafkaSerializationException",
+      "error_message": "cannot serialize schema version v3",
+      "expected_incident_id": "bd6c2c55-5658-4348-89e4-327b33843413",
+      "expected_status": "resolved",
+      "exact_terms": [
+        "KafkaSerializationException",
+        "schema registry",
+        "v3",
+        "hybrid-search-v1",
+        "admin-portal"
+      ],
+      "alternative_phrases": [
+        "이벤트 발행 실패",
+        "스키마 버전 불일치"
+      ]
+    },
+    "admin_portal-access-denied": {
+      "project_name": "admin-portal",
+      "description": "관리자 포털 권한 검증 실패",
+      "error_type": "AccessDeniedException",
+      "error_message": "role REPORT_ADMIN required",
+      "expected_incident_id": "933fd209-e3e3-4f26-962b-7ad1fd305663",
+      "expected_status": "investigating",
+      "exact_terms": [
+        "AccessDeniedException",
+        "REPORT_ADMIN",
+        "permission",
+        "hybrid-search-v1",
+        "admin-portal"
+      ],
+      "alternative_phrases": [
+        "권한 없음",
+        "관리자 권한인데 차단"
+      ]
+    },
+    "admin_portal-json-mapping": {
+      "project_name": "admin-portal",
+      "description": "관리자 포털 Webhook JSON 매핑 실패",
+      "error_type": "JsonMappingException",
+      "error_message": "Cannot deserialize value of type EventStatus",
+      "expected_incident_id": "b6067af3-5910-489f-a9aa-b7bc184d9d3c",
+      "expected_status": "investigating",
+      "exact_terms": [
+        "JsonMappingException",
+        "EventStatus",
+        "webhook",
+        "hybrid-search-v1",
+        "admin-portal"
+      ],
+      "alternative_phrases": [
+        "웹훅 파싱 실패",
+        "enum 역직렬화 오류"
+      ]
+    },
+    "admin_portal-optimistic-lock": {
+      "project_name": "admin-portal",
+      "description": "관리자 포털 동시 처리 중 optimistic lock 충돌",
+      "error_type": "OptimisticLockException",
+      "error_message": "row was updated or deleted by another transaction",
+      "expected_incident_id": "fef763ec-0a24-479b-b70d-2a8d2bcd0237",
+      "expected_status": "investigating",
+      "exact_terms": [
+        "OptimisticLockException",
+        "idempotency",
+        "order",
+        "hybrid-search-v1",
+        "admin-portal"
+      ],
+      "alternative_phrases": [
+        "동시성 충돌",
+        "중복 요청으로 주문 확정 실패"
+      ]
+    },
+    "admin_portal-ssl-handshake": {
+      "project_name": "admin-portal",
+      "description": "관리자 포털 TLS 인증서 검증 실패",
+      "error_type": "SSLHandshakeException",
+      "error_message": "PKIX path building failed",
+      "expected_incident_id": "b4a2517e-45da-4e5f-994c-c25309d6d7a0",
+      "expected_status": "investigating",
+      "exact_terms": [
+        "SSLHandshakeException",
+        "PKIX",
+        "truststore",
+        "hybrid-search-v1",
+        "admin-portal"
+      ],
+      "alternative_phrases": [
+        "TLS handshake 실패",
+        "인증서 체인 오류"
+      ]
+    },
+    "batch_platform-jwt-class-not-found": {
+      "project_name": "batch-platform",
+      "description": "배치 플랫폼 로그인 인증 클래스 로딩 실패",
+      "error_type": "ClassNotFoundException",
+      "error_message": "com.example.auth.JwtTokenProvider",
+      "expected_incident_id": "9f6d6df5-e54f-4ca3-a498-3f13582ff63d",
+      "expected_status": "investigating",
+      "exact_terms": [
+        "JwtTokenProvider",
+        "ClassNotFoundException",
+        "login",
+        "hybrid-search-v1",
+        "batch-platform"
+      ],
+      "alternative_phrases": [
+        "인증 토큰 provider를 못 찾음",
+        "로그인 직후 클래스 로딩 실패"
+      ]
+    },
+    "batch_platform-payment-null-pointer": {
+      "project_name": "batch-platform",
+      "description": "배치 플랫폼 결제 승인 중 널 참조",
+      "error_type": "NullPointerException",
+      "error_message": "paymentMethod is null",
+      "expected_incident_id": "104e30a1-1346-4f4d-a61f-5af7211b97e7",
+      "expected_status": "open",
+      "exact_terms": [
+        "paymentMethod",
+        "NullPointerException",
+        "PAY-4021",
+        "hybrid-search-v1",
+        "batch-platform"
+      ],
+      "alternative_phrases": [
+        "결제 승인 NPE",
+        "결제수단 없이 승인 요청"
+      ]
+    },
+    "batch_platform-redis-pool-exhausted": {
+      "project_name": "batch-platform",
+      "description": "배치 플랫폼 Redis 연결 풀 고갈",
+      "error_type": "RedisConnectionException",
+      "error_message": "ERR max number of clients reached",
+      "expected_incident_id": "e18b903f-0f74-493f-a7d8-380db9b38dea",
+      "expected_status": "open",
+      "exact_terms": [
+        "RedisConnectionException",
+        "maxTotal",
+        "cache",
+        "hybrid-search-v1",
+        "batch-platform"
+      ],
+      "alternative_phrases": [
+        "캐시 서버 접속 실패",
+        "Redis client pool exhausted"
+      ]
+    },
+    "batch_platform-sql-bad-column": {
+      "project_name": "batch-platform",
+      "description": "배치 플랫폼 리포트 조회 SQL 컬럼 오류",
+      "error_type": "SQLGrammarException",
+      "error_message": "column report_status_cd does not exist",
+      "expected_incident_id": "e7638d40-9c51-4f24-ad60-ca88a2bd23e1",
+      "expected_status": "open",
+      "exact_terms": [
+        "report_status_cd",
+        "SQLGrammarException",
+        "report_state_cd",
+        "hybrid-search-v1",
+        "batch-platform"
+      ],
+      "alternative_phrases": [
+        "리포트 화면 500",
+        "없는 컬럼 조회"
+      ]
+    },
+    "batch_platform-partner-timeout": {
+      "project_name": "batch-platform",
+      "description": "배치 플랫폼 외부 파트너 API 타임아웃",
+      "error_type": "TimeoutException",
+      "error_message": "partner profile API timed out after 3000ms",
+      "expected_incident_id": "323fce49-8578-4bb0-9620-93b7f163b7a1",
+      "expected_status": "open",
+      "exact_terms": [
+        "TimeoutException",
+        "partner-profile",
+        "3000ms",
+        "hybrid-search-v1",
+        "batch-platform"
+      ],
+      "alternative_phrases": [
+        "외부 API 응답 지연",
+        "파트너 프로필 조회 지연"
+      ]
+    },
+    "batch_platform-config-file-missing": {
+      "project_name": "batch-platform",
+      "description": "배치 플랫폼 feature flag 설정 파일 누락",
+      "error_type": "FileNotFoundException",
+      "error_message": "/etc/incidentlens/feature-flags.yml",
+      "expected_incident_id": "73f8a032-24c9-42a2-8e79-8f365db2cad2",
+      "expected_status": "open",
+      "exact_terms": [
+        "feature-flags.yml",
+        "FileNotFoundException",
+        "/etc/incidentlens",
+        "hybrid-search-v1",
+        "batch-platform"
+      ],
+      "alternative_phrases": [
+        "설정 파일 없음",
+        "feature flag 로딩 실패"
+      ]
+    },
+    "batch_platform-docker-container-exit": {
+      "project_name": "batch-platform",
+      "description": "배치 플랫폼 Docker 컨테이너 비정상 종료",
+      "error_type": "ContainerExitError",
+      "error_message": "Docker container exited with code 137",
+      "expected_incident_id": "5a2d05f7-9c98-4790-996e-4da2d44e99f9",
+      "expected_status": "open",
+      "exact_terms": [
+        "Docker",
+        "ContainerExitError",
+        "code 137",
+        "hybrid-search-v1",
+        "batch-platform"
+      ],
+      "alternative_phrases": [
+        "컨테이너가 갑자기 종료",
+        "OOMKilled"
+      ]
+    },
+    "batch_platform-kafka-serialization": {
+      "project_name": "batch-platform",
+      "description": "배치 플랫폼 Kafka 이벤트 직렬화 실패",
+      "error_type": "KafkaSerializationException",
+      "error_message": "cannot serialize schema version v3",
+      "expected_incident_id": "8471ff53-d6e3-40d1-a7f7-9526d0698c0f",
+      "expected_status": "open",
+      "exact_terms": [
+        "KafkaSerializationException",
+        "schema registry",
+        "v3",
+        "hybrid-search-v1",
+        "batch-platform"
+      ],
+      "alternative_phrases": [
+        "이벤트 발행 실패",
+        "스키마 버전 불일치"
+      ]
+    },
+    "batch_platform-access-denied": {
+      "project_name": "batch-platform",
+      "description": "배치 플랫폼 권한 검증 실패",
+      "error_type": "AccessDeniedException",
+      "error_message": "role REPORT_ADMIN required",
+      "expected_incident_id": "1c1e0052-cffd-4f93-9900-2e3799163bdc",
+      "expected_status": "open",
+      "exact_terms": [
+        "AccessDeniedException",
+        "REPORT_ADMIN",
+        "permission",
+        "hybrid-search-v1",
+        "batch-platform"
+      ],
+      "alternative_phrases": [
+        "권한 없음",
+        "관리자 권한인데 차단"
+      ]
+    },
+    "batch_platform-json-mapping": {
+      "project_name": "batch-platform",
+      "description": "배치 플랫폼 Webhook JSON 매핑 실패",
+      "error_type": "JsonMappingException",
+      "error_message": "Cannot deserialize value of type EventStatus",
+      "expected_incident_id": "e3df9872-277e-49ec-83f9-8b28230afa85",
+      "expected_status": "open",
+      "exact_terms": [
+        "JsonMappingException",
+        "EventStatus",
+        "webhook",
+        "hybrid-search-v1",
+        "batch-platform"
+      ],
+      "alternative_phrases": [
+        "웹훅 파싱 실패",
+        "enum 역직렬화 오류"
+      ]
+    },
+    "batch_platform-optimistic-lock": {
+      "project_name": "batch-platform",
+      "description": "배치 플랫폼 동시 처리 중 optimistic lock 충돌",
+      "error_type": "OptimisticLockException",
+      "error_message": "row was updated or deleted by another transaction",
+      "expected_incident_id": "bf0576df-1986-48b2-89e2-1877f45342a0",
+      "expected_status": "open",
+      "exact_terms": [
+        "OptimisticLockException",
+        "idempotency",
+        "order",
+        "hybrid-search-v1",
+        "batch-platform"
+      ],
+      "alternative_phrases": [
+        "동시성 충돌",
+        "중복 요청으로 주문 확정 실패"
+      ]
+    },
+    "batch_platform-ssl-handshake": {
+      "project_name": "batch-platform",
+      "description": "배치 플랫폼 TLS 인증서 검증 실패",
+      "error_type": "SSLHandshakeException",
+      "error_message": "PKIX path building failed",
+      "expected_incident_id": "a4ab79f6-8d84-4d5a-94b6-c4423c040b22",
+      "expected_status": "open",
+      "exact_terms": [
+        "SSLHandshakeException",
+        "PKIX",
+        "truststore",
+        "hybrid-search-v1",
+        "batch-platform"
+      ],
+      "alternative_phrases": [
+        "TLS handshake 실패",
+        "인증서 체인 오류"
+      ]
+    }
+  },
+  "hybrid_search_queries": [
+    {
+      "name": "exact_class_and_exception",
+      "project_name": "data-portal",
+      "query": "JwtTokenProvider ClassNotFoundException",
+      "expected_scenario": "data_portal-jwt-class-not-found",
+      "expected_incident_id": "6a6c688d-9a7c-4b84-a4e9-c4b61d00ba61"
+    },
+    {
+      "name": "same_error_different_cause",
+      "project_name": "data-portal",
+      "query": "결제 NullPointerException paymentMethod",
+      "expected_scenario": "data_portal-payment-null-pointer",
+      "expected_incident_id": "f656635e-7ab4-4360-b3bf-77af1a48e301"
+    },
+    {
+      "name": "project_filter_similar_incident",
+      "project_name": "admin-portal",
+      "query": "Docker 컨테이너 종료 code 137",
+      "expected_scenario": "admin_portal-docker-container-exit",
+      "expected_incident_id": "29f65d03-e255-41a7-ae5c-8381cefed8b1"
+    },
+    {
+      "name": "keyword_required_config_path",
+      "project_name": "batch-platform",
+      "query": "/etc/incidentlens/feature-flags.yml FileNotFoundException",
+      "expected_scenario": "batch_platform-config-file-missing",
+      "expected_incident_id": "73f8a032-24c9-42a2-8e79-8f365db2cad2"
+    },
+    {
+      "name": "natural_language_variant",
+      "project_name": "data-portal",
+      "query": "웹훅 enum 역직렬화 오류",
+      "expected_scenario": "data_portal-json-mapping",
+      "expected_incident_id": "c8c9f3b9-8e80-4f65-ad9b-2bdfdc722871"
+    }
+  ]
+}
