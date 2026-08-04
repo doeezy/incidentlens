@@ -61,7 +61,7 @@ class IncidentRepository:
         self,
         project_name: str,
         ticket_created_at: datetime,
-        limit: int = 500,
+        limit: int = 50,
     ) -> list[Incident]:
         """티켓-incident 매칭 후보: 동일 프로젝트이고 상태가 open 또는 investigating."""
         stmt = (
