@@ -57,6 +57,17 @@ class QueryAnalysis(BaseModel):
     retrieval_required: bool
     rewritten_query: str | None = None
     reason: str
+    query_sufficient: bool = True
+    missing_information: list[
+        Literal[
+            "symptom_or_error",
+            "error_message",
+            "affected_feature",
+            "project",
+        ]
+    ] = Field(default_factory=list)
+    clarification_required: bool = False
+    clarification_question: str | None = None
 
 
 class ConversationHistoryMessage(BaseModel):
@@ -127,6 +138,10 @@ class IncidentAnswerAgent:
             retrieval_required=query_analysis.retrieval_required,
             rewritten_query=query_analysis.rewritten_query,
             analysis_reason=query_analysis.reason,
+            query_sufficient=query_analysis.query_sufficient,
+            missing_information=query_analysis.missing_information,
+            clarification_required=query_analysis.clarification_required,
+            clarification_question=query_analysis.clarification_question,
             answer=state["answer"],
             search_results=search_response.results,
         )
@@ -213,11 +228,32 @@ class IncidentAnswerAgent:
                 "trace_retrieval": AgentTraceRetrieval(),
                 "trace_confidence": AgentTraceConfidence(),
             }
+        if not analysis.query_sufficient:
+            empty_response = IncidentSearchResponse(
+                query=state["question"],
+                top_k=state.get("top_k", 5),
+                project_name=state.get("project_name"),
+                results=[],
+            )
+            return {
+                "query_analysis": analysis,
+                "search_response": empty_response,
+                "answer": (
+                    analysis.clarification_question
+                    or "검색을 위해 장애 증상이나 오류 정보를 조금 더 알려주세요."
+                ),
+                "query_analyzer_ms": elapsed_ms,
+                "retrieval_ms": 0.0,
+                "confidence_ms": 0.0,
+                "answer_generation_ms": 0.0,
+                "trace_retrieval": AgentTraceRetrieval(),
+                "trace_confidence": AgentTraceConfidence(),
+            }
         return {"query_analysis": analysis, "query_analyzer_ms": elapsed_ms}
 
     def _route_after_query_analysis(self, state: IncidentAgentState) -> str:
         analysis = state["query_analysis"]
-        return "retrieve" if analysis.retrieval_required else "end"
+        return "retrieve" if analysis.retrieval_required and analysis.query_sufficient else "end"
 
     def _retrieve_incidents(self, state: IncidentAgentState) -> IncidentAgentState:
         analysis = state["query_analysis"]
@@ -269,6 +305,10 @@ class IncidentAnswerAgent:
                 intent=query_analysis.intent,
                 retrieval_required=query_analysis.retrieval_required,
                 reason=query_analysis.reason,
+                query_sufficient=query_analysis.query_sufficient,
+                missing_information=query_analysis.missing_information,
+                clarification_required=query_analysis.clarification_required,
+                clarification_question=query_analysis.clarification_question,
             ),
             retrieval=state.get("trace_retrieval") or AgentTraceRetrieval(),
             confidence=state.get("trace_confidence") or AgentTraceConfidence(),
@@ -347,7 +387,10 @@ class IncidentAnswerAgent:
         history_messages: list[ConversationHistoryMessage] | None = None,
     ) -> QueryAnalysis:
         if not self._settings.openai_api_key:
-            return self._fallback_query_analysis(question)
+            return self._fallback_query_analysis(
+                question,
+                history_messages=history_messages or [],
+            )
 
         messages = [
             {
@@ -377,7 +420,10 @@ class IncidentAnswerAgent:
         if parsed is not None:
             return self._normalize_query_analysis(parsed, question)
 
-        return self._fallback_query_analysis(question)
+        return self._fallback_query_analysis(
+            question,
+            history_messages=history_messages or [],
+        )
 
     def _query_analyzer_user_content(
         self,
@@ -419,6 +465,9 @@ class IncidentAnswerAgent:
             "current_question이 독립적인 질문이면 history를 무시하세요.\n"
             "current_question이 이전 대화를 참조하는 꼬리 질문이면 history를 이용하세요.\n"
             "history에 없는 내용을 추론하지 마세요.\n"
+            "history에서 이미 확인된 정보를 current_question에서 다시 말하지 않았다는 "
+            "이유만으로 부족하다고 판단하지 마세요.\n"
+            "current_question이 history와 충돌하면 current_question을 우선하세요.\n"
             "rewritten_query는 항상 독립적인 검색어가 되도록 생성하세요.\n\n"
             "예:\n"
             "history: USER \"로그인 장애 원인이 뭐야?\", ASSISTANT \"JwtTokenProvider를 찾지 못해 발생한 장애입니다.\"\n"
@@ -442,8 +491,56 @@ class IncidentAnswerAgent:
             "그 외에는 모두\n\n"
             "retrieval_required = true\n\n"
             "입니다.\n\n"
+            "## Query Sufficiency\n\n"
+            "query_sufficient는 retrieval_required와 다른 판단입니다.\n"
+            "- retrieval_required: 이 요청이 과거 Incident 검색을 필요로 하는가\n"
+            "- query_sufficient: 현재 정보와 history만으로 검색을 시도할 만한 "
+            "실질적인 단서가 있는가\n\n"
+            "query_sufficient=false는 검색에 사용할 실질적인 단서가 거의 없는 "
+            "경우에만 사용하세요.\n"
+            "정보가 적거나 query가 모호하다는 이유만으로 clarification을 실행하지 "
+            "마세요.\n"
+            "고정된 필수 필드 체크리스트를 만들지 마세요. project_name, module_name, "
+            "class_name, error_type이 모두 있어야 검색 가능하다고 판단하면 안 됩니다.\n"
+            "핵심은 현재 정보와 history만으로 과거 Incident 검색을 시도할 만한 "
+            "단서가 있는가입니다.\n\n"
+            "다음처럼 최소한의 검색 단서가 있으면 query_sufficient=true입니다.\n"
+            "- 캐시 서버 접속 실패\n"
+            "- 로그인 오류\n"
+            "- paymentMethod is null\n"
+            "- ClassNotFoundException AuthService login\n"
+            "- 배치 컨테이너 종료 오류\n\n"
+            "다음처럼 검색 가능한 기술적/증상적 단서가 거의 없으면 "
+            "query_sufficient=false일 수 있습니다.\n"
+            "- 안돼요\n"
+            "- 오류났어\n"
+            "- 왜 이러지?\n"
+            "- 이거 문제 있어\n\n"
+            "history에서 이미 project, 서비스, 기능, 증상, 에러가 확인되었다면 "
+            "그 정보를 함께 사용하세요. 이미 받은 정보를 다시 질문하지 마세요.\n\n"
+            "missing_information은 비어 있는 모든 필드를 나열하는 용도가 아닙니다.\n"
+            "검색 가능성을 확보하기 위해 사용자에게 추가로 받아야 하는 최소 정보만 "
+            "반환하세요.\n"
+            "가능한 값은 다음 중에서만 선택하세요.\n"
+            "- symptom_or_error\n"
+            "- error_message\n"
+            "- affected_feature\n"
+            "- project\n\n"
+            "clarification은 한 번에 최소한의 정보만 요청하세요.\n"
+            "나쁜 예: \"프로젝트명, 서비스명, 모듈명, 클래스명, 메서드명, 에러 타입, "
+            "에러 메시지, 발생 시각을 알려주세요.\"\n"
+            "좋은 예: \"어떤 기능에서 어떤 오류나 증상이 발생했는지 알려주세요.\"\n"
+            "좋은 예: \"확인된 에러 메시지나 예외명이 있다면 알려주세요.\"\n\n"
+            "query_sufficient=false이면 clarification_required=true, "
+            "clarification_question은 한국어 질문 문자열, rewritten_query=null로 "
+            "반환하세요.\n"
+            "query_sufficient=true이면 clarification_required=false, "
+            "missing_information=[], clarification_question=null로 반환하세요.\n"
+            "OUT_OF_SCOPE이면 retrieval_required=false이고 clarification_required=false입니다.\n\n"
             "## Query Rewrite\n\n"
             "retrieval_required가 true인 경우에는 검색에 적합한 query를 작성하세요.\n"
+            "단, query_sufficient=false이면 rewritten_query를 작성하지 말고 null로 "
+            "반환하세요.\n"
             "rewrite는 새로운 의미를 만들거나 원문을 축약하는 작업이 아닙니다.\n"
             "원문의 핵심 검색 단서를 보존한 채 불필요한 표현만 제거하는 작업입니다.\n\n"
             "### 핵심 원칙\n\n"
@@ -538,7 +635,11 @@ class IncidentAnswerAgent:
             "  \"intent\": \"ROOT_CAUSE\",\n"
             "  \"retrieval_required\": true,\n"
             "  \"rewritten_query\": \"로그인 인증 토큰 클래스 로딩 실패\",\n"
-            "  \"reason\": \"사용자가 로그인 과정의 클래스 로딩 실패 원인을 묻고 있음\"\n"
+            "  \"reason\": \"사용자가 로그인 과정의 클래스 로딩 실패 원인을 묻고 있음\",\n"
+            "  \"query_sufficient\": true,\n"
+            "  \"missing_information\": [],\n"
+            "  \"clarification_required\": false,\n"
+            "  \"clarification_question\": null\n"
             "}"
         )
 
@@ -567,6 +668,29 @@ class IncidentAnswerAgent:
                 retrieval_required=False,
                 rewritten_query=None,
                 reason=analysis.reason,
+                query_sufficient=True,
+                missing_information=[],
+                clarification_required=False,
+                clarification_question=None,
+            )
+        if not analysis.query_sufficient:
+            missing_information = (
+                analysis.missing_information
+                if analysis.missing_information
+                else ["symptom_or_error"]
+            )
+            return QueryAnalysis(
+                intent=analysis.intent,
+                retrieval_required=True,
+                rewritten_query=None,
+                reason=analysis.reason,
+                query_sufficient=False,
+                missing_information=missing_information,
+                clarification_required=True,
+                clarification_question=(
+                    analysis.clarification_question
+                    or "어떤 기능에서 어떤 오류나 증상이 발생했는지 알려주세요."
+                ),
             )
         rewritten_query = (analysis.rewritten_query or question).strip()
         return QueryAnalysis(
@@ -574,21 +698,50 @@ class IncidentAnswerAgent:
             retrieval_required=True,
             rewritten_query=rewritten_query or question.strip(),
             reason=analysis.reason,
+            query_sufficient=True,
+            missing_information=[],
+            clarification_required=False,
+            clarification_question=None,
         )
 
-    def _fallback_query_analysis(self, question: str) -> QueryAnalysis:
-        lowered = question.lower()
+    def _fallback_query_analysis(
+        self,
+        question: str,
+        *,
+        history_messages: list[ConversationHistoryMessage] | None = None,
+    ) -> QueryAnalysis:
+        history_text = " ".join(message.content for message in (history_messages or []))
+        combined = f"{history_text} {question}".strip()
+        lowered = combined.lower()
+        if self._is_vague_incident_question(question) and not history_text.strip():
+            return QueryAnalysis(
+                intent="SUMMARY",
+                retrieval_required=True,
+                rewritten_query=None,
+                reason="검색에 사용할 구체적인 장애 증상이나 오류 단서가 부족합니다.",
+                query_sufficient=False,
+                missing_information=["symptom_or_error"],
+                clarification_required=True,
+                clarification_question="어떤 기능에서 어떤 오류나 증상이 발생했는지 알려주세요.",
+            )
         incident_terms = [
             "장애",
             "에러",
             "오류",
             "exception",
             "error",
+            "null",
             "로그",
             "로그인",
             "결제",
             "api",
             "timeout",
+            "실패",
+            "접속",
+            "캐시",
+            "서버",
+            "종료",
+            "컨테이너",
         ]
         if not any(term in lowered for term in incident_terms):
             return QueryAnalysis(
@@ -596,6 +749,21 @@ class IncidentAnswerAgent:
                 retrieval_required=False,
                 rewritten_query=None,
                 reason="장애 검색과 관련된 키워드가 확인되지 않았습니다.",
+                query_sufficient=True,
+                missing_information=[],
+                clarification_required=False,
+                clarification_question=None,
+            )
+        if not self._has_searchable_incident_clue(question, history_text):
+            return QueryAnalysis(
+                intent="SUMMARY",
+                retrieval_required=True,
+                rewritten_query=None,
+                reason="검색에 사용할 구체적인 장애 증상이나 오류 단서가 부족합니다.",
+                query_sufficient=False,
+                missing_information=["symptom_or_error"],
+                clarification_required=True,
+                clarification_question="어떤 기능에서 어떤 오류나 증상이 발생했는지 알려주세요.",
             )
         if any(term in question for term in ("원인", "왜", "이유")):
             intent = "ROOT_CAUSE"
@@ -605,12 +773,77 @@ class IncidentAnswerAgent:
             intent = "SIMILAR_CASE"
         else:
             intent = "SUMMARY"
+        rewritten_source = (
+            combined
+            if history_text.strip()
+            and not self._has_searchable_incident_clue(question, "")
+            else question
+        )
         return QueryAnalysis(
             intent=intent,
             retrieval_required=True,
-            rewritten_query=" ".join(question.split()),
+            rewritten_query=" ".join(rewritten_source.split()),
             reason="LLM Query Analyzer를 사용할 수 없어 규칙 기반으로 분류했습니다.",
+            query_sufficient=True,
+            missing_information=[],
+            clarification_required=False,
+            clarification_question=None,
         )
+
+    def _has_searchable_incident_clue(self, question: str, history_text: str) -> bool:
+        text = f"{history_text} {question}".strip().lower()
+        if self._is_vague_incident_question(question) and not history_text.strip():
+            return False
+
+        technical_markers = [
+            "exception",
+            "error",
+            "timeout",
+            "null",
+            "failed",
+            "failure",
+            "http",
+            "500",
+            "404",
+            "sql",
+            "redis",
+            "docker",
+            "container",
+        ]
+        korean_markers = [
+            "로그인",
+            "결제",
+            "캐시",
+            "서버",
+            "접속",
+            "실패",
+            "종료",
+            "배치",
+            "컨테이너",
+            "메모리",
+            "컬럼",
+            "인증",
+            "조회",
+            "요청",
+            "응답",
+        ]
+        if any(marker in text for marker in technical_markers + korean_markers):
+            return True
+
+        compact_words = [word for word in text.replace("?", " ").split() if word]
+        return len(compact_words) >= 3
+
+    def _is_vague_incident_question(self, question: str) -> bool:
+        return question.strip().lower() in {
+            "안돼요",
+            "안돼",
+            "오류났어",
+            "오류 났어",
+            "왜 이러지?",
+            "왜 이러지",
+            "이거 문제 있어",
+            "문제 있어",
+        }
 
     def _generate_llm_answer(
         self,

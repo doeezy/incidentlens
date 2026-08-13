@@ -309,6 +309,89 @@ class IncidentRetrievalService:
             confidence_telemetry=self._confidence_telemetry,
         )
 
+    def search_vector_candidates_for_evaluation(
+        self,
+        *,
+        query: str,
+        limit: int,
+        project_name: str | None,
+    ) -> list[RetrievalStageCandidate]:
+        """Return raw vector candidates without LLM confidence evaluation."""
+        clean_query = query.strip()
+        clean_project_name = project_name.strip() if project_name else None
+        query_vector = self._embedding_service.embed_text(clean_query)
+        return [
+            RetrievalStageCandidate(
+                search_type="VECTOR",
+                incident_id=hit.incident_id,
+                rank=hit.rank,
+                raw_score=hit.vector_score,
+                vector_score=hit.vector_score,
+            )
+            for hit in self._search_embeddings(
+                query_vector=query_vector,
+                limit=limit,
+                project_name=clean_project_name,
+            )
+        ]
+
+    def search_bm25_candidates_for_evaluation(
+        self,
+        *,
+        query: str,
+        limit: int,
+        project_name: str,
+    ) -> list[RetrievalStageCandidate]:
+        """Return raw BM25 candidates without LLM confidence evaluation."""
+        clean_query = query.strip()
+        clean_project_name = project_name.strip()
+        return [
+            RetrievalStageCandidate(
+                search_type="BM25",
+                incident_id=hit.incident_id,
+                rank=hit.rank,
+                raw_score=hit.bm25_score,
+                bm25_score=hit.bm25_score,
+            )
+            for hit in IncidentRepository(self._session).search_bm25(
+                project_name=clean_project_name,
+                query=clean_query,
+                limit=limit,
+            )
+        ]
+
+    def search_hybrid_candidates_for_evaluation(
+        self,
+        *,
+        query: str,
+        limit: int,
+        candidate_limit: int,
+        rrf_k: int,
+        project_name: str,
+    ) -> list[RetrievalStageCandidate]:
+        """Return raw RRF candidates without LLM confidence evaluation."""
+        clean_query = query.strip()
+        clean_project_name = project_name.strip()
+        _, _, rrf_hits = self._search_hybrid_candidates(
+            query=clean_query,
+            top_k=limit,
+            candidate_limit=candidate_limit,
+            rrf_k=rrf_k,
+            project_name=clean_project_name,
+        )
+        return [
+            RetrievalStageCandidate(
+                search_type="RRF",
+                incident_id=hit.incident_id,
+                rank=hit.rrf_rank,
+                raw_score=hit.rrf_score,
+                vector_score=hit.vector_score,
+                bm25_score=hit.bm25_score,
+                rrf_score=hit.rrf_score,
+            )
+            for hit in rrf_hits
+        ]
+
     def _search_hybrid_candidates(
         self,
         *,

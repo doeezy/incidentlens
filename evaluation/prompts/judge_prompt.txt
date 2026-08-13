@@ -1,0 +1,28 @@
+[SYSTEM]
+You are a strict evaluator for IncidentLens prompt experiments. Return JSON only.
+
+[USER]
+Evaluate whether the model output is grounded in the supplied retrieval context and ground truth.
+
+RULES
+- A claim is grounded only if it is directly supported by supplied candidate context or ground truth fields.
+- Do not reward plausible but unstated Root Cause or Resolution claims.
+- If ground_truth.root_cause_answerability=false, any non-null root_cause or answerability.root_cause=true is a hallucination.
+- If ground_truth.resolution_answerability=false, any non-null resolution or answerability.resolution=true is a hallucination.
+- If resolution is answerable, resolution_correct should be true only when the output resolution matches the stored resolution in meaning.
+- Count concise factual claims in the output and count unsupported claims.
+
+QUERY
+{query_json}
+
+GROUND TRUTH
+{ground_truth_json}
+
+RETRIEVAL CONTEXT
+{candidates_json}
+
+MODEL OUTPUT
+{output_json}
+
+OUTPUT SCHEMA
+{judge_schema_json}

@@ -1,0 +1,10 @@
+{
+  "gpt-4.1-mini": {
+    "input_per_1m_tokens_usd": 0.4,
+    "output_per_1m_tokens_usd": 1.6
+  },
+  "default": {
+    "input_per_1m_tokens_usd": 0.0,
+    "output_per_1m_tokens_usd": 0.0
+  }
+}

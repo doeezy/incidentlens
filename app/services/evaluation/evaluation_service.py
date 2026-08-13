@@ -107,7 +107,7 @@ class EvaluationService:
             analysis = self._query_agent.analyze_query(case.question)
             trace: RetrievalEvaluationTrace | None = None
             retrieval_latency_ms: float | None = None
-            if analysis.retrieval_required:
+            if analysis.retrieval_required and analysis.query_sufficient:
                 retrieval_start = perf_counter()
                 trace = self._retrieval_service.search_for_evaluation(
                     query=analysis.rewritten_query or case.question,

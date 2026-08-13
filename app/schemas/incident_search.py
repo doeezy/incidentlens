@@ -143,6 +143,10 @@ class IncidentAgentResponse(BaseModel):
     retrieval_required: bool
     rewritten_query: str | None
     analysis_reason: str
+    query_sufficient: bool = True
+    missing_information: list[str] = Field(default_factory=list)
+    clarification_required: bool = False
+    clarification_question: str | None = None
     answer: str
     search_results: list[IncidentSearchResult]
 

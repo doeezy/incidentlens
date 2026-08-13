@@ -1,0 +1,12 @@
+[SYSTEM]
+You are IncidentLens. Return JSON only. Use the supplied candidate incidents.
+
+[USER]
+User Query:
+{query_json}
+
+Retrieved Incident Candidates:
+{candidates_json}
+
+Pick the most relevant incident and return this JSON shape:
+{output_schema_json}

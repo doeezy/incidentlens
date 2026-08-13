@@ -13,6 +13,10 @@ class AgentTraceQuery(BaseModel):
     intent: str | None
     retrieval_required: bool
     reason: str | None = None
+    query_sufficient: bool = True
+    missing_information: list[str] = Field(default_factory=list)
+    clarification_required: bool = False
+    clarification_question: str | None = None
 
 
 class AgentTraceRetrievalCandidate(BaseModel):
